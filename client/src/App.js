@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { Route } from 'react-router'
 import { Router } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy';
-import jwtDecode from 'jwt-decode'
+// import jwtDecode from 'jwt-decode'
+import styled from 'styled-components'
 
 // import setAuthToken from '../services/setAuthToken'
 // import { handleAuth, logoutUser } from '../actions/auth'
@@ -12,6 +13,9 @@ import history from './history'
 
 // import PrivateRoute from './PrivateRoute/PrivateRoute'
 import Home from './pages/Home'
+import Header from './components/Header'
+import Login from './pages/Login/Login'
+import Signup from './pages/Signup'
 
 // if (localStorage.jwtToken) {
 //   // Set the auth token header auth
@@ -30,15 +34,27 @@ import Home from './pages/Home'
 //   }
 // }
 
+const AppWrapper = styled.div`
+  height: 100vh;
+  overflow: hidden;
+`
+
+const AppBody = styled.div`
+  height: calc(100vh - 3.25rem);
+  width: 100%;
+`
+
 const App = ({ store }) => (
   <StoreProvider store={store}>
     <Router history={history}>
-      <div className="app">
-        {/* <Header /> */}
-        <div className="app-body">
+      <AppWrapper>
+        <Header />
+        <AppBody>
           <Route path="/" exact component={Home} />
-        </div>
-      </div>
+          <Route path='/entrar' exact component={Login} />
+          <Route path='/cadastro' exact component={Signup} />
+        </AppBody>
+      </AppWrapper>
     </Router>
   </StoreProvider>
 )
