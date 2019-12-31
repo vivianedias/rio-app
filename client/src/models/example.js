@@ -4,8 +4,8 @@ const productsModel = {
   }
 };
 
-const basketModel = {
-  productIds: [1]
-};
+// const basketModel = {
+//   productIds: [1]
+// };
 
 export default productsModel
