@@ -34,6 +34,10 @@ const Flexbox = styled(({ children, className }) => {
     justify-content: ${props.justify};
   `}
 
+  ${props => props.align && `
+    align-items: ${props.align};
+  `}
+
   ${props => props.width && `
     width: ${props.width};
   `}
@@ -58,6 +62,7 @@ Flexbox.propTypes = {
   center: PropTypes.bool,
   end: PropTypes.bool,
   justify: PropTypes.oneOf(['space-around', 'space-between', 'center', 'space-evenly', 'flex-end']),
+  align: PropTypes.oneOf(['center', 'flex-end', 'flex-start']),
   width: PropTypes.string,
   /** The margin property. */
   margin: shape({
