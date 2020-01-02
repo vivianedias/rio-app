@@ -3,53 +3,47 @@ import React, { Fragment } from "react"
 const InputText = (
   {
     label,
-    isEdit = false,
-    name = "",
-    value,
-    onChange,
+    name,
     type,
     placeholder,
-    maxLength = undefined,
-    showLeftIcon = false,
-    leftIcon,
+    icon,
     help = undefined,
-    error = undefined
+    error = undefined,
+    register
   }) => {
   return (
-    <div className="custom-field field">
+    <div className="field">
       <label className="label">{label}</label>
-      {isEdit && (
-        <Fragment>
-          <div className="control">
-            <input
-              name={name}
-              value={value}
-              onChange={onChange}
-              className={`custom-field__input input ${error ? "is-danger" : ""}`}
-              type={type}
-              placeholder={placeholder}
-              maxLength={maxLength}
-            />
-            {showLeftIcon && (
-              <span className="icon is-left is-small">
-                <i className={`fas ${leftIcon}`} />
-              </span>
-            )}
-            {error && (
-              <span className="icon is-right is-small">
-                <i className={`fas ${error ? "fa-exclamation-triangle" : ""}`} />
-              </span>
-            )}
-          </div>
-          {help && <p className="help">{help}</p>}
-          {typeof error !== "undefined" &&
-            typeof error !== "object" &&
-            <p className="help is-danger">
-              {error}
-            </p>
-          }
-        </Fragment>
-      )}
+        <div
+          className={`control ${icon ? "has-icons-left" : ""} ${error ? "has-icons-right" : ""}`}
+        >
+          <input
+            className={`input ${error ? "is-danger" : ""}`}
+            type={type}
+            placeholder={placeholder}
+            name={name}
+            ref={register}
+          />
+          {icon && (
+            <span
+              className="icon is-left is-small"
+              style={{ 'zIndex': 'unset ' }}
+            >
+              <i className={`fas ${icon}`} />
+            </span>
+          )}
+          {error && (
+            <span className="icon is-right is-small">
+              <i className="fas fa-exclamation-triangle" />
+            </span>
+          )}
+        </div>
+        {help && <p className="help">{help}</p>}
+        {error &&
+          <p className="help is-danger">
+            {error.message}
+          </p>
+        }
     </div>
   )
 }
