@@ -1,44 +1,75 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
+import { useStoreState } from 'easy-peasy'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Modal from '../../components/Modal'
-import { Form, InputWrapper } from './style'
+import Button from '../../components/Button'
+import { Form, InputWrapper, VerticalLine } from './style'
+import { emailValidation } from '../../utils/service'
 
 const Login = () => {
   
-  const errors = {}
   const [modalStatus, setModalStatus] = useState(false)
+  const { register, handleSubmit, errors, clearError } = useForm()
+
+  const onSubmit = data => { console.log(data) }
+
+  const toggleModal = () => {
+    clearError()
+    return setModalStatus(!modalStatus)
+  }
+
   return (
     <Fragment>
       <Flexbox center>
-        <Form onSubmit={() => alert('bla')}>
-          <h1 className="title has-text-danger">entre no rio</h1>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Flexbox
+            center
+            width="100%"
+            margin={{
+              top: 10,
+              bottom: 10,
+              left: 0,
+              right: 0
+            }}
+          >
+            <h1 className="title has-text-danger">entre no rio</h1>
+          </Flexbox>
           <InputWrapper>
             <InputText 
               label="E-mail"
-              name="email"
               type="text"
+              name="email"
               placeholder="e-mail"
-              onChange={() => alert('bla')}
-              showLeftIcon={true}
-              leftIcon="fa-envelope"
-              showRightIcon={true}
+              icon="fa-envelope"
               error={errors && errors.email}
               isEdit={true}
+              register={register({
+                required: 'Esse campo é obrigatório',
+                pattern: {
+                  value: emailValidation(),
+                  message: 'Insira um endereço de e-mail válido'
+                }
+              })}
             />
             <InputText 
               label="Senha"
-              name="password"
               type="password"
+              name="password"
               placeholder="senha"
-              onChange={() => alert('bla')}
-              showLeftIcon={true}
-              leftIcon="fa-lock"
-              showRightIcon={true}
+              icon="fa-lock"
               error={errors && errors.password}
               isEdit={true}
+              register={register({
+                required: 'Esse campo é obrigatório',
+                minLength: {
+                  value: 10,
+                  message: 'A senha deve ter no mínimo 10 caracteres'
+                }
+              })}
             />
             <Link 
               to="/esqueci-senha" 
@@ -48,27 +79,58 @@ const Login = () => {
             </Link>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">    
-            <div
-              onClick={() => setModalStatus(!modalStatus)}
-              className="button is-rounded"
+            <Button
+              onClick={toggleModal}
+              styles="button is-rounded"
             >
               cadastre-se
-            </div>
-            <button 
-              type="submit" 
-              className="button is-danger is-rounded"
-            >
+            </Button>
+            <Button type="submit" styles="is-danger is-rounded">
               entrar
-            </button>     
+            </Button>     
           </Flexbox>
         </Form>
       </Flexbox>
       <Modal
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
-        width="200px"
+        width="500px"
       >
-        olá
+        <Flexbox
+          width="100%"
+          center
+          margin={{
+            top: 10,
+            bottom: 20,
+            left: 0,
+            right: 0
+          }}
+        >
+          <h1 className="title is-5">
+            Selecione o tipo de cadastro que deseja:
+          </h1>
+        </Flexbox>
+        <Flexbox
+          justify="space-evenly"
+          width="100%"
+          align="center"
+        >
+          <Link to="/cadastro/empresas">
+            <Button
+              styles="is-link"
+            >
+              Empresa
+            </Button>
+          </Link>
+          <VerticalLine />
+          <Link to="cadastro/profissional">
+            <Button
+              styles="is-danger"
+            >
+              Profissional
+            </Button>
+          </Link>
+        </Flexbox>
       </Modal>
     </Fragment>
   )
