@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useStoreState } from 'easy-peasy'
+// import { useStoreState } from 'easy-peasy'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
-import { Form, InputWrapper, VerticalLine } from './style'
+import SignupPopup from '../../components/popups/Signup'
+
+import { Form, InputWrapper } from './style'
 import { emailValidation } from '../../utils/service'
 
 const Login = () => {
@@ -96,41 +98,7 @@ const Login = () => {
         onClose={() => setModalStatus(false)}
         width="500px"
       >
-        <Flexbox
-          width="100%"
-          center
-          margin={{
-            top: 10,
-            bottom: 20,
-            left: 0,
-            right: 0
-          }}
-        >
-          <h1 className="title is-5">
-            Selecione o tipo de cadastro que deseja:
-          </h1>
-        </Flexbox>
-        <Flexbox
-          justify="space-evenly"
-          width="100%"
-          align="center"
-        >
-          <Link to="/cadastro/empresas">
-            <Button
-              styles="is-link"
-            >
-              Empresa
-            </Button>
-          </Link>
-          <VerticalLine />
-          <Link to="cadastro/profissional">
-            <Button
-              styles="is-danger"
-            >
-              Profissional
-            </Button>
-          </Link>
-        </Flexbox>
+        <SignupPopup />
       </Modal>
     </Fragment>
   )

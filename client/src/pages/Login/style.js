@@ -7,13 +7,13 @@ export const FullWidth = styled.div`
 
 export const Form = styled.form`
   background-color: pink;
+  width: 100%;
+  padding: 20px;
+  @media(min-width: 576px) {
+    width: unset;
+  }
 `
 
 export const InputWrapper = styled.div`
   margin-bottom: 20px;
-`
-
-export const VerticalLine = styled.div`
-  height: 150px;
-  border-left: 2px solid hsl(0, 0%, 29%);
 `
