@@ -1,4 +1,5 @@
-import React, { Fragment } from "react"
+import React from "react"
+import PropTypes from 'prop-types'
 
 const InputText = (
   {
@@ -7,8 +8,8 @@ const InputText = (
     type,
     placeholder,
     icon,
-    help = undefined,
-    error = undefined,
+    help,
+    error,
     register
   }) => {
   return (
@@ -46,6 +47,35 @@ const InputText = (
         }
     </div>
   )
+}
+
+InputText.propTypes = {
+  label: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
+  icon: PropTypes.string,
+  help: PropTypes.string,
+  register: PropTypes.func.isRequired
+  // margin: shape({
+  //   top: oneOfType([string, number]),
+  //   bottom: oneOfType([string, number]),
+  //   left: oneOfType([string, number]),
+  //   right: oneOfType([string, number])
+  // }),
+  // /** The padding property. */
+  // padding: shape({
+  //   top: oneOfType([string, number]),
+  //   bottom: oneOfType([string, number]),
+  //   left: oneOfType([string, number]),
+  //   right: oneOfType([string, number])
+  // })
+}
+
+InputText.defaultProps = {
+  type: "text",
+  help: undefined,
+  error: undefined
 }
 
 export default InputText
