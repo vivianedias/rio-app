@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+
+import Modal from '../components/Modal'
+import SignupPopup from '../components/popups/Signup'
+import Button from '../components/Button'
+
 // import { withRouter } from 'react-router';
 // import _ from 'lodash';
 
 const Header = () => {
-
 	// constructor(props) {
 	// 	super(props);
 	// 	this.state = {
@@ -32,7 +36,9 @@ const Header = () => {
 	// }
 
 		// const { auth: { isAuthenticated, user }, history } = this.props;
-		// const { isActive } = this.state;
+    // const { isActive } = this.state;
+
+  const [modalStatus, setModalStatus] = useState(false)
 
   return (
     <nav
@@ -93,9 +99,12 @@ const Header = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <NavLink to="/cadastro" className="button is-primary">
-                <strong>Cadastro</strong>
-              </NavLink>
+              <Button
+                onClick={() => setModalStatus(!modalStatus)}
+                styles="is-primary"
+              >
+                Cadastre-se
+              </Button>
               <NavLink to="/entrar" className="button is-light">
                 Entrar
               </NavLink>
@@ -103,6 +112,15 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <Modal
+        isOpen={modalStatus}
+        onClose={() => setModalStatus(false)}
+        width="500px"
+      >
+        <SignupPopup
+          onClick={() => setModalStatus(false)}
+        />
+      </Modal>
     </nav>
   );
 }

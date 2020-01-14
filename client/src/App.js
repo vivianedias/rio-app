@@ -15,7 +15,9 @@ import history from './history'
 import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login/Login'
-import Signup from './pages/Signup'
+import Enterprise from './pages/Signup/Enterprise'
+import Professionals from './pages/Signup/Professionals'
+
 
 // if (localStorage.jwtToken) {
 //   // Set the auth token header auth
@@ -36,7 +38,6 @@ import Signup from './pages/Signup'
 
 const AppWrapper = styled.div`
   height: 100vh;
-  overflow: hidden;
 `
 
 const AppBody = styled.div`
@@ -52,7 +53,11 @@ const App = ({ store }) => (
         <AppBody>
           <Route path="/" exact component={Home} />
           <Route path='/entrar' exact component={Login} />
-          <Route path='/cadastro' exact component={Signup} />
+          <Route path='/cadastro/empresas' component={Enterprise} />
+          <Route
+            path='/cadastro/profissional'
+            component={Professionals}
+          />
         </AppBody>
       </AppWrapper>
     </Router>
