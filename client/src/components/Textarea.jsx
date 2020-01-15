@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Textarea = ({ placeholder, label, rows, register, error, name }) => {
-  console.log(typeof error)
   return (
     <div className="field">
       <label className="label">{label}</label>
       <div className={`control ${error ? "has-icons-right" : ""}`}>
         <textarea
-          className="textarea"
+          className={`textarea ${error ? "is-danger" : ""}`}
           placeholder={placeholder}
           rows={rows}
           ref={register}
@@ -20,6 +19,11 @@ const Textarea = ({ placeholder, label, rows, register, error, name }) => {
             <i className="fas fa-exclamation-triangle" />
           </span>
         )}
+        {error &&
+          <p className="help is-danger">
+            {error}
+          </p>
+        }
       </div>
     </div>
   )
@@ -30,7 +34,8 @@ Textarea.propTypes = {
   rows: PropTypes.number,
   label: PropTypes.string.isRequired,
   register: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  error: PropTypes.string
 }
 
 Textarea.defaultProps = {
