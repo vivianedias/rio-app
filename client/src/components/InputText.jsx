@@ -42,7 +42,7 @@ const InputText = (
         {help && <p className="help">{help}</p>}
         {error &&
           <p className="help is-danger">
-            {error.message}
+            {error}
           </p>
         }
     </div>
