@@ -3,27 +3,19 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const cors = require('cors')
 const helmet = require('helmet')
-const db = require('./config/db')
+
 
 const keys = require('./config/keys')
 const path = require('path')
 
-const users = require('./routes/api/users')
-const projects = require('./routes/api/projects')
+const candidate = require('./routes/api/candidate')
+
 
 const app = express()
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-// DB Config - Atlas MongoDb
-// const db = require('./config/keys').mongoURI;
-// // Connect to MongoDB - Atlas MongoDb
-// mongoose
-//   .connect(db, { useNewUrlParser: true })
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
 
 // adding Helmet to enhance your API's security
 app.use(helmet())
@@ -38,8 +30,7 @@ app.use(passport.initialize())
 require('./config/passport')(passport)
 
 // Use Routes
-app.use('/api/users', users)
-app.use('/api/projects', projects)
+app.use('/api/candidate', candidate)
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {

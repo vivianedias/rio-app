@@ -10,11 +10,11 @@ const crypto = require('crypto')
 // Load Input Validation
 const validateRegisterInput = require('../../validator/register')
 const validateLoginInput = require('../../validator/login')
-// Load User model
-const User = require('../../models/Users')
+// Load Candidate model
+const Candidate = require('../../models/Candidate')
 
-// @route   POST api/users/register
-// @desc    Register user
+// @route   POST api/candidate/register
+// @desc    Register candidate
 // @access  Public
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body)
@@ -24,33 +24,44 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (user) {
-        errors.email = 'Email already exists'
+  Candidate.findOne({ email: req.body.email })
+    .then(candidate => {
+      if (candidate) {
+        errors.email = 'Favor checar as suas informações.'
         return res.status(400).json(errors)
       } else {
-        const newUser = new User({
+        const newCandidate = new Candidate({
           name: req.body.name,
           email: req.body.email,
           password: req.body.password,
           birthday: req.body.birthday,
           gender: req.body.gender,
-          color: req.body.gender,
-          state: req.body.state,
-          city: req.body.city,
-          currentField: req.body.currentField,
-          socialNumber: req.body.socialNumber
+          pcd: req.body.pcd,
+          homeState: req.body.homeState,
+          stateResidence: req.body.stateResidence,
+          cityResidence: req.body.cityResidence,
+          selfDeclaration: req.body.selfDeclaration,
+          address: req.body.address,
+          education: req.body.education,
+          kindEducation: req.body.kindEducation, 
+          cnpj: req.body.cnpj,
+          cnpjType: req.body.cnpjType,
+          identityContent: req.body.identityContent,
+          identityContentSegment: req.body.identityContentSegment,
+          expertiseAreas: req.body.expertiseAreas,
+          ApanAssociate: req.body.ApanAssociate,
+          phone: req.body.phone, 
+        
         })
 
         bcrypt.genSalt(10, (err, salt) => {
           if (err) throw err
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
+          bcrypt.hash(newCandidate.password, salt, (err, hash) => {
             if (err) throw err
-            newUser.password = hash
-            newUser
+            newCandidate.password = hash
+            newCandidate
               .save()
-              .then(user => res.json(user))
+              .then(candidate => res.json(candidate))
               .catch(err => console.log(err))
           })
         })
@@ -58,8 +69,8 @@ router.post('/register', (req, res) => {
     })
 })
 
-// @route   GET api/users/login
-// @desc    Login User / Returning JWT Token
+// @route   GET api/candidate/login
+// @desc    Login Candidate / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body)
@@ -72,20 +83,20 @@ router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-  // Find user by email
-  User.findOne({ email }).then(user => {
-    // Check for user
-    if (!user) {
-      errors.email = 'Usuário não encontrado'
+  // Find candidate by email
+  Candidate.findOne({ email }).then(candidate => {
+    // Check for candidate
+    if (!candidate) {
+      errors.email = 'Verifique seu email ou senha e tente novamente.'
       return res.status(400).json(errors)
     }
 
     // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, candidate.password).then(isMatch => {
       if (isMatch) {
-        // User Matched
+        // Candidate Matched
         // Create JWT Payload
-        const payload = { id: user.id, name: user.name, email: user.email }
+        const payload = { id: candidate.id, name: candidate.name, email: candidate.email }
 
         // Sign Token
         jwt.sign(
@@ -100,28 +111,28 @@ router.post('/login', (req, res) => {
           }
         )
       } else {
-        errors.password = 'Senha incorreta'
+        errors.password = 'Verifique seu email ou senha e tente novamente.'
         return res.status(400).json(errors)
       }
     })
   })
 })
 
-// @route   GET api/users/current
-// @desc    Return current user
+// @route   GET api/candidate/current
+// @desc    Return current candidate
 // @access  Private
 router.get('/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email
+      id: req.candidate.id,
+      name: req.candidate.name,
+      email: req.candidate.email
     })
   }
 )
 
-// @route   POST api/users/forgot-password
+// @route   POST api/candidate/forgot-password
 // @desc    Send email to reset password
 // @access  Public
 router.post('/forgot-password', (req, res) => {
@@ -136,16 +147,16 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      // Check for user
-      if (!user) {
+  Candidate.findOne({ email: req.body.email })
+    .then(candidate => {
+      // Check for candidate
+      if (!candidate) {
         errors.recovery = 'Usuário não encontrado'
         return res.status(400).json(errors)
       }
 
       // Update reset password token and exp date
-      User.findOneAndUpdate(
+      Candidate.findOneAndUpdate(
         { email },
         { $set: update },
         { new: true }
@@ -193,12 +204,12 @@ router.post('/reset/:token', (req, res, next) => {
   }
 
   // if we get to here, the passwords match
-  User.findOne({
+  Candidate.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   })
-    .then(user => {
-      if (!user) {
+    .then(candidate => {
+      if (!candidate) {
         errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
         return res.status(404).json(errors)
       }
@@ -215,12 +226,12 @@ router.post('/reset/:token', (req, res, next) => {
             resetPasswordToken: null,
             resetPasswordExpires: null
           }
-          User.findOneAndUpdate(
+          Candidate.findOneAndUpdate(
             { resetPasswordToken: req.params.token },
             { $set: updatePassword },
             { new: true }
           )
-            .then(user => {
+            .then(candidate => {
               res.json('Sua senha foi redefinida com sucesso')
             })
             .catch(() => {

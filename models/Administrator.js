@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const AdministratorSchema = new Schema({
-  socialName: {
+  name: {
     type: String,
     required: true
   },
@@ -35,6 +35,6 @@ const AdministratorSchema = new Schema({
   }
 })
 
-const Administrator = mongoose.model('Candidate', AdministratorSchema)
+const Administrator = mongoose.model('Administrator', AdministratorSchema)
 
 module.exports = Administrator

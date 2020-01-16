@@ -1,7 +1,7 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const mongoose = require('mongoose')
-const User = mongoose.model('users')
+const Candidate = mongoose.model('Candidate')
 const keys = require('../config/keys')
 
 const opts = {}
@@ -11,10 +11,10 @@ opts.secretOrKey = keys.secretOrKey
 module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwtPayload, done) => {
-      User.findById(jwtPayload.id)
-        .then(user => {
-          if (user) {
-            return done(null, user)
+      Candidate.findById(jwtPayload.id)
+        .then(candidate => {
+          if (candidate) {
+            return done(null, candidate)
           }
           return done(null, false)
         })
@@ -22,3 +22,4 @@ module.exports = passport => {
     })
   )
 }
+
