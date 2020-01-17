@@ -9,9 +9,8 @@ const Radios = ({ register, name, label, fields, error }) => (
         <label className="radio" key={uuid()}>
           <input
             type="radio"
-            name={name}
+            name={`${name}[${parse(item)}]`}
             ref={register}
-            value={parse(item)}
           />
           <span>{item}</span>
         </label>

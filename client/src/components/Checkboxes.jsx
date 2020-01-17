@@ -31,16 +31,19 @@ const Checkboxes = ({ label, register, name, fields }) => (
   <div className="field">
     <label className="label">{label}</label>
     <Wrapper>
-      {fields.map(item => (
-        <Label key={uuid()} className="control checkbox">
-          <Checkbox
-            type="checkbox"
-            name={`${name}[${parse(item)}]`}
-            ref={register}
-          /> 
-          <span>{item}</span>
-        </Label>
-      ))}
+      {fields.map(item => {
+        const checkedItem = typeof item !== 'string' ? item.name : item
+        return (
+          <Label key={uuid()} className="control checkbox">
+            <Checkbox
+              type="checkbox"
+              name={`${name}[${parse(checkedItem)}]`}
+              ref={register}
+            /> 
+            <span>{checkedItem}</span>
+          </Label>
+        )
+      })}
     </Wrapper>
   </div>
 )
