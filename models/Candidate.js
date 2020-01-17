@@ -1,36 +1,51 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
-
+ 
 // Create Schema
 const CandidateSchema = new Schema({
-  socialName: {
+  email:{
+    type: String,
+    required: true,
+    lowercase: true
+  },
+  name:{
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true, 
-    lowercase: true
-  },
-  birthday: {
-    type: String,
+  selfDeclaration:{
+    type: String, 
     required: true
   },
   gender: {
     type: String,
     required: true
   },
-  selfDeclaration: {
-    type: String,
+  sexualOrientation:{
+    type: String, 
+    require: false
+  },
+  pcd:{
+    type: String, 
+    require: true
+  }, 
+  birthday:{
+    type: Date, 
     required: true
   },
-  state: {
-    type: String,
+  homeState:{
+    type: String, 
     required: true
   },
-  city: {
+  stateResidence:{
+    type: String,
+    require: true,
+  },
+
+  cityResidence:{
+    type: String, 
+    require: true
+  },
+  address: {
     type: String,
     required: true
   },
@@ -38,17 +53,37 @@ const CandidateSchema = new Schema({
     type: Number,
     required: true
   },
-  associate: {
+  education: {
     type: String,
     required: true
   },
-  biography: {
+  kindEducation:{
+    type: String, 
+    required:true,
+  },
+  cpnj:{
+    type: Boolean, 
+    required: true
+  },  
+  cnpjType:{
     type: String,
     required: true
   },
-  portfoliCurriculum:{
+  identityContent:{
     type: String, 
     required: true
+  },
+  identityContentSegment:{
+    type: String,
+    required: true
+  },
+  expertiseAreas: {
+    type: String,
+    required: true
+  },
+  ApanAssociate:{
+    type: Boolean,
+    require: true
   },
   password: {
     type: String,
@@ -67,6 +102,7 @@ const CandidateSchema = new Schema({
     default: Date.now
   }
 })
+
 
 const Candidate = mongoose.model('Candidate', CandidateSchema)
 

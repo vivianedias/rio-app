@@ -3,17 +3,54 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CompanySchema = new Schema({
-  institution: {
+  name:{
+    type: String,
+    required: true,
+    lowercase: true
+  },
+  email:{
     type: String,
     required: true
   },
-  cnpj: {
-    type: Number,
-    required: true,
-    unique: true, 
+  gender:{
+    type: String,
+    required: true
+  },
+  selfDeclaration:{
+    type: String, 
+    required: true
+  },
+  companyName: {
+    type: String,
+    required: true
+  },
+  foundationDate:{
+    type: Date, 
+    require: true
+  },
+  companyPresentation:{
+    type: String, 
+    require: true
+  }, 
+  companySocialMidia:{
+    type: String, 
+    required: true
+  },
+  diversifyFunctions:{
+    type: String, 
+    required: true
+  },
+  identityContent:{
+  type: Boolean,
+  require: true,
+  },
+
+  identityContentSegment:{
+    type: String, 
+    require: false
   },
   cnpjType: {
-    type: String,
+    type: Number,
     required: true
   },
   businessSegment: {
@@ -24,12 +61,24 @@ const CompanySchema = new Schema({
     type: String,
     required: true
   },
-  city: {
+  apanAssociate:{
+    type: Boolean,
+    require: true
+  },
+  otherStatesOperation:{
+    type: String, 
+    required: true
+  },  
+  headOfficeCity:{
+    type: String,
+    required: true
+  },
+  fieldsWork:{
     type: String,
     required: true
   },
   phone: {
-    type: String,
+    type: Number,
     required: true
   },
   password: {
@@ -51,6 +100,6 @@ const CompanySchema = new Schema({
 })
 
 
-const Company = mongoose.model('Candidate', CompanySchema)
+const Company = mongoose.model('Company', CompanySchema)
 
 module.exports = Company

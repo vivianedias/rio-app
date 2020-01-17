@@ -9,7 +9,7 @@ module.exports = function validateLoginInput (data) {
 
   // Email
   if (!Validator.isEmail(data.email)) {
-    errors.email = 'E-mail inválido'
+    errors.email = 'E-mail ou senha inválidos.'
   }
   if (Validator.isEmpty(data.email)) {
     errors.email = 'Digite seu e-mail'

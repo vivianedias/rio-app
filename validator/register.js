@@ -8,13 +8,7 @@ module.exports = function validateRegisterInput (data) {
   data.email = !isEmpty(data.email) ? data.email : ''
   data.password = !isEmpty(data.password) ? data.password : ''
   data.confirmedPassword = !isEmpty(data.confirmedPassword) ? data.confirmedPassword : ''
-  data.birthday = !isEmpty(data.birthday) ? data.birthday : ''
-  data.gender = !isEmpty(data.gender) ? data.gender : ''
-  data.color = !isEmpty(data.color) ? data.color : ''
-  data.state = !isEmpty(data.state) ? data.state : ''
-  data.city = !isEmpty(data.city) ? data.city : ''
-  data.currentField = !isEmpty(data.currentField) ? data.currentField : ''
-  data.socialNumber = !isEmpty(data.socialNumber) ? data.socialNumber : ''
+ //TO DO  - FIX AND INSERT OTHER INFORMATIONS
 
   // Name
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -46,34 +40,8 @@ module.exports = function validateRegisterInput (data) {
     errors.confirmedPassword = 'Essas senhas não coincidem'
   }
 
-  // Birthday
-  if (Validator.isEmpty(data.birthday)) {
-    errors.birthday = 'Selecione sua data de nascimento'
-  }
-  // Gender
-  if (Validator.isEmpty(data.gender)) {
-    errors.gender = 'Campo obrigatório'
-  }
-  // Color
-  if (Validator.isEmpty(data.color)) {
-    errors.color = 'Campo obrigatório'
-  }
-  // State
-  if (Validator.isEmpty(data.state)) {
-    errors.state = 'Informe seu Estado'
-  }
-  // City
-  if (Validator.isEmpty(data.city)) {
-    errors.city = 'Informe sua Cidade'
-  }
-  // Current Field
-  if (Validator.isEmpty(data.currentField)) {
-    errors.currentField = 'Informe sua Área de Atuação'
-  }
-  // Social Number
-  if (Validator.isEmpty(data.socialNumber)) {
-    errors.socialNumber = 'Campo obrigatório'
-  }
+   //TO DO  - FIX AND INSERT OTHER INFORMATIONS
+
 
   return {
     errors,

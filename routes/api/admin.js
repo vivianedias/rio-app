@@ -10,11 +10,11 @@ const crypto = require('crypto')
 // Load Input Validation
 const validateRegisterInput = require('../../validator/register')
 const validateLoginInput = require('../../validator/login')
-// Load User model
-const User = require('../../models/Users')
+// Load admin model
+const Admin = require('../../models/Admin')
 
-// @route   POST api/users/register
-// @desc    Register user
+// @route   POST api/Admin/register
+// @desc    Register Admin
 // @access  Public
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body)
@@ -24,33 +24,27 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      if (user) {
-        errors.email = 'Email already exists'
+  Admin.findOne({ email: req.body.email })
+    .then(admin => {
+      if (admin) {
+        errors.email = 'Favor checar as suas informações.'
         return res.status(400).json(errors)
       } else {
-        const newUser = new User({
+        const newAdmin = new Admin({
           name: req.body.name,
           email: req.body.email,
-          password: req.body.password,
-          birthday: req.body.birthday,
-          gender: req.body.gender,
-          color: req.body.gender,
-          state: req.body.state,
-          city: req.body.city,
-          currentField: req.body.currentField,
-          socialNumber: req.body.socialNumber
+          phone: req.body.phone, 
+          password: req.body.password
         })
 
         bcrypt.genSalt(10, (err, salt) => {
           if (err) throw err
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
+          bcrypt.hash(newAdmin.password, salt, (err, hash) => {
             if (err) throw err
-            newUser.password = hash
-            newUser
+            newAdmin.password = hash
+            newAdmin
               .save()
-              .then(user => res.json(user))
+              .then(admin => res.json(admin))
               .catch(err => console.log(err))
           })
         })
@@ -58,8 +52,8 @@ router.post('/register', (req, res) => {
     })
 })
 
-// @route   GET api/users/login
-// @desc    Login User / Returning JWT Token
+// @route   GET api/admin/login
+// @desc    Login admin / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body)
@@ -72,20 +66,20 @@ router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-  // Find user by email
-  User.findOne({ email }).then(user => {
-    // Check for user
-    if (!user) {
-      errors.email = 'Usuário não encontrado'
+  // Find admin by email
+  Admin.findOne({ email }).then(admin => {
+    // Check for admin
+    if (!admin) {
+      errors.email = 'Verifique seu email ou senha e tente novamente.'
       return res.status(400).json(errors)
     }
 
     // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, admin.password).then(isMatch => {
       if (isMatch) {
-        // User Matched
+        // Admin Matched
         // Create JWT Payload
-        const payload = { id: user.id, name: user.name, email: user.email }
+        const payload = { id: admin.id, name: admin.name, email: admin.email }
 
         // Sign Token
         jwt.sign(
@@ -100,28 +94,28 @@ router.post('/login', (req, res) => {
           }
         )
       } else {
-        errors.password = 'Senha incorreta'
+        errors.password = 'Verifique seu email ou senha e tente novamente.'
         return res.status(400).json(errors)
       }
     })
   })
 })
 
-// @route   GET api/users/current
-// @desc    Return current user
+// @route   GET api/admin/current
+// @desc    Return current admin
 // @access  Private
 router.get('/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.json({
-      id: req.user.id,
-      name: req.user.name,
-      email: req.user.email
+      id: req.admin.id,
+      name: req.admin.name,
+      email: req.admin.email
     })
   }
 )
 
-// @route   POST api/users/forgot-password
+// @route   POST api/admin/forgot-password
 // @desc    Send email to reset password
 // @access  Public
 router.post('/forgot-password', (req, res) => {
@@ -136,16 +130,16 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  User.findOne({ email: req.body.email })
-    .then(user => {
-      // Check for user
-      if (!user) {
+  Admin.findOne({ email: req.body.email })
+    .then(admin => {
+      // Check for admin
+      if (!admin) {
         errors.recovery = 'Usuário não encontrado'
         return res.status(400).json(errors)
       }
 
       // Update reset password token and exp date
-      User.findOneAndUpdate(
+      Admin.findOneAndUpdate(
         { email },
         { $set: update },
         { new: true }
@@ -193,12 +187,12 @@ router.post('/reset/:token', (req, res, next) => {
   }
 
   // if we get to here, the passwords match
-  User.findOne({
+  Admin.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   })
-    .then(user => {
-      if (!user) {
+    .then(admin => {
+      if (!admin) {
         errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
         return res.status(404).json(errors)
       }
@@ -215,12 +209,12 @@ router.post('/reset/:token', (req, res, next) => {
             resetPasswordToken: null,
             resetPasswordExpires: null
           }
-          User.findOneAndUpdate(
+          Admin.findOneAndUpdate(
             { resetPasswordToken: req.params.token },
             { $set: updatePassword },
             { new: true }
           )
-            .then(user => {
+            .then(admin => {
               res.json('Sua senha foi redefinida com sucesso')
             })
             .catch(() => {
