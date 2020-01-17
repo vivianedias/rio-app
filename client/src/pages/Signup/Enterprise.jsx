@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { If } from '../../components/If'
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Button from '../../components/Button'
 import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
+import Select from '../../components/Select'
 
 import { emailValidation } from '../../utils/service'
+import cities from '../../assets/cities.json'
+import states from '../../assets/states.json'
 import {
   segment,
   actions,
@@ -17,8 +21,8 @@ import {
   gender,
   identitySegments
 } from './dicioFields'
+
 import { Form } from './styles'
-import { If } from '../../components/If'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, watch } = useForm({
@@ -32,13 +36,70 @@ const Enterprise = () => {
       companyName: 'blebli'
     },
   })
+
   const identityYes = watch('identityContent'); 
-  console.log(identityYes)
-  const onSubmit = (data) => console.log(data)
-  console.log({errors, values: getValues()})
+  const hasState = watch('state')
+  const onSubmit = (data, e) => {
+    e.preventDefault()
+    console.log(data)
+  }
+  const [isLoading, setLoader] = useState(false)
+  console.log({ errors, values: getValues() })
+  console.log(hasState)
+
+  const programIsLoading = () => {
+    setLoader(true)
+    setTimeout(() => { setLoader(false) }, 2000);
+  }
+
   return (
     <Flexbox justify="center">
       <Form onSubmit={handleSubmit(onSubmit)}>
+        <Select
+          label="Estado"
+          error={errors.state && errors.state.message}
+          name="state"
+          firstValue="Estado"
+          register={register({
+            required: 'Esse campo é obrigatório'
+          })}
+          onChange={programIsLoading}
+          isLoading={false}
+        >
+          {states.map(item => 
+            <option value={item.id} key={item.id}>{item.name}</option>
+          )}      
+        </Select>
+        <If condition={typeof hasState !== 'undefined'}>
+          <Select
+            label="Cidade"
+            error={errors.city && errors.city.message}
+            name="city"
+            firstValue="Cidade"
+            register={register({
+              required: 'Esse campo é obrigatório'
+            })}
+            isLoading={isLoading}
+          >
+            {cities
+              .filter(city => city['state_id'].toString() === getValues().state)
+              .map(filteredCities => (
+                <option
+                  value={filteredCities.name}
+                  key={filteredCities.id}
+                >
+                  {filteredCities.name}
+                </option>
+            ))
+            }
+          </Select>
+        </If>
+        <Checkboxes
+          label="Outros estados que a empresa tem atuação"
+          register={register}
+          fields={states}
+          name="otherStates"
+        />
         <Checkboxes
           label="Segmento de atuação"
           register={register}
@@ -87,7 +148,9 @@ const Enterprise = () => {
         <If condition={identityYes === 'sim'}>
           <Checkboxes
             label="Se sim, em qual segmento?"
-            register={register}
+            register={register({
+              required: 'Esse campo é obrigatório'
+            })}
             fields={identitySegments}
             name="companyIdentitySegments"
           />
