@@ -10,11 +10,11 @@ const crypto = require('crypto')
 // Load Input Validation
 const validateRegisterInput = require('../../validator/register')
 const validateLoginInput = require('../../validator/login')
-// Load Company model
-const Company = require('../../models/Company')
+// Load admin model
+const Admin = require('../../models/Admin')
 
-// @route   POST api/company/register
-// @desc    Register company
+// @route   POST api/Admin/register
+// @desc    Register Admin
 // @access  Public
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body)
@@ -24,44 +24,27 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  Company.findOne({ email: req.body.email })
-    .then(company => {
-      if (company) {
+  Admin.findOne({ email: req.body.email })
+    .then(admin => {
+      if (admin) {
         errors.email = 'Favor checar as suas informações.'
         return res.status(400).json(errors)
       } else {
-        const newCompany = new Company({
+        const newAdmin = new Admin({
           name: req.body.name,
-          gender: req.body.gender,
           email: req.body.email,
-          selfDeclaration: req.body.selfDeclaration,
-          companyName: req.body.companyName,
-          foundationDate: req.body.foundationDate,
-          companyPresentation: req.body.companyPresentation,
-          companySocialMidia: req.body.companySocialMidia,
-          diversifyFunctions: req.body.diversifyFunctions,
-          identityContent: req.body.identityContent,
-          cnpjType: req.body.cnpjType,
-          identityContentSegment: req.body.identityContentSegment,
-          businessSegment: req.body.businessSegment,
-          businessField: req.body.businessField, 
-          otherStatesOperation: req.body.otherStatesOperation,
-          headOfficeCity: req.body.headOfficeCity,
-          apanAssociate: req.body.ApanAssociate,
-          fieldsWork: req.body.fieldsWork, 
           phone: req.body.phone, 
           password: req.body.password
-        
         })
 
         bcrypt.genSalt(10, (err, salt) => {
           if (err) throw err
-          bcrypt.hash(newCompany.password, salt, (err, hash) => {
+          bcrypt.hash(newAdmin.password, salt, (err, hash) => {
             if (err) throw err
-            newCompany.password = hash
-            newCompany
+            newAdmin.password = hash
+            newAdmin
               .save()
-              .then(company => res.json(company))
+              .then(admin => res.json(admin))
               .catch(err => console.log(err))
           })
         })
@@ -69,8 +52,8 @@ router.post('/register', (req, res) => {
     })
 })
 
-// @route   GET api/company/login
-// @desc    Login company / Returning JWT Token
+// @route   GET api/admin/login
+// @desc    Login admin / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body)
@@ -83,20 +66,20 @@ router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-  // Find company by email
-  Company.findOne({ email }).then(company => {
-    // Check for company
-    if (!company) {
+  // Find admin by email
+  Admin.findOne({ email }).then(admin => {
+    // Check for admin
+    if (!admin) {
       errors.email = 'Verifique seu email ou senha e tente novamente.'
       return res.status(400).json(errors)
     }
 
     // Check Password
-    bcrypt.compare(password, company.password).then(isMatch => {
+    bcrypt.compare(password, admin.password).then(isMatch => {
       if (isMatch) {
-        // Company Matched
+        // Admin Matched
         // Create JWT Payload
-        const payload = { id: company.id, name: company.name, email: company.email }
+        const payload = { id: admin.id, name: admin.name, email: admin.email }
 
         // Sign Token
         jwt.sign(
@@ -118,21 +101,21 @@ router.post('/login', (req, res) => {
   })
 })
 
-// @route   GET api/company/current
-// @desc    Return current company
+// @route   GET api/admin/current
+// @desc    Return current admin
 // @access  Private
 router.get('/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.json({
-      id: req.company.id,
-      name: req.company.name,
-      email: req.company.email
+      id: req.admin.id,
+      name: req.admin.name,
+      email: req.admin.email
     })
   }
 )
 
-// @route   POST api/company/forgot-password
+// @route   POST api/admin/forgot-password
 // @desc    Send email to reset password
 // @access  Public
 router.post('/forgot-password', (req, res) => {
@@ -147,16 +130,16 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  Company.findOne({ email: req.body.email })
-    .then(company => {
-      // Check for company
-      if (!company) {
+  Admin.findOne({ email: req.body.email })
+    .then(admin => {
+      // Check for admin
+      if (!admin) {
         errors.recovery = 'Usuário não encontrado'
         return res.status(400).json(errors)
       }
 
       // Update reset password token and exp date
-      Company.findOneAndUpdate(
+      Admin.findOneAndUpdate(
         { email },
         { $set: update },
         { new: true }
@@ -204,12 +187,12 @@ router.post('/reset/:token', (req, res, next) => {
   }
 
   // if we get to here, the passwords match
-  Company.findOne({
+  Admin.findOne({
     resetPasswordToken: req.params.token,
     resetPasswordExpires: { $gt: Date.now() }
   })
-    .then(company => {
-      if (!company) {
+    .then(admin => {
+      if (!admin) {
         errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
         return res.status(404).json(errors)
       }
@@ -226,12 +209,12 @@ router.post('/reset/:token', (req, res, next) => {
             resetPasswordToken: null,
             resetPasswordExpires: null
           }
-          Company.findOneAndUpdate(
+          Admin.findOneAndUpdate(
             { resetPasswordToken: req.params.token },
             { $set: updatePassword },
             { new: true }
           )
-            .then(company => {
+            .then(admin => {
               res.json('Sua senha foi redefinida com sucesso')
             })
             .catch(() => {

@@ -3,16 +3,20 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CompanySchema = new Schema({
-  answerableName:{
+  name:{
     type: String,
     required: true,
     lowercase: true
   },
-  answerableGender:{
+  email:{
     type: String,
     required: true
   },
-  awnserbleSelfDeclaration:{
+  gender:{
+    type: String,
+    required: true
+  },
+  selfDeclaration:{
     type: String, 
     required: true
   },
