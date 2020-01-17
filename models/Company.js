@@ -24,7 +24,7 @@ const CompanySchema = new Schema({
     type: Date, 
     require: true
   },
-  companyResentation:{
+  companyPresentation:{
     type: String, 
     require: true
   }, 
@@ -36,15 +36,15 @@ const CompanySchema = new Schema({
     type: String, 
     required: true
   },
-identityContent:{
+  identityContent:{
   type: Boolean,
   require: true,
-},
+  },
 
-identityContentSegment:{
-  type: String, 
-  require: false
-},
+  identityContentSegment:{
+    type: String, 
+    require: false
+  },
   cnpjType: {
     type: Number,
     required: true
@@ -61,7 +61,7 @@ identityContentSegment:{
     type: Boolean,
     require: true
   },
-  otherStatesOperationCompany:{
+  otherStatesOperation:{
     type: String, 
     required: true
   },  
