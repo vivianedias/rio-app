@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CompanySchema = new Schema({
-  answerableRegister:{
+  answerableName:{
     type: String,
     required: true,
     lowercase: true
@@ -16,7 +16,7 @@ const CompanySchema = new Schema({
     type: String, 
     required: true
   },
-  institution: {
+  companyName: {
     type: String,
     required: true
   },
@@ -57,7 +57,7 @@ const CompanySchema = new Schema({
     type: String,
     required: true
   },
-  ApanAssociate:{
+  apanAssociate:{
     type: Boolean,
     require: true
   },
@@ -67,10 +67,6 @@ const CompanySchema = new Schema({
   },  
   headOfficeCity:{
     type: String,
-    required: true
-  },
-  businessSegment:{
-    type: String, 
     required: true
   },
   fieldsWork:{
