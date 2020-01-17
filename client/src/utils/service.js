@@ -19,3 +19,5 @@ export const isEmpty = (value) => {
   (typeof value === 'object' && Object.keys(value).length === 0) ||
   (typeof value === 'string' && value.trim().length === 0)
 }
+
+export const parseText = input => input.toLowerCase().split(' ').join('_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
