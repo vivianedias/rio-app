@@ -7,7 +7,7 @@ module.exports = function validateRegisterInput (data) {
   data.name = !isEmpty(data.name) ? data.name : ''
   data.email = !isEmpty(data.email) ? data.email : ''
   data.password = !isEmpty(data.password) ? data.password : ''
-  data.confirmedPassword = !isEmpty(data.confirmedPassword) ? data.confirmedPassword : ''
+  data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : ''
   data.phone = !isEmpty(data.phone) ? data.phone : ''
 
  // Name
@@ -33,11 +33,11 @@ module.exports = function validateRegisterInput (data) {
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.password = 'Senha precisa conter no mínimo 6 caracteres'
   }
-  if (Validator.isEmpty(data.confirmedPassword)) {
-    errors.confirmedPassword = 'Confirme sua senha'
+  if (Validator.isEmpty(data.confirmPassword)) {
+    errors.confirmPassword = 'Confirme sua senha'
   }
-  if (!Validator.equals(data.password, data.confirmedPassword)) {
-    errors.confirmedPassword = 'Essas senhas não coincidem'
+  if (!Validator.equals(data.password, data.confirmPassword)) {
+    errors.confirmPassword = 'Essas senhas não coincidem'
   }
 
   if (!Validator.isLength(data.phone, { min: 10, max: 13 })) {

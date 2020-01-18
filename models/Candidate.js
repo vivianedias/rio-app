@@ -25,23 +25,22 @@ const CandidateSchema = new Schema({
     require: false
   },
   pcd:{
-    type: String, 
+    type: Boolean, 
     require: true
   }, 
   birthday:{
-    type: Date, 
+    type: String, 
     required: true
   },
   homeState:{
     type: String, 
     required: true
   },
-  stateResidence:{
+  currentState:{
     type: String,
     require: true,
   },
-
-  cityResidence:{
+  currentCity:{
     type: String, 
     require: true
   },
@@ -50,14 +49,14 @@ const CandidateSchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
     required: true
   },
   education: {
     type: String,
     required: true
   },
-  kindEducation:{
+  formationInstitution:{
     type: String, 
     required:true,
   },
@@ -70,10 +69,10 @@ const CandidateSchema = new Schema({
     required: true
   },
   identityContent:{
-    type: String, 
+    type: Boolean, 
     required: true
   },
-  identityContentSegment:{
+  identitySegments:{
     type: String,
     required: true
   },
@@ -81,7 +80,7 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  ApanAssociate:{
+  apanAssociate:{
     type: Boolean,
     require: true
   },
