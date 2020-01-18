@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useStoreActions } from 'easy-peasy'
+import uuid from 'uuid'
 
 import { If } from '../../components/If'
 import InputText from '../../components/InputText'
@@ -20,38 +22,77 @@ import {
   registryTypes,
   formations,
   identitySegments,
+  sexualOrientation
 } from './dicioFields'
 
 import { Form } from './styles'
-import uuid from 'uuid'
 
 const Professionals = () => {
-  const { register, handleSubmit, errors, getValues, watch } = useForm({})
+  const {
+    register,
+    handleSubmit,
+    errors,
+    getValues,
+    watch,
+    setValue
+  } = useForm({
+    defaultValues: {
+      name: "Viviane",
+      email: "vivi@gmail.com",
+      password: "123456",
+      confirmPassword: "123456",
+      birthday:"12/1/1995",
+      gender: "bla",
+      pcd: true,
+      homeState: "bla",
+      currentState:"bla",
+      currentCity: "bla",
+      selfDeclaration: "bla",
+      address: "blabla",
+      education: "blabla",
+      formationInstitution: "bla",
+      cnpj: true,
+      cnpjType: "bla",
+      identityContent: true,
+      identitySegments: "",
+      expertiseAreas: "bla",
+      apanAssociate: true,
+      phone: "13123123",
+      sexualOrientation: "bla",
+      bio: "blasdjasjkdaskdbaskd",
+      links: "blablablablabldajsdnkasjdnsaja"
+    }
+  })
 
-  const hasRegistry = watch('companyRegistry');
-  const identityYes = watch('identityContent');
-
+  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
   const onSubmit = (data, e) => {
     e.preventDefault()
     console.log(data)
+    registerUser({data})
   }
-  const [isLoading, setLoader] = useState(false)
-  console.log({ errors, values: getValues() })
 
+  const hasRegistry = watch('companyRegistry')
+  const identityYes = watch('identityContent')
+
+  const [isLoading, setLoader] = useState(false)
   const programIsLoading = () => {
     setLoader(true)
     setTimeout(() => { setLoader(false) }, 2000);
   }
 
+  useEffect(() => {
+    register({ name: 'birthday' });
+  }, [register])
+
+  const handleBirthday = selectedOption => setValue('birthday', selectedOption);
+
   return (
     <Flexbox justify="center">
       <Form onSubmit={handleSubmit(onSubmit)}>
-
         <InputText
           name="email"
           type="text"
           register={register({
-            required: 'Esse campo é obrigatório',
             pattern: {
               value: emailValidation(),
               message: 'Insira um endereço de e-mail válido'
@@ -63,22 +104,42 @@ const Professionals = () => {
         />
 
         <InputText
+          name="password"
+          type="password"
+          register={register({
+            minLength: {
+              value: 6,
+              message: 'A senha precisa ter no mínimo 6 caracteres'
+            }
+          })}
+          label="Senha"
+          placeholder="Insira uma senha"
+          error={errors.password && errors.password.message}
+        />
+
+        <InputText
+          name="confirmPassword"
+          type="password"
+          register={register({
+            validate: value => value === getValues().password || 'As senhas não são identicas'
+          })}
+          label="Confirme sua senha"
+          placeholder="Insira sua senha novamente"
+          error={errors.confirmPassword && errors.confirmPassword.message}
+        />
+
+        <InputText
           name="name"
           type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           label="Nome social"
           placeholder="Insira seu nome"
           error={errors.name && errors.name.message}
         />
 
-
         <Radios
           label="Auto Declaração"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="selfDeclaration"
           fields={selfDeclaration}
           error={errors.selfDeclaration && errors.selfDeclaration.message}
@@ -86,30 +147,27 @@ const Professionals = () => {
 
         <Radios
           label="Gênero"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="gender"
           fields={gender}
           error={errors.gender && errors.gender.message}
         />
 
-
-        <Radios
+        <Select
           label="Orientação sexual"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          name="sexualOrientation"
-          fields={[]}
           error={errors.sexualOrientation && errors.sexualOrientation.message}
-        />
+          name="sexualOrientation"
+          firstValue="Orientação Sexual"
+          register={register}
+        >
+          {sexualOrientation.map(item =>
+            <option value={item} key={uuid()}>{item}</option>
+          )}
+        </Select>
 
         <Radios
           label="PcD (Pessoa com deficiência)"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="pcd"
           fields={["Sim", "Não"]}
           error={errors.pcd && errors.pcd.message}
@@ -117,12 +175,10 @@ const Professionals = () => {
 
         <Select
           label="Estado de origem"
-          error={errors.originState && errors.originState.message}
-          name="originState"
+          error={errors.homeState && errors.homeState.message}
+          name="homeState"
           firstValue="Estado"
-          register={register({
-            required: 'Esse campo é obrigatório'
-          })}
+          register={register}
         >
           {states.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
@@ -134,9 +190,7 @@ const Professionals = () => {
           error={errors.currentState && errors.currentState.message}
           name="currentState"
           firstValue="Estado"
-          register={register({
-            required: 'Esse campo é obrigatório'
-          })}
+          register={register}
           onChange={programIsLoading}
         >
           {states.map(item =>
@@ -150,9 +204,7 @@ const Professionals = () => {
             error={errors.currentCity && errors.currentCity.message}
             name="currentCity"
             firstValue="Cidade"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
+            register={register}
             isLoading={isLoading}
           >
             {cities
@@ -169,25 +221,19 @@ const Professionals = () => {
           </Select>
         </If>
 
-
         <InputText
           name="address"
           type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           label="Endereço"
           placeholder="Insira seu endereço atual"
           error={errors.address && errors.address.message}
         />
 
-
-
         <InputText
-          name="tel"
+          name="phone"
           type="text"
           register={register({
-            required: 'Esse campo é obrigatório',
             pattern: {
               value: /^[0-9]*$/gm,
               message: 'Insira apenas números'
@@ -199,27 +245,33 @@ const Professionals = () => {
           })}
           label="Contato Telefonico (DDD + nº)"
           placeholder="Insira seu telefone"
-          error={errors.tel && errors.tel.message}
+          error={errors.phone && errors.phone.message}
         />
 
+        <Select
+          label="Formação"
+          error={errors.education && errors.education.message}
+          name="education"
+          firstValue="Formação"
+          register={register}
+        >
+          {formations.map(item =>
+            <option value={item} key={uuid()}>{item}</option>
+          )}
+        </Select>
 
         <InputText
           name="formationInstitution"
           type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           label="Qual foi a instituição ou processo de formação? "
           placeholder="Insira sua instituição de formação"
           error={errors.formationInstitution && errors.formationInstitution.message}
         />
 
-
         <Radios
           label="Possui CNPJ"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="companyRegistry"
           fields={["Sim", "Não"]}
           error={errors.companyRegistry && errors.companyRegistry.message}
@@ -231,9 +283,7 @@ const Professionals = () => {
             error={errors.companyRegistryType && errors.companyRegistryType.message}
             name="companyRegistryType"
             firstValue="Tipo de CPNJ"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
+            register={register}
           >
             {registryTypes.map(type => (
               <option value={type} key={uuid()}>
@@ -243,41 +293,41 @@ const Professionals = () => {
           </Select>
         </If>
 
-        <If condition={hasRegistry === 'sim'}>
+        <If condition={hasRegistry === true}>
           <Radios
             label="Sua empresa é vocacionada para conteúdo identitário?"
             register={register({
-              required: 'Esse campo é obrigatório',
             })}
             name="identityContent"
             fields={["Sim", "Não"]}
             error={errors.identityContent && errors.identityContent.message}
           />
         </If>
-        <If condition={identityYes === 'sim'}>
+
+        <If condition={identityYes === true}>
           <Checkboxes
             label="Se sim, em qual segmento?"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
+            register={register}
             fields={identitySegments}
             name="companyIdentitySegments"
           />
         </If>
+
         <Checkboxes
           label="Áreas de atuação"
           register={register}
           fields={functions}
+          name="expertiseAreas"
         />
+
         <Radios
           label="É associado(a) da APAN"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="apan"
           fields={["Sim", "Não"]}
           error={errors.apan && errors.apan.message}
         />
+
         <Textarea
           label="Mini Bio"
           placeholder="Insira uma apresentação sua"
@@ -285,13 +335,13 @@ const Professionals = () => {
           error={errors.bio && errors.bio.message}
           name="bio"
           register={register({
-            required: 'Esse campo é obrigatório',
             minLength: {
               value: 15,
               message: 'Apresentação curta demais'
             }
           })}
         />
+
         <Textarea
           label="Links para IMDB, currículo, portfólio, reel e outros"
           placeholder="Insira aqui links"
@@ -299,7 +349,6 @@ const Professionals = () => {
           error={errors.links && errors.links.message}
           name="links"
           register={register({
-            required: 'Esse campo é obrigatório',
             minLength: {
               value: 10,
               message: 'Insira pelo menos um link'

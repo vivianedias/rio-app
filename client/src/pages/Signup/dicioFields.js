@@ -6,10 +6,12 @@ export const functions = ["Produtor(a) de Conteúdo", "Roteirista", "Consultor(a
 
 export const color = ["Negra", "Branca", "Indigena", "Amarela", "Outros"]
 
-export const gender = ["Mulher Cis", "Mulher Trans", "Homem  Cis", "Homem Trans", "Queer", "Não Binário", "Outro"]
+export const gender = ["Mulher Cis", "Mulher Trans", "Homem Cis", "Homem Trans", "Queer", "Não Binário", "Outro"]
 
 export const identitySegments = ["Audiovisual Negro", "Audiovisual Indígena", "Audiovisual LGBTI+", "Audiovisual Feminista", "Audiovisual Queer", "Audiovisual Ambiental", "Minha empresa não é vocacionada para Conteúdo Identitário", "Outro"]
 
 export const registryTypes = ["MEI", "EIRELI", "ME", "Outro"]
 
 export const formations = ["Autodidata", "ONG ou Instituição Cultural", "Formação Técnica", "Universidade ou Faculdade"]
+
+export const sexualOrientation = ["Lésbica", "Gay", "Bissexual", "Panssexual", "Assexual", "Heterossexual", "Outros"]
