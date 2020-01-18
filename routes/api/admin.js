@@ -10,6 +10,7 @@ const crypto = require('crypto')
 // Load Input Validation
 const validateRegisterInput = require('../../validator/register')
 const validateLoginInput = require('../../validator/login')
+
 // Load admin model
 const Admin = require('../../models/Admin')
 
@@ -50,6 +51,7 @@ router.post('/register', (req, res) => {
         })
       }
     })
+    .catch(err => console.log(err))
 })
 
 // @route   GET api/admin/login

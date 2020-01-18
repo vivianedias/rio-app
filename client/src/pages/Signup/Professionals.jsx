@@ -15,11 +15,11 @@ import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
   functions,
-  color,
+  color as selfDeclaration,
   gender,
   registryTypes,
   formations,
-  identitySegments
+  identitySegments,
 } from './dicioFields'
 
 import { Form } from './styles'
@@ -101,7 +101,7 @@ const Professionals = () => {
             required: 'Esse campo é obrigatório',
           })}
           name="sexualOrientation"
-          fields={sexualOrientation}
+          fields={[]}
           error={errors.sexualOrientation && errors.sexualOrientation.message}
         />
 
@@ -114,7 +114,6 @@ const Professionals = () => {
           fields={["Sim", "Não"]}
           error={errors.pcd && errors.pcd.message}
         />
-
 
         <Select
           label="Estado de origem"
@@ -130,7 +129,6 @@ const Professionals = () => {
           )}
         </Select>
 
-
         <Select
           label="Estado de residência"
           error={errors.currentState && errors.currentState.message}
@@ -145,8 +143,6 @@ const Professionals = () => {
             <option value={item.id} key={item.id}>{item.name}</option>
           )}
         </Select>
-
-
 
         <If condition={typeof getValues().currentState !== 'undefined'}>
           <Select

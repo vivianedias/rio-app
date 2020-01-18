@@ -8,9 +8,9 @@ module.exports = function validateRegisterInput (data) {
   data.email = !isEmpty(data.email) ? data.email : ''
   data.password = !isEmpty(data.password) ? data.password : ''
   data.confirmedPassword = !isEmpty(data.confirmedPassword) ? data.confirmedPassword : ''
- //TO DO  - FIX AND INSERT OTHER INFORMATIONS
+  data.phone = !isEmpty(data.phone) ? data.phone : ''
 
-  // Name
+ // Name
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
     errors.name = 'Nome deve ter entre 2 e 30 caracteres'
   }
@@ -40,8 +40,12 @@ module.exports = function validateRegisterInput (data) {
     errors.confirmedPassword = 'Essas senhas não coincidem'
   }
 
-   //TO DO  - FIX AND INSERT OTHER INFORMATIONS
-
+  if (!Validator.isLength(data.phone, { min: 10, max: 13 })) {
+    errors.phone = 'Esse não é um número válido'
+  }
+  if (Validator.isEmpty(data.phone)) {
+    errors.phone = 'Digite o seu telefone'
+  }
 
   return {
     errors,
