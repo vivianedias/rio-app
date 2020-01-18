@@ -39,7 +39,7 @@ const SignupPopup = ({ onClick }) => (
         </Button>
       </Link>
       <VerticalLine />
-      <Link to="cadastro/profissional" onClick={onClick}>
+      <Link to="/cadastro/profissional" onClick={onClick}>
         <Button
           styles="is-danger"
         >
