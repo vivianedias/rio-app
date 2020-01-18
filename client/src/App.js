@@ -17,7 +17,7 @@ import Header from './components/Header'
 import Login from './pages/Login/Login'
 import Enterprise from './pages/Signup/Enterprise'
 import Professionals from './pages/Signup/Professionals'
-
+import Footer from './components/Footer'
 
 // if (localStorage.jwtToken) {
 //   // Set the auth token header auth
@@ -58,6 +58,9 @@ const App = ({ store }) => (
             path='/cadastro/profissional'
             component={Professionals}
           />
+        <Footer fixed>
+          Bla
+        </Footer>
         </AppBody>
       </AppWrapper>
     </Router>
