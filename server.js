@@ -3,8 +3,8 @@ const bodyParser = require('body-parser')
 const passport = require('passport')
 const cors = require('cors')
 const helmet = require('helmet')
+const db = require('./config/db')
 
-const keys = require('./config/keys')
 const path = require('path')
 
 const candidate = require('./routes/api/candidate')
@@ -34,7 +34,6 @@ require('./config/passport')(passport)
 app.use('/api/candidate', candidate)
 app.use('/api/company', company)
 app.use('/api/admin', admin)
-
 
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') {
