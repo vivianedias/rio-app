@@ -11,7 +11,6 @@ const candidate = require('./routes/api/candidate')
 const company = require('./routes/api/company')
 const admin = require('./routes/api/admin')
 
-
 const app = express()
 
 // Body parser middleware
@@ -30,26 +29,23 @@ app.use(passport.initialize())
 // Passport Config
 require('./config/passport')(passport)
 
+app.use(express.static(path.join(__dirname, 'client', 'build')))
+app.use((err, req, res, next) => {
+  console.error(err)
+  res.status(500).json({ message: 'an error occurred' })
+})
+
 // Use Routes
 app.use('/api/candidate', candidate)
 app.use('/api/company', company)
 app.use('/api/admin', admin)
 
-// Server static assets if in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('client/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(
-      path.resolve(__dirname, 'client', 'build', 'index.html')
-    );
-  });
-}
+// Set static folder
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+})
 
 // TODO: colocar isso em um .env
 const port = process.env.PORT || 5000
-
-app.use(express.static('public'))
 
 app.listen(port, () => console.log(`Server running on port ${port}`))
