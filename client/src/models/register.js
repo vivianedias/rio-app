@@ -18,6 +18,20 @@ const registerModel = {
         return actions.setErrors(errors)
       })
   }),
+
+  registerCompany: thunk(async (actions, payload) => {
+    actions.setUser(payload)
+    axios.post('/api/company/register', payload)
+      .then(() => {
+        localStorage.defaultLocation
+          ? history.push(`/login?${localStorage.defaultLocation}`)
+          : history.push('/login')
+      })
+      .catch(err => {
+        const errors = err.response.data
+        return actions.setErrors(errors)
+      })
+  }),
   user: {},
   errors: {},
   setUser: action((state, payload) => {
@@ -27,5 +41,6 @@ const registerModel = {
     state.errors = payload
   }),
 }
+
 
 export default registerModel
