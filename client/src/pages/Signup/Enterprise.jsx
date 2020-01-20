@@ -19,25 +19,18 @@ import {
   functions,
   color,
   gender,
-  identitySegments
+  identitySegments,
+  cnpj_type
 } from './dicioFields'
 
 import { Form } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, watch } = useForm({
-    defaultValues: {
-      companyLinks: 'blablablablablablablablablablablabla',
-      companyPresentation: 'blablablablablablablablablablablabla',
-      email: 'test@test.com',
-      tel: 12988801105,
-      responsibleName: 'blablabla',
-      city: 'blablabla',
-      companyName: 'blebli'
-    },
+
   })
 
-  const identityYes = watch('identityContent'); 
+  const identityYes = watch('identityContent');
   const hasState = watch('state')
   const onSubmit = (data, e) => {
     e.preventDefault()
@@ -55,26 +48,132 @@ const Enterprise = () => {
   return (
     <Flexbox justify="center">
       <Form onSubmit={handleSubmit(onSubmit)}>
+
+        <InputText
+          name="email"
+          type="text"
+          register={register({
+            required: 'Esse campo é obrigatório',
+            pattern: {
+              value: emailValidation(),
+              message: 'Insira um endereço de e-mail válido'
+            }
+          })}
+          label="Endereço de e-mail"
+          placeholder="Insira um endereço de e-mail válido"
+          error={errors.email && errors.email.message}
+        />
+
+        <InputText
+          name="companyName"
+          type="text"
+          register={register({
+            required: 'Esse campo é obrigatório',
+          })}
+          label="Nome da empresa"
+          placeholder="Insira o nome da empresa"
+          error={errors.companyName && errors.companyName.message}
+        />
+
+        <Textarea
+          label="Apresentação da empresa"
+          placeholder="Insira uma apresentação"
+          rows={5}
+          error={errors.companyPresentation && errors.companyPresentation.message}
+          name="companyPresentation"
+          register={register({
+            required: 'Esse campo é obrigatório',
+            minLength: {
+              value: 15,
+              message: 'Apresentação curta demais'
+            }
+          })}
+        />
+
+        <Textarea
+          label="Links para site e redes socias da empresa"
+          placeholder="Insira aqui links"
+          rows={5}
+          error={errors.companyLinks && errors.companyLinks.message}
+          name="companySocialMidia"
+          register={register({
+            required: 'Esse campo é obrigatório',
+            minLength: {
+              value: 10,
+              message: 'Insira pelo menos um link'
+            }
+          })}
+        />
+
+        <InputText
+          name="phone"
+          type="text"
+          register={register({
+            required: 'Esse campo é obrigatório',
+            pattern: {
+              value: /^[0-9]*$/gm,
+              message: 'Insira apenas números'
+            },
+            maxLength: {
+              value: 11,
+              message: 'Máximo de onze números'
+            }
+          })}
+          label="Contato Telefonico (DDD + nº)"
+          placeholder="Insira aqui"
+          error={errors.tel && errors.tel.message}
+        />
+
+        <InputText
+          name="name"
+          type="text"
+          register={register({
+            required: 'Esse campo é obrigatório',
+          })}
+          label="Nome da pessoa responsável pelo cadastro"
+          placeholder="Insira o nome da pessoa responsável"
+          error={errors.responsibleName && errors.responsibleName.message}
+        />
+        <Radios
+          label="Auto Declaração (pessoa responsável pelo cadastro)"
+          register={register({
+            required: 'Esse campo é obrigatório',
+          })}
+          name="selfDeclaration"
+          fields={color}
+          error={errors.color && errors.color.message}
+        />
+
+        <Radios
+          label="Gênero (pessoa responsável pelo cadastro)"
+          register={register({
+            required: 'Esse campo é obrigatório',
+          })}
+          name="gender"
+          fields={gender}
+          error={errors.gender && errors.gender.message}
+        />
+
         <Select
           label="Estado"
           error={errors.state && errors.state.message}
-          name="state"
-          firstValue="Estado"
+          name="headOfficeState"
+          firstValue="Estado Sede"
           register={register({
             required: 'Esse campo é obrigatório'
           })}
           onChange={programIsLoading}
           isLoading={false}
         >
-          {states.map(item => 
+          {states.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
-          )}      
+          )}
         </Select>
         <If condition={typeof hasState !== 'undefined'}>
           <Select
             label="Cidade"
             error={errors.city && errors.city.message}
-            name="city"
+            name="headOfficeCity"
             firstValue="Cidade"
             register={register({
               required: 'Esse campo é obrigatório'
@@ -90,7 +189,7 @@ const Enterprise = () => {
                 >
                   {filteredCities.name}
                 </option>
-            ))
+              ))
             }
           </Select>
         </If>
@@ -98,44 +197,34 @@ const Enterprise = () => {
           label="Outros estados que a empresa tem atuação"
           register={register}
           fields={states}
-          name="otherStates"
+          name="otherStatesOperation"
         />
         <Checkboxes
           label="Segmento de atuação"
           register={register}
           fields={segment}
-          name="segment"
+          name="businessSegment"
         />
         <Checkboxes
           label="Campos de atuação"
           register={register}
           fields={actions}
-          name="actionFields"
+          name="businessField"
         />
         <Checkboxes
           label="Funções que busca diversificar na empresa :"
           register={register}
           fields={functions}
-          name="companyFunctions"
+          name="diversifyFunctions"
         />
-        <Radios
-          label="Auto Declaração (pessoa responsável pelo cadastro)"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          name="color"
-          fields={color}
-          error={errors.color && errors.color.message}
+
+        <Checkboxes
+          label="Qual o tipo do seu CNPJ ?"
+          register={register}
+          fields={cnpj_type}
+          name="cnpjType"
         />
-        <Radios
-          label="Gênero (pessoa responsável pelo cadastro)"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          name="gender"
-          fields={gender}
-          error={errors.gender && errors.gender.message}
-        />
+
         <Radios
           label="Sua empresa é vocacionada para conteúdo identitário?"
           register={register({
@@ -152,99 +241,22 @@ const Enterprise = () => {
               required: 'Esse campo é obrigatório'
             })}
             fields={identitySegments}
-            name="companyIdentitySegments"
+            name="identityContentSegment"
           />
         </If>
-        <InputText
-          name="email"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-            pattern: {
-              value: emailValidation(),
-              message: 'Insira um endereço de e-mail válido'
-            }
-          })}
-          label="Endereço de e-mail"
-          placeholder="Insira um endereço de e-mail válido"
-          error={errors.email && errors.email.message}
-        />
-        <InputText
-          name="companyName"
-          type="text"
+
+
+        <Radios
+          label="A empresa é associado(a) da APAN?"
           register={register({
             required: 'Esse campo é obrigatório',
           })}
-          label="Nome da empresa"
-          placeholder="Insira o nome da empresa"
-          error={errors.companyName && errors.companyName.message}
+          name="apanAssociate"
+          fields={["Sim", "Não"]}
+          error={errors.identityContent && errors.identityContent.message}
         />
-        <InputText
-          name="tel"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-            pattern: {
-              value: /^[0-9]*$/gm,
-              message: 'Insira apenas números'
-            },
-            maxLength: {
-              value: 11,
-              message: 'Máximo de onze números'
-            }
-          })}
-          label="Contato Telefonico (DDD + nº)"
-          placeholder="Insira o telefone da empresa"  
-          error={errors.tel && errors.tel.message}
-        />
-        <InputText
-          name="responsibleName"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          label="Nome da pessoa responsável pelo cadastro"
-          placeholder="Insira o nome da pessoa responsável"
-          error={errors.responsibleName && errors.responsibleName.message}
-        />
-        <InputText
-          name="city"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          label="Cidade sede"
-          placeholder="Insira a cidade sede"
-          error={errors.city && errors.city.message}
-        />
-        <Textarea
-          label="Apresentação da empresa"
-          placeholder="Insira uma apresentação"
-          rows={5}
-          error={errors.companyPresentation && errors.companyPresentation.message}
-          name="companyPresentation"
-          register={register({
-            required: 'Esse campo é obrigatório',
-            minLength: {
-              value: 15,
-              message: 'Apresentação curta demais'
-            }
-          })}
-        />
-        <Textarea
-          label="Links para site e redes socias da empresa"
-          placeholder="Insira aqui links"
-          rows={5}
-          error={errors.companyLinks && errors.companyLinks.message}
-          name="companyLinks"
-          register={register({
-            required: 'Esse campo é obrigatório',
-            minLength: {
-              value: 10,
-              message: 'Insira pelo menos um link'
-            }
-          })}
-        />
+
+
         <Button type="submit">Enviar</Button>
       </Form>
     </Flexbox>

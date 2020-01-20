@@ -1,52 +1,52 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
- 
+
 // Create Schema
 const CompanySchema = new Schema({
-  name:{
+  name: {
     type: String,
     required: true,
     lowercase: true
   },
-  email:{
+  email: {
     type: String,
     required: true
   },
-  gender:{
+  gender: {
     type: String,
     required: true
   },
-  selfDeclaration:{
-    type: String, 
+  selfDeclaration: {
+    type: String,
     required: true
   },
   companyName: {
     type: String,
     required: true
   },
-  foundationDate:{
-    type: Date, 
+  foundationDate: {
+    type: Date,
     require: true
   },
-  companyPresentation:{
-    type: String, 
+  companyPresentation: {
+    type: String,
     require: true
-  }, 
-  companySocialMidia:{
-    type: String, 
+  },
+  companySocialMidia: {
+    type: String,
     required: true
   },
-  diversifyFunctions:{
-    type: String, 
+  diversifyFunctions: {
+    type: String,
     required: true
   },
-  identityContent:{
-  type: Boolean,
-  require: true,
+  identityContent: {
+    type: Boolean,
+    require: true,
   },
 
-  identityContentSegment:{
-    type: String, 
+  identityContentSegment: {
+    type: String,
     require: false
   },
   cnpjType: {
@@ -61,30 +61,36 @@ const CompanySchema = new Schema({
     type: String,
     required: true
   },
-  apanAssociate:{
+  apanAssociate: {
     type: Boolean,
     require: true
   },
-  otherStatesOperation:{
-    type: String, 
-    required: true
-  },  
-  headOfficeCity:{
+  otherStatesOperation: {
     type: String,
     required: true
   },
-  fieldsWork:{
+  headOfficeCity: {
+    type: String,
+    required: true
+  },
+
+  headOfficeState: {
+    type: String,
+    required: true
+  },
+
+  fieldsWork: {
     type: String,
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
     required: true
   },
   password: {
     type: String,
     required: true,
-    select: false, 
+    select: false,
   },
   resetPasswordToken: {
     type: String,
