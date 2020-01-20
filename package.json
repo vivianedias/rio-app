@@ -9,9 +9,7 @@
     "start": "PORT=3000 node server.js",
     "server": "nodemon server.js",
     "client": "yarn --cwd client start",
-    "dev": "NODE_ENV=development concurrently \"yarn run server\" \"yarn run client\"",
-    "build": "yarn --cwd client run build",
-    "postinstall": "yarn run build"
+    "dev": "NODE_ENV=development concurrently \"yarn run server\" \"yarn run client\""
   },
   "repository": {
     "type": "git",
