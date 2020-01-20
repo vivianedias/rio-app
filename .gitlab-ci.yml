@@ -1,0 +1,13 @@
+stages:
+  - install
+  - build
+
+install:
+  stage: install # witch are the stages
+  script:
+    - npm install
+    - npm run test
+    - npm run build
+    - git add .
+    - git commit "test"
+    - git push https://$usuario:$senha@kamino.deploy.umbler.com/7xlqnIzj/meusitenodejs-com-br.git
