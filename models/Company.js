@@ -84,7 +84,7 @@ const CompanySchema = new Schema({
     required: true
   },
   phone: {
-    type: Number,
+    type: String,
     required: true
   },
   password: {

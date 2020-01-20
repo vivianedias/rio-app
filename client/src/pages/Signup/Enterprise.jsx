@@ -27,15 +27,7 @@ import { Form } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, watch } = useForm({
-    defaultValues: {
-      companyLinks: 'blablablablablablablablablablablabla',
-      companyPresentation: 'blablablablablablablablablablablabla',
-      email: 'test@test.com',
-      tel: 12988801105,
-      responsibleName: 'blablabla',
-      city: 'blablabla',
-      companyName: 'blebli'
-    },
+
   })
 
   const identityYes = watch('identityContent');
