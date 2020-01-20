@@ -9,25 +9,30 @@ const StyledRadio = styled.label`
 `
 const Input = styled.input`
   margin-right: 10px;
-`
-
-const Wrapper = styled.div`
+  `
+  
+  const Wrapper = styled.div`
   display: flex;
+  `
+  
+const InputLabel = styled.span`
+  text-transform: capitalize;
 `
 
-const Radios = ({ register, name, label, fields, error }) => (
+const Radios = ({ label, error, onChange, name }) => (
   <div className="field">
     <label className="label">{label}</label>
     <Wrapper>
-      {fields.map(item => (
+      {['sim', 'não'].map(item => (
         <StyledRadio className="radio" key={uuid()}>
           <Input
             type="radio"
-            name={`${name}[${parse(item)}]`}
-            ref={register}
             className={`${error ? "is-danger" : ""}`}
+            onChange={onChange}
+            value={item === 'sim'}
+            name={name}
           />
-          <span>{item}</span>
+          <InputLabel>{item}</InputLabel>
         </StyledRadio>
       ))}
     </Wrapper>
