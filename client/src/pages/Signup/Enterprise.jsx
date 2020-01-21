@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useStoreActions } from 'easy-peasy'
+import uuid from 'uuid'
 
 import { If } from '../../components/If'
 import InputText from '../../components/InputText'
@@ -23,27 +25,57 @@ import {
   cnpj_type
 } from './dicioFields'
 
-import { Form } from './styles'
+import { Form, Success } from './styles'
 
 const Enterprise = () => {
-  const { register, handleSubmit, errors, getValues, watch } = useForm({
-
+  const { register, handleSubmit, errors, getValues, setValue } = useForm({
+    // defaultValues: {
+    //   name: 'Viviane',
+    //   gender:'bla',
+    //   email: 'bla@gmail.com',
+    //   selfDeclaration: 'bla',
+    //   companyName:'bla',
+    //   foundationDate:'bla',
+    //   companyPresentation:'bla',
+    //   companySocialMidia:'bla',
+    //   diversifyFunctions:'bla',
+    //   identityContent: false,
+    //   companyRegistryType:'bla',
+    //   identityContentSegment:'bla',
+    //   businessSegment:'bla',
+    //   businessField: 'bla',
+    //   otherStates:'bla',
+    //   city: 'bla',
+    //   state: 'bla',
+    //   apanAssociate: true,
+    //   fieldsWork: 'bla',
+    //   phone: 'bla',
+    //   password:'bla'
+    // }
   })
 
-  const identityYes = watch('identityContent');
-  const hasState = watch('state')
-  const onSubmit = (data, e) => {
-    e.preventDefault()
-    console.log(data)
-  }
-  const [isLoading, setLoader] = useState(false)
-  console.log({ errors, values: getValues() })
-  console.log(hasState)
+  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
+  const [isSuccessful, setSuccess] = useState(false)
 
+  const onSubmit = async (data) => {
+    console.log(data)
+    const res = await registerUser(data)
+
+    if(res) return setSuccess(true)
+  }
+
+  const [isLoading, setLoader] = useState(false)
   const programIsLoading = () => {
     setLoader(true)
     setTimeout(() => { setLoader(false) }, 2000);
   }
+
+  const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
+
+  useEffect(() => {
+    register({ name: 'identityContent' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'apanAssociate' }, { required: 'Esse campo é obrigatório' });
+  }, [register]);
 
   return (
     <Flexbox justify="center">
@@ -94,7 +126,7 @@ const Enterprise = () => {
           label="Links para site e redes socias da empresa"
           placeholder="Insira aqui links"
           rows={5}
-          error={errors.companyLinks && errors.companyLinks.message}
+          error={errors.companySocialMidia && errors.companySocialMidia.message}
           name="companySocialMidia"
           register={register({
             required: 'Esse campo é obrigatório',
@@ -121,7 +153,7 @@ const Enterprise = () => {
           })}
           label="Contato Telefonico (DDD + nº)"
           placeholder="Insira aqui"
-          error={errors.tel && errors.tel.message}
+          error={errors.phone && errors.phone.message}
         />
 
         <InputText
@@ -132,32 +164,40 @@ const Enterprise = () => {
           })}
           label="Nome da pessoa responsável pelo cadastro"
           placeholder="Insira o nome da pessoa responsável"
-          error={errors.responsibleName && errors.responsibleName.message}
+          error={errors.name && errors.name.message}
         />
-        <Radios
+        <Select
           label="Auto Declaração (pessoa responsável pelo cadastro)"
           register={register({
             required: 'Esse campo é obrigatório',
           })}
+          firstValue="Auto Declaração"
           name="selfDeclaration"
-          fields={color}
-          error={errors.color && errors.color.message}
-        />
+          error={errors.selfDeclaration && errors.selfDeclaration.message}
+        >
+          {color.map(item =>
+            <option value={item} key={uuid()}>{item}</option>
+          )}
+        </Select>
 
-        <Radios
+        <Select
           label="Gênero (pessoa responsável pelo cadastro)"
           register={register({
             required: 'Esse campo é obrigatório',
           })}
           name="gender"
-          fields={gender}
+          firstValue="Gênero"
           error={errors.gender && errors.gender.message}
-        />
+        >
+          {gender.map(item =>
+            <option value={item} key={uuid()}>{item}</option>
+          )}
+        </Select>
 
         <Select
           label="Estado"
           error={errors.state && errors.state.message}
-          name="headOfficeState"
+          name="state"
           firstValue="Estado Sede"
           register={register({
             required: 'Esse campo é obrigatório'
@@ -169,7 +209,7 @@ const Enterprise = () => {
             <option value={item.id} key={item.id}>{item.name}</option>
           )}
         </Select>
-        <If condition={typeof hasState !== 'undefined'}>
+        <If condition={typeof getValues().state !== 'undefined'}>
           <Select
             label="Cidade"
             error={errors.city && errors.city.message}
@@ -197,7 +237,7 @@ const Enterprise = () => {
           label="Outros estados que a empresa tem atuação"
           register={register}
           fields={states}
-          name="otherStatesOperation"
+          name="otherStates"
         />
         <Checkboxes
           label="Segmento de atuação"
@@ -212,52 +252,51 @@ const Enterprise = () => {
           name="businessField"
         />
         <Checkboxes
-          label="Funções que busca diversificar na empresa :"
+          label="Funções que busca diversificar na empresa"
           register={register}
           fields={functions}
           name="diversifyFunctions"
         />
 
-        <Checkboxes
-          label="Qual o tipo do seu CNPJ ?"
-          register={register}
+        <Select
+          label="Qual o tipo do seu CNPJ?"
+          register={register({
+            required: 'Esse campo é obrigatório'
+          })}
+          firstValue="Tipo de CNPJ"
           fields={cnpj_type}
-          name="cnpjType"
-        />
+          name="companyRegistry"
+          error={errors.companyRegistry && errors.companyRegistry.message}
+        >
+          {cnpj_type.map(item =>
+            <option value={item} key={uuid()}>{item}</option>
+          )}
+        </Select>
 
         <Radios
           label="Sua empresa é vocacionada para conteúdo identitário?"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
           name="identityContent"
-          fields={["Sim", "Não"]}
           error={errors.identityContent && errors.identityContent.message}
+          onChange={e => handleRadio('identityContent', e.target.value)}
         />
-        <If condition={identityYes === 'sim'}>
-          <Checkboxes
-            label="Se sim, em qual segmento?"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
-            fields={identitySegments}
-            name="identityContentSegment"
-          />
-        </If>
 
+        <Checkboxes
+          label="Se sim, em qual segmento?"
+          fields={identitySegments}
+          name="identityContentSegment"
+        />
 
         <Radios
           label="A empresa é associado(a) da APAN?"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
           name="apanAssociate"
-          fields={["Sim", "Não"]}
-          error={errors.identityContent && errors.identityContent.message}
+          error={errors.apanAssociate && errors.apanAssociate.message}
+          onChange={e => handleRadio('apanAssociate', e.target.value)}
         />
 
-
         <Button type="submit">Enviar</Button>
+        <If condition={isSuccessful}>
+          <Success>Seu cadastro foi realizado com sucesso!</Success>
+        </If>
       </Form>
     </Flexbox>
   )

@@ -40,17 +40,16 @@ router.post('/register', (req, res) => {
           companySocialMidia: req.body.companySocialMidia,
           diversifyFunctions: req.body.diversifyFunctions,
           identityContent: req.body.identityContent,
-          cnpjType: req.body.cnpjType,
+          companyRegistry: req.body.companyRegistry,
           identityContentSegment: req.body.identityContentSegment,
           businessSegment: req.body.businessSegment,
           businessField: req.body.businessField, 
-          otherStatesOperation: req.body.otherStatesOperation,
-          headOfficeCity: req.body.headOfficeCity,
+          otherStates: req.body.otherStates,
+          city: req.body.city,
+          state: req.body.state,
           apanAssociate: req.body.ApanAssociate,
-          fieldsWork: req.body.fieldsWork, 
           phone: req.body.phone, 
           password: req.body.password
-        
         })
 
         bcrypt.genSalt(10, (err, salt) => {
