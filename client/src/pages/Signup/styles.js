@@ -11,4 +11,5 @@ export const Form = styled.form`
 export const Success = styled.div`
   color: #79A9D2;
   font-weight: 600;
+  margin-top: 20px;
 `

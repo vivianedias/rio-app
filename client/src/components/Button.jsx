@@ -10,9 +10,9 @@ const StyledButton = styled.button`
   ${props => props.margin && props.margin.right && `margin-right: ${props.margin.right};`}
 `
 
-const Button = ({ type, onClick, children, disabled, styles }) => (
+const Button = ({ type, onClick, children, disabled, styles, isLoading }) => (
   <StyledButton
-    className={`button ${styles}`}
+    className={`button ${isLoading ? 'is-loading' : ''} ${styles}`}
     disabled={disabled}
     type={type}
     onClick={onClick}
@@ -26,13 +26,14 @@ export default Button
 const { node, bool, string, shape, oneOfType, number } = PropTypes
 
 Button.propTypes = {
+  isLoading: bool,
   /** Children nodes. */
   children: node,
   /** Disable button. */
   disabled: bool,
   /** Button type. */
   type: string,
-  /** Button min-width. */
+/** Button min-width. */
   minWidth: string,
   /** Button margin. */
   margin: shape({
@@ -44,6 +45,7 @@ Button.propTypes = {
 }
 
 Button.defaultProps = {
+  isLoading: false,
   type: 'button',
   disabled: false,
   style: 'is-rounded normal is-danger',
