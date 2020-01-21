@@ -43,6 +43,7 @@ const AppWrapper = styled.div`
 const AppBody = styled.div`
   height: calc(100vh - 3.25rem);
   width: 100%;
+  font-family: "Montserrat";
 `
 
 const App = ({ store }) => (
@@ -58,9 +59,9 @@ const App = ({ store }) => (
             path='/cadastro/profissional'
             component={Professionals}
           />
-        <Footer fixed>
-          Bla
-        </Footer>
+          <Footer fixed>
+
+          </Footer>
         </AppBody>
       </AppWrapper>
     </Router>

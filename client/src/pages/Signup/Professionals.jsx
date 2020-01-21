@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 import uuid from 'uuid'
+import styled from 'styled-components'
 
 import { If } from '../../components/If'
 import InputText from '../../components/InputText'
@@ -26,6 +27,9 @@ import {
 } from './dicioFields'
 
 import { Form, Success } from './styles'
+
+const Wrapper = styled.div`
+background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%); `
 
 const Professionals = () => {
   const {
@@ -224,17 +228,9 @@ const Professionals = () => {
             register={register}
             isLoading={isLoading.city}
           >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().currentState)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
+            {formations.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
           </Select>
         </If>
 

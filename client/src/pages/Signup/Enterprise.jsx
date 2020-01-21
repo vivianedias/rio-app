@@ -27,6 +27,9 @@ import {
 
 import { Form, Success } from './styles'
 
+const Wrapper = styled.div`
+background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%); `
+
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, setValue } = useForm()
     // defaultValues: {
@@ -99,31 +102,17 @@ const Enterprise = () => {
           error={errors.email && errors.email.message}
         />
 
-        <InputText
-          name="companyName"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          label="Nome da empresa"
-          placeholder="Insira o nome da empresa"
-          error={errors.companyName && errors.companyName.message}
-        />
+          <InputText
+            name="name"
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Nome da pessoa responsável pelo cadastro"
+            placeholder="Insira o nome da pessoa responsável"
+            error={errors.responsibleName && errors.responsibleName.message}
+          />
 
-        <Textarea
-          label="Apresentação da empresa"
-          placeholder="Insira uma apresentação"
-          rows={5}
-          error={errors.companyPresentation && errors.companyPresentation.message}
-          name="companyPresentation"
-          register={register({
-            required: 'Esse campo é obrigatório',
-            minLength: {
-              value: 15,
-              message: 'Apresentação curta demais'
-            }
-          })}
-        />
 
         <Textarea
           label="Links para site e redes socias da empresa"
@@ -214,17 +203,9 @@ const Enterprise = () => {
             register={register}
             isLoading={isLoading.city}
           >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().state)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
+            {states.map(item =>
+              <option value={item.id} key={item.id}>{item.name}</option>
+            )}
           </Select>
         </If>
         <Checkboxes

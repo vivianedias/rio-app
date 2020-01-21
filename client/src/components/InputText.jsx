@@ -1,5 +1,11 @@
 import React from "react"
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+
+const StyledLabel = styled.label`
+  color: #fc9b44;
+  font-weight: 500;
+`
 
 const InputText = (
   {
@@ -14,37 +20,37 @@ const InputText = (
   }) => {
   return (
     <div className="field">
-      <label className="label">{label}</label>
-        <div
-          className={`control ${icon ? "has-icons-left" : ""} ${error ? "has-icons-right" : ""}`}
-        >
-          <input
-            className={`input ${error ? "is-danger" : ""}`}
-            type={type}
-            placeholder={placeholder}
-            name={name}
-            ref={register}
-          />
-          {icon && (
-            <span
-              className="icon is-left is-small"
-              style={{ 'zIndex': 'unset ' }}
-            >
-              <i className={`fas ${icon}`} />
-            </span>
-          )}
-          {error && (
-            <span className="icon is-right is-small">
-              <i className="fas fa-exclamation-triangle" />
-            </span>
-          )}
-        </div>
-        {help && <p className="help">{help}</p>}
-        {error &&
-          <p className="help is-danger">
-            {error}
-          </p>
-        }
+      <StyledLabel className="label">{label}</StyledLabel>
+      <div
+        className={`control ${icon ? "has-icons-left" : ""} ${error ? "has-icons-right" : ""}`}
+      >
+        <input
+          className={`input ${error ? "is-danger" : ""}`}
+          type={type}
+          placeholder={placeholder}
+          name={name}
+          ref={register}
+        />
+        {icon && (
+          <span
+            className="icon is-left is-small"
+            style={{ 'zIndex': 'unset ' }}
+          >
+            <i className={`fas ${icon}`} />
+          </span>
+        )}
+        {error && (
+          <span className="icon is-right is-small">
+            <i className="fas fa-exclamation-triangle" />
+          </span>
+        )}
+      </div>
+      {help && <p className="help">{help}</p>}
+      {error &&
+        <p className="help is-danger">
+          {error}
+        </p>
+      }
     </div>
   )
 }

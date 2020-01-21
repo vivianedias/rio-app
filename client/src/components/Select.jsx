@@ -1,6 +1,11 @@
 import React from "react"
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 
+const StyledLabel = styled.label`
+  color: #fc9b44;
+  font-weight: 500;
+`
 const Select = (
   {
     label,
@@ -13,16 +18,16 @@ const Select = (
     onChange
   }) => (
     <div className="field">
-      <label className="label">{label}</label>
-        <div className="control">
-          <div className={`select ${error ? "is-focused is-danger" : ""} ${isLoading ? "is-loading" : ""}`}>
-            <select name={name} ref={register} onChange={onChange}>
-              <option value="">{firstValue}</option>
-              {children}
-            </select>
-          </div>
-          {error && <p className="help is-danger">{error}</p>}
+      <StyledLabel className="label">{label}</StyledLabel>
+      <div className="control">
+        <div className={`select ${error ? "is-focused is-danger" : ""} ${isLoading ? "is-loading" : ""}`}>
+          <select name={name} ref={register} onChange={onChange}>
+            <option value="">{firstValue}</option>
+            {children}
+          </select>
         </div>
+        {error && <p className="help is-danger">{error}</p>}
+      </div>
     </div>
   )
 
