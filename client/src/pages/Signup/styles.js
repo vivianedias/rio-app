@@ -13,3 +13,7 @@ export const Success = styled.div`
   font-weight: 600;
   margin-top: 20px;
 `
+
+export const Background = styled.div`
+  background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
+`
