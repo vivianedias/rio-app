@@ -8,6 +8,9 @@ const StyledButton = styled.button`
   ${props => props.margin && props.margin.bottom && `margin-bottom: ${props.margin.bottom};`}
   ${props => props.margin && props.margin.left && `margin-left: ${props.margin.left};`}
   ${props => props.margin && props.margin.right && `margin-right: ${props.margin.right};`}
+  ${props => `background-color: ${props.backgroundColor || '#6f0000 '};`}
+  ${props => `border-color: ${props.borderColor || '#6f0000'};`}
+  ${props => `color: ${props.color || '#fc9b44'};`}
 `
 
 const Button = ({ type, onClick, children, disabled, styles }) => (

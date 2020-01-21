@@ -29,7 +29,7 @@ const StyledFooter = styled.footer`
   display: flex;
   align-items: center;
   height: 94px;
-  background: #000;
+  background: #d1913c;
   padding: 0 150px;
   overflow: hidden;
   width: auto;

@@ -21,18 +21,20 @@ const ModalContentStyled = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: ${props => `${props.width}`}; /* Could be more or less, depending on screen size */
-  border-radius: 10px;
+  background-image: linear-gradient(77deg,rgba(111,0,0,0) 20%,#200122 100%);
+  background-color: #6f0000;
+  border: none;
 `
 
 const CloseButtonStyled = styled.div`
-  color: #aaa;
+  color: #fc9b44;
   float: right;
   font-size: 28px;
   font-weight: bold;
 
   &:hover,
   &:focus {
-    color: black;
+    color: #FFFF;
     text-decoration: none;
     cursor: pointer;
   }

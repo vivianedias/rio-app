@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import styled from 'styled-components'
+
+const StyledLabel = styled.label`
+ color: #fc9b44;
+font-weight: 500;
+`
+
 const Textarea = ({ placeholder, label, rows, register, error, name }) => {
   return (
     <div className="field">
-      <label className="label">{label}</label>
+      <StyledLabel className="label">{label}</StyledLabel>
       <div className={`control ${error ? "has-icons-right" : ""}`}>
         <textarea
           className={`textarea ${error ? "is-danger" : ""}`}
@@ -12,7 +19,7 @@ const Textarea = ({ placeholder, label, rows, register, error, name }) => {
           rows={rows}
           ref={register}
           name={name}
-        >  
+        >
         </textarea>
         {error && (
           <span className="icon is-right is-small">

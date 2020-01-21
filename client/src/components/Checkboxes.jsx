@@ -6,6 +6,11 @@ import { parseText as parse } from '../utils/service'
 
 const mobile = '576px'
 
+const StyledDescription = styled.label`
+  color: #fc9b44;
+  font-weight: 500;
+`
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -19,6 +24,8 @@ const Wrapper = styled.div`
 const Label = styled.label`
   display: flex;
   margin-bottom: 10px;
+  color: #FFFF;
+  font-weight: 500;
   @media(min-width: ${mobile}) {
     width: 50%;
   }
@@ -29,7 +36,7 @@ const Checkbox = styled.input`
 
 const Checkboxes = ({ label, register, name, fields }) => (
   <div className="field">
-    <label className="label">{label}</label>
+    <StyledDescription className="label">{label}</StyledDescription>
     <Wrapper>
       {fields.map(item => {
         const checkedItem = typeof item !== 'string' ? item.name : item
@@ -39,7 +46,7 @@ const Checkboxes = ({ label, register, name, fields }) => (
               type="checkbox"
               name={`${name}[${parse(checkedItem)}]`}
               ref={register}
-            /> 
+            />
             <span>{checkedItem}</span>
           </Label>
         )

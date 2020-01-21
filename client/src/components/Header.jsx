@@ -1,57 +1,71 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import styled from 'styled-components'
 
 import Modal from '../components/Modal'
 import SignupPopup from '../components/popups/Signup'
 import Button from '../components/Button'
 
+
+const Wrapper = styled.nav`
+background-color: #200122;
+padding: 5px;
+
+`
+
+const StyledLogo = styled.img`
+margin-left: 30px;
+`
+
+
+
 // import { withRouter } from 'react-router';
 // import _ from 'lodash';
 
 const Header = () => {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		isActive: false,
-	// 		isBurguerOpen: false,
-	// 	}
-	// }
+  // constructor(props) {
+  // 	super(props);
+  // 	this.state = {
+  // 		isActive: false,
+  // 		isBurguerOpen: false,
+  // 	}
+  // }
 
-	// componentDidMount() {
-	// 	window.addEventListener('resize', _.throttle(this.setWindowWidth, 500), false);
-	// 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);
-	// }
+  // componentDidMount() {
+  // 	window.addEventListener('resize', _.throttle(this.setWindowWidth, 500), false);
+  // 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);
+  // }
 
-	// componentWillUnmount() {
-	// 	window.removeEventListener('scroll', this.setWindowWidth, false);
-	// }
+  // componentWillUnmount() {
+  // 	window.removeEventListener('scroll', this.setWindowWidth, false);
+  // }
 
-	// setWindowWidth = () => {
-	// 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);		
-	// }
+  // setWindowWidth = () => {
+  // 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);		
+  // }
 
-	// handleClick = (e) => {
-	// 	e.preventDefault();
-	// 	this.setState(prevState => ({ isBurguerOpen: !prevState.isBurguerOpen }));
-	// }
+  // handleClick = (e) => {
+  // 	e.preventDefault();
+  // 	this.setState(prevState => ({ isBurguerOpen: !prevState.isBurguerOpen }));
+  // }
 
-		// const { auth: { isAuthenticated, user }, history } = this.props;
-    // const { isActive } = this.state;
+  // const { auth: { isAuthenticated, user }, history } = this.props;
+  // const { isActive } = this.state;
 
   const [modalStatus, setModalStatus] = useState(false)
 
   return (
-    <nav
+    <Wrapper
       className="navbar"
       role="navigation"
       aria-label="main navigation"
     >
       <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
-          <img
-            src="https://bulma.io/images/bulma-logo.png"
-            width="112"
-            height="28"
+        <a href="https://raio.agency/">
+          <StyledLogo
+            src="https://raio.agency/wp-content/uploads/2020/01/RAIO_logo.png"
+            width="274.141"
+            height="93.594"
             alt="RIO Logo"
           />
         </a>
@@ -67,44 +81,19 @@ const Header = () => {
           <span aria-hidden="true"></span>
         </button>
       </div>
-      <div id="navbarBasicExample" className="navbar-menu">
-        <div className="navbar-start">
-          <NavLink to="/" className="navbar-item">
-            Home
-          </NavLink>
-          <button className="navbar-item">
-            Documentation
-          </button>
-          <div className="navbar-item has-dropdown is-hoverable">
-            <button className="navbar-link">
-              More
-            </button>
-            <div className="navbar-dropdown">
-              <button className="navbar-item">
-                About
-              </button>
-              <button className="navbar-item">
-                Jobs
-              </button>
-              <button className="navbar-item">
-                Contact
-              </button>
-              <hr className="navbar-divider" />
-              <button className="navbar-item">
-                Report an issue
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="navbar-end">
+      {/*<div id="navbarBasicExample" className="navbar-menu">
+
+               <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
               <Button
                 onClick={() => setModalStatus(!modalStatus)}
-                styles="is-primary"
+                styles=""
+
               >
                 Cadastre-se
               </Button>
+
               <NavLink to="/entrar" className="button is-light">
                 Entrar
               </NavLink>
@@ -120,8 +109,8 @@ const Header = () => {
         <SignupPopup
           onClick={() => setModalStatus(false)}
         />
-      </Modal>
-    </nav>
+      </Modal>*/}
+    </Wrapper>
   );
 }
 
