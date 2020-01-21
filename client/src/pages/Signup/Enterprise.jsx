@@ -28,7 +28,7 @@ import {
 import { Form, Success } from './styles'
 
 const Enterprise = () => {
-  const { register, handleSubmit, errors, getValues, setValue } = useForm({
+  const { register, handleSubmit, errors, getValues, setValue } = useForm()
     // defaultValues: {
     //   name: 'Viviane',
     //   gender:'bla',
@@ -52,35 +52,38 @@ const Enterprise = () => {
     //   phone: 'bla',
     //   password:'bla'
     // }
+  // })
+
+  const registerUser = useStoreActions(actions => actions.user.registerCompany)
+  const [isSuccessful, setSuccess] = useState(false)
+  const [isLoading, setLoader] = useState({
+    city: false,
+    submit: false
   })
 
-  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
-  const [isSuccessful, setSuccess] = useState(false)
-
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
+    setLoader({ ...isLoading, submit: true })
     console.log(data)
-    const res = await registerUser(data)
-
-    if(res) return setSuccess(true)
+    setSuccess(true)
+    setLoader({ ...isLoading, submit: false })
+    registerUser(data)
   }
 
-  const [isLoading, setLoader] = useState(false)
   const programIsLoading = () => {
-    setLoader(true)
-    setTimeout(() => { setLoader(false) }, 2000);
+    setLoader({ ...isLoading, city: true })
+    setTimeout(() => { setLoader({...isLoading, city: false }) }, 2000);
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
 
   useEffect(() => {
-    register({ name: 'identityContent' }, { required: 'Esse campo é obrigatório' });
-    register({ name: 'apanAssociate' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'identityContent' });
+    register({ name: 'apanAssociate' });
   }, [register]);
 
   return (
     <Flexbox justify="center">
       <Form onSubmit={handleSubmit(onSubmit)}>
-
         <InputText
           name="email"
           type="text"
@@ -168,9 +171,7 @@ const Enterprise = () => {
         />
         <Select
           label="Auto Declaração (pessoa responsável pelo cadastro)"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           firstValue="Auto Declaração"
           name="selfDeclaration"
           error={errors.selfDeclaration && errors.selfDeclaration.message}
@@ -182,12 +183,10 @@ const Enterprise = () => {
 
         <Select
           label="Gênero (pessoa responsável pelo cadastro)"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          error={errors.gender && errors.gender.message}
           name="gender"
           firstValue="Gênero"
-          error={errors.gender && errors.gender.message}
+          register={register}
         >
           {gender.map(item =>
             <option value={item} key={uuid()}>{item}</option>
@@ -199,11 +198,8 @@ const Enterprise = () => {
           error={errors.state && errors.state.message}
           name="state"
           firstValue="Estado Sede"
-          register={register({
-            required: 'Esse campo é obrigatório'
-          })}
+          register={register}
           onChange={programIsLoading}
-          isLoading={false}
         >
           {states.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
@@ -215,10 +211,8 @@ const Enterprise = () => {
             error={errors.city && errors.city.message}
             name="headOfficeCity"
             firstValue="Cidade"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
-            isLoading={isLoading}
+            register={register}
+            isLoading={isLoading.city}
           >
             {cities
               .filter(city => city['state_id'].toString() === getValues().state)
@@ -260,9 +254,7 @@ const Enterprise = () => {
 
         <Select
           label="Qual o tipo do seu CNPJ?"
-          register={register({
-            required: 'Esse campo é obrigatório'
-          })}
+          register={register}
           firstValue="Tipo de CNPJ"
           fields={cnpj_type}
           name="companyRegistry"
@@ -284,6 +276,7 @@ const Enterprise = () => {
           label="Se sim, em qual segmento?"
           fields={identitySegments}
           name="identityContentSegment"
+          register={register}
         />
 
         <Radios
@@ -293,7 +286,12 @@ const Enterprise = () => {
           onChange={e => handleRadio('apanAssociate', e.target.value)}
         />
 
-        <Button type="submit">Enviar</Button>
+        <Button
+          type="submit"
+          isLoading={isLoading.submit}
+        >
+          Enviar
+        </Button>
         <If condition={isSuccessful}>
           <Success>Seu cadastro foi realizado com sucesso!</Success>
         </If>

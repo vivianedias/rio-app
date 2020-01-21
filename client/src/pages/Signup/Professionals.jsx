@@ -34,8 +34,8 @@ const Professionals = () => {
     errors,
     getValues,
     setValue
-  } = useForm({
-    defaultValues: {
+  } = useForm()
+    // defaultValues: {
       // name: "Viviane"
       // email: "vivi@gmail.com",
       // password: "123456",
@@ -60,32 +60,35 @@ const Professionals = () => {
       // sexualOrientation: "bla",
       // bio: "blasdjasjkdaskdbaskd",
       // links: "blablablablabldajsdnkasjdnsaja"
-    }
-  })
+    // }
+  // })
 
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
   const [isSuccessful, setSuccess] = useState(false)
-
-  const onSubmit = async (data) => {
+  const [isLoading, setLoader] = useState({
+    city: false,
+    submit: false
+  })
+  const onSubmit = (data) => {
+    setLoader({ ...isLoading, submit: true })
     console.log(data)
-    const res = await registerUser(data)
-
-    if(res) return setSuccess(true)
+    setSuccess(true)
+    setLoader({ ...isLoading, submit: false })
+    registerUser(data)
   }
 
-  const [isLoading, setLoader] = useState(false)
   const programIsLoading = () => {
-    setLoader(true)
-    setTimeout(() => { setLoader(false) }, 2000);
+    setLoader({ ...isLoading, city: true })
+    setTimeout(() => { setLoader({...isLoading, city: false }) }, 2000);
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
 
   useEffect(() => {
-    register({ name: 'pcd' }, { required: 'Esse campo é obrigatório' });
-    register({ name: 'companyRegistry' }, { required: 'Esse campo é obrigatório' });
-    register({ name: 'identityContent' }, { required: 'Esse campo é obrigatório' });
-    register({ name: 'apan' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'pcd' });
+    register({ name: 'companyRegistry' });
+    register({ name: 'identityContent' });
+    register({ name: 'apan' });
   }, [register]);
 
   return (
@@ -146,9 +149,7 @@ const Professionals = () => {
 
         <Select
           label="Auto Declaração"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="selfDeclaration"
           error={errors.selfDeclaration && errors.selfDeclaration.message}
           firstValue="Auto Declaração"
@@ -160,9 +161,7 @@ const Professionals = () => {
 
         <Select
           label="Gênero"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           name="gender"
           error={errors.gender && errors.gender.message}
           firstValue="Gênero"
@@ -177,9 +176,7 @@ const Professionals = () => {
           error={errors.sexualOrientation && errors.sexualOrientation.message}
           name="sexualOrientation"
           firstValue="Orientação Sexual"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
         >
           {sexualOrientation.map(item =>
             <option value={item} key={uuid()}>{item}</option>
@@ -198,9 +195,7 @@ const Professionals = () => {
           error={errors.homeState && errors.homeState.message}
           name="homeState"
           firstValue="Estado"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
         >
           {states.map(item =>
             <option value={item.id} key={item.id}>{item.name}</option>
@@ -212,9 +207,7 @@ const Professionals = () => {
           error={errors.currentState && errors.currentState.message}
           name="currentState"
           firstValue="Estado"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           onChange={programIsLoading}
         >
           {states.map(item =>
@@ -228,10 +221,8 @@ const Professionals = () => {
             error={errors.currentCity && errors.currentCity.message}
             name="currentCity"
             firstValue="Cidade"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
-            isLoading={isLoading}
+            register={register}
+            isLoading={isLoading.city}
           >
             {cities
               .filter(city => city['state_id'].toString() === getValues().currentState)
@@ -282,9 +273,7 @@ const Professionals = () => {
           error={errors.education && errors.education.message}
           name="education"
           firstValue="Formação"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
         >
           {formations.map(item =>
             <option value={item} key={uuid()}>{item}</option>
@@ -339,18 +328,16 @@ const Professionals = () => {
 
         <Checkboxes
           label="Áreas de atuação"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
+          register={register}
           fields={functions}
           name="expertiseAreas"
         />
 
         <Radios
           label="É associado(a) da APAN"
-          error={errors.apan && errors.apan.message}
-          onChange={e => handleRadio('apan', e.target.value)}
-          name="apan"
+          error={errors.apanAssociate && errors.apanAssociate.message}
+          onChange={e => handleRadio('apanAssociate', e.target.value)}
+          name="apanAssociate"
         />
 
         <Textarea
@@ -382,7 +369,12 @@ const Professionals = () => {
             }
           })}
         />
-        <Button type="submit">Enviar</Button>
+        <Button
+          type="submit"
+          isLoading={isLoading.submit}
+        >
+          Enviar
+        </Button>
         <If condition={isSuccessful}>
           <Success>Seu cadastro foi realizado com sucesso!</Success>
         </If>
