@@ -7,7 +7,7 @@ const registerModel = {
   registerProfessional: thunk(async (actions, payload) => {
     actions.setUser(payload)
 
-    axios.post('/api/candidate/register', payload)
+    return axios.post('/api/candidate/register', payload)
       .then(() => {
         localStorage.defaultLocation
           ? history.push(`/login?${localStorage.defaultLocation}`)
@@ -18,10 +18,9 @@ const registerModel = {
         return actions.setErrors(errors)
       })
   }),
-
   registerCompany: thunk(async (actions, payload) => {
     actions.setUser(payload)
-    axios.post('/api/company/register', payload)
+    return axios.post('/api/company/register', payload)
       .then(() => {
         localStorage.defaultLocation
           ? history.push(`/login?${localStorage.defaultLocation}`)
