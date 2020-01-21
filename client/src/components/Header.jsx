@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, {
+  // useState
+} from 'react';
+// import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components'
 
-import Modal from '../components/Modal'
-import SignupPopup from '../components/popups/Signup'
-import Button from '../components/Button'
+// import Modal from '../components/Modal'
+// import SignupPopup from '../components/popups/Signup'
+// import Button from '../components/Button'
 
 
 const Wrapper = styled.nav`
-background-color: #200122;
-padding: 5px;
-
+  background-color: #200122;
+  padding: 5px;
 `
 
 const StyledLogo = styled.img`
-margin-left: 30px;
+  margin-left: 30px;
 `
-
-
 
 // import { withRouter } from 'react-router';
 // import _ from 'lodash';
@@ -52,7 +51,7 @@ const Header = () => {
   // const { auth: { isAuthenticated, user }, history } = this.props;
   // const { isActive } = this.state;
 
-  const [modalStatus, setModalStatus] = useState(false)
+  // const [modalStatus, setModalStatus] = useState(false)
 
   return (
     <Wrapper
