@@ -25,7 +25,7 @@ import {
   sexualOrientation
 } from './dicioFields'
 
-import { Form } from './styles'
+import { Form, Success } from './styles'
 
 const Professionals = () => {
   const {
@@ -64,11 +64,13 @@ const Professionals = () => {
   })
 
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
+  const [isSuccessful, setSuccess] = useState(false)
 
-  const onSubmit = (data, e) => {
-    e.preventDefault()
+  const onSubmit = async (data) => {
     console.log(data)
-    registerUser(data)
+    const res = await registerUser(data)
+
+    if(res) return setSuccess(true)
   }
 
   const [isLoading, setLoader] = useState(false)
@@ -80,13 +82,11 @@ const Professionals = () => {
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
 
   useEffect(() => {
-    register({ name: 'pcd' }, { required: true });
-    register({ name: 'companyRegistry' }, { required: true });
-    register({ name: 'identityContent' }, { required: true });
-    register({ name: 'apan' }, { required: true });
-  }, []);
-
-  console.log(getValues().companyRegistry)
+    register({ name: 'pcd' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'companyRegistry' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'identityContent' }, { required: 'Esse campo é obrigatório' });
+    register({ name: 'apan' }, { required: 'Esse campo é obrigatório' });
+  }, [register]);
 
   return (
     <Flexbox justify="center">
@@ -383,6 +383,9 @@ const Professionals = () => {
           })}
         />
         <Button type="submit">Enviar</Button>
+        <If condition={isSuccessful}>
+          <Success>Seu cadastro foi realizado com sucesso!</Success>
+        </If>
       </Form>
     </Flexbox>
   )
