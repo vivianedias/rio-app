@@ -42,7 +42,7 @@ router.post('/register', (req, res) => {
           selfDeclaration: req.body.selfDeclaration,
           address: req.body.address,
           education: req.body.education,
-          formationInstitution: req.body.formationInstitution, 
+          formationInstitution: req.body.formationInstitution,
           cnpj: req.body.cnpj,
           cnpjType: req.body.cnpjType,
           identityContent: req.body.identityContent,
@@ -132,6 +132,16 @@ router.get('/current',
     })
   }
 )
+
+// @route   GET api/candidate/logout
+// @desc    Logout of the account
+// @access  Private
+
+router.get('/logout', function (req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 
 // @route   POST api/candidate/forgot-password
 // @desc    Send email to reset password
@@ -248,4 +258,27 @@ router.post('/reset/:token', (req, res, next) => {
     })
 })
 
-module.exports = router
+
+router.post('delete', isLoggedIn, (res, req) => {
+  Candidate.findByIdAndDelete(req.candidate.id)
+    .then(candidate => {
+      res.json('Deletada(o) com sucesso')
+      req.flash("Sua conta foi deletada");
+      req.logout();
+    })
+    .catch(() => {
+      errors.deleteCandidate = 'Erro ao deletar sua conta'
+      return res.status(404).json(errors)
+    })
+});
+
+// Helper functions
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/");
+}
+
+
+module.exports = router;
