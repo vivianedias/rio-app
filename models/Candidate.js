@@ -60,7 +60,7 @@ const CandidateSchema = new Schema({
     type: String, 
     required:true,
   },
-  cpnj:{
+  cnpj:{
     type: Boolean, 
     required: true
   },  

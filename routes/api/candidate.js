@@ -48,7 +48,7 @@ router.post('/register', (req, res) => {
           identityContent: req.body.identityContent,
           identitySegments: req.body.identitySegments,
           expertiseAreas: req.body.expertiseAreas,
-          apanAssociate: req.body.ApanAssociate,
+          apanAssociate: req.body.apanAssociate,
           phone: req.body.phone,
           links: req.body.links,
           bio: req.body.bio,
@@ -63,7 +63,7 @@ router.post('/register', (req, res) => {
             newCandidate
               .save()
               .then(candidate => res.json(candidate))
-              .catch(err => console.log(err))
+              .catch(err => console.error(err))
           })
         })
       }
