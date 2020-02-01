@@ -4,8 +4,8 @@ import axios from 'axios'
 import history from '../history'
 
 const registerModel = {
-  registerProfessional: thunk(async (actions, payload) => {
-    actions.setUser(payload)
+  registerCandidate: thunk(async (actions, payload) => {
+    actions.setCandidate(payload)
 
     axios.post('/api/candidate/register', payload)
       .then(() => {
@@ -20,7 +20,7 @@ const registerModel = {
   }),
 
   registerCompany: thunk(async (actions, payload) => {
-    actions.setUser(payload)
+    actions.setCompany(payload)
     axios.post('/api/company/register', payload)
       .then(() => {
         localStorage.defaultLocation
@@ -32,10 +32,14 @@ const registerModel = {
         return actions.setErrors(errors)
       })
   }),
-  user: {},
+  candidate: {},
+  company: {},
   errors: {},
-  setUser: action((state, payload) => {
-    state.user = payload
+  setCandidate: action((state, payload) => {
+    state.candidate = payload
+  }),
+  setCompany: action((state, payload) => {
+    state.company = payload
   }),
   setErrors: action((state, payload) => {
     state.errors = payload

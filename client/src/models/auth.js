@@ -7,37 +7,37 @@ import history from '../history'
 import { isEmpty } from '../utils/service'
 
 const authModel = {
-  authUser: thunk(async (actions, payload) => {
+  authCandidate: thunk(async (actions, payload) => {
     const { value, query } = payload
     try {
-      const res = await axios.post('/api/users/login', value)
+      const res = await axios.post('/api/candidate/login', value)
       actions.setAuth({
-        user: {
+        candidate: {
           email: undefined,
           password: undefined
         }
       })
-  
+
       // Set token to localStorage
       const { token } = res.data
       localStorage.setItem('jwtToken', token)
-  
+
       // Set token to auth header
       setAuthToken(token)
-  
-      // Decode token to get user data
+
+      // Decode token to get candidate data
       const decoded = jwtDecode(token)
-  
-      // Set current user
+
+      // Set current candidate
       actions.setAuth({
         isAuthenticated: !isEmpty(decoded),
-        user: decoded
+        candidate: decoded
       })
-  
+
       history && query
         ? history.push(`/${query}`)
         : history.push('/dashboard')
-  
+
       query && localStorage.removeItem('defaultLocation')
     }
     catch (e) {
@@ -47,7 +47,7 @@ const authModel = {
   }),
   auth: {
     isAuthenticated: false,
-    user: {
+    candidate: {
       email: undefined,
       password: undefined
     }

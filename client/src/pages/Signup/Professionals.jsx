@@ -38,41 +38,14 @@ const Professionals = () => {
     errors,
     getValues,
     setValue
-  } = useForm({
-    defaultValues: {
-      // name: "Viviane"
-      // email: "vivi@gmail.com",
-      // password: "123456",
-      // confirmPassword: "123456",
-      // birthday:"12/1/1995",
-      // gender: "bla",
-      // pcd: true,
-      // homeState: "bla",
-      // currentState:"bla",
-      // currentCity: "bla",
-      // selfDeclaration: "bla",
-      // address: "blabla",
-      // education: "blabla",
-      // formationInstitution: "bla",
-      // cnpj: true,
-      // cnpjType: "bla",
-      // identityContent: true,
-      // identitySegments: "",
-      // expertiseAreas: "bla",
-      // apanAssociate: true,
-      // phone: "13123123",
-      // sexualOrientation: "bla",
-      // bio: "blasdjasjkdaskdbaskd",
-      // links: "blablablablabldajsdnkasjdnsaja"
-    }
-  })
+  } = useForm({})
 
-  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
+  const registerCandidate = useStoreActions(actions => actions.candidate.registerCandidate)
 
   const onSubmit = (data, e) => {
     e.preventDefault()
     console.log(data)
-    registerUser(data)
+    registerCandidate(data)
   }
 
   const [isLoading, setLoader] = useState(false)
