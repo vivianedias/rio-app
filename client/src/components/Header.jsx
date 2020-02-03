@@ -1,12 +1,12 @@
 import React, {
-  // useState
+  useState
 } from 'react';
-// import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components'
 
-// import Modal from '../components/Modal'
-// import SignupPopup from '../components/popups/Signup'
-// import Button from '../components/Button'
+import Modal from '../components/Modal'
+import SignupPopup from '../components/popups/Signup'
+import Button from '../components/Button'
 
 
 const Wrapper = styled.nav`
@@ -51,7 +51,7 @@ const Header = () => {
   // const { auth: { isAuthenticated, user }, history } = this.props;
   // const { isActive } = this.state;
 
-  // const [modalStatus, setModalStatus] = useState(false)
+  const [modalStatus, setModalStatus] = useState(false)
 
   return (
     <Wrapper
@@ -80,7 +80,7 @@ const Header = () => {
           <span aria-hidden="true"></span>
         </button>
       </div>
-      {/*<div id="navbarBasicExample" className="navbar-menu">
+      <div id="navbarBasicExample" className="navbar-menu">
 
                <div className="navbar-end">
           <div className="navbar-item">
@@ -108,7 +108,7 @@ const Header = () => {
         <SignupPopup
           onClick={() => setModalStatus(false)}
         />
-      </Modal>*/}
+      </Modal>
     </Wrapper>
   );
 }

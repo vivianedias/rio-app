@@ -69,12 +69,15 @@ const Professionals = () => {
     city: false,
     submit: false
   })
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoader({ ...isLoading, submit: true })
     console.log(data)
-    setSuccess(true)
-    setLoader({ ...isLoading, submit: false })
-    registerUser(data)
+    // const res = registerUser(data)
+    // console.log(res)
+    // if (res.status === 200) {
+    //   setSuccess(true)
+    //   setLoader({ ...isLoading, submit: false })
+    // }
   }
 
   const programIsLoading = () => {
@@ -86,9 +89,9 @@ const Professionals = () => {
 
   useEffect(() => {
     register({ name: 'pcd' });
-    register({ name: 'companyRegistry' });
+    register({ name: 'cnpj' });
     register({ name: 'identityContent' });
-    register({ name: 'apan' });
+    register({ name: 'apanAssociate' });
   }, [register]);
 
   return (
@@ -191,6 +194,8 @@ const Professionals = () => {
             onChange={e => handleRadio('pcd', e.target.value)}
             name="pcd"
           />
+
+          {/* <Datepicker /> */}
 
           <Select
             label="Estado de origem"
@@ -295,15 +300,15 @@ const Professionals = () => {
 
           <Radios
             label="Possui CNPJ"
-            onChange={e => handleRadio('companyRegistry', e.target.value)}
-            error={errors.companyRegistry && errors.companyRegistry.message}
-            name="companyRegistry"
+            onChange={e => handleRadio('cnpj', e.target.value)}
+            error={errors.cnpj && errors.cnpj.message}
+            name="cnpj"
           />
 
           <Select
             label="Se sim, qual o tipo do seu CNPJ ?"
-            error={errors.companyRegistryType && errors.companyRegistryType.message}
-            name="companyRegistryType"
+            error={errors.cnpjType && errors.cnpjType.message}
+            name="cnpjType"
             firstValue="Tipo de CPNJ"
             register={register}
           >

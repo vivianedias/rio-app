@@ -66,7 +66,6 @@ const CandidateSchema = new Schema({
   },  
   cnpjType:{
     type: String,
-    required: true
   },
   identityContent:{
     type: Boolean, 
@@ -84,10 +83,13 @@ const CandidateSchema = new Schema({
     type: Boolean,
     require: true
   },
-  password: {
+  bio: {
     type: String,
-    required: true,
-    select: false, 
+    required: true
+  },
+  links: {
+    type: String,
+    required: true
   },
   resetPasswordToken: {
     type: String,
