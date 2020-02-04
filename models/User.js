@@ -17,19 +17,32 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  type: { // TODO: Limit to three options: admin, company, professional
+  type: {
     required: true,
     type: String,
-    lowercase: true
+    lowercase: true,
+    enum : ['admin', 'professional', 'enterprise']
   },
-  resetPasswordToken: {
+  phone: {
+    type: String,
+    required: true
+  },
+  gender: {
+    type: String,
+    required: true
+  },
+  self_declaration: {
+    type: String,
+    required: true
+  },
+  reset_password_token: {
     type: String,
     unique: true
   },
-  resetPasswordExpires: {
+  reset_password_expires: {
     type: Date
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now
   }

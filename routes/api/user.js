@@ -35,7 +35,10 @@ router.post('/register', (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        type: req.body.type
+        type: req.body.type,
+        gender: req.body.gender,
+        self_declaration: req.body.self_declaration,
+        phone: req.body.phone
       })
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -175,7 +178,6 @@ router.post('/forgot-password', (req, res) => {
 
 router.post('/reset/:token', (req, res, next) => {
   const errors = {}
-
   const { password, confirmedPassword } = req.body
 
   // if passwords don't match, flash error and send back to form
@@ -189,8 +191,8 @@ router.post('/reset/:token', (req, res, next) => {
 
   // if we get to here, the passwords match
   User.findOne({
-    resetPasswordToken: req.params.token,
-    resetPasswordExpires: { $gt: Date.now() }
+    reset_password_token: req.params.token,
+    reset_password_expires: { $gt: Date.now() }
   })
     .then(user => {
       if (!user) {
@@ -198,33 +200,32 @@ router.post('/reset/:token', (req, res, next) => {
         return res.status(404).json(errors)
       }
 
-      var passwordHash = password
       bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err
-        bcrypt.hash(passwordHash, salt, (err, hash) => {
+        bcrypt.hash(password, salt, (err, hash) => {
           if (err) throw err
-          passwordHash = hash
+          const passwordHash = hash
           // Update password and set password token and exp date to null
           const updatePassword = {
             password: passwordHash,
-            resetPasswordToken: null,
-            resetPasswordExpires: null
+            reset_password_token: null,
+            reset_password_expires: null
           }
           User.findOneAndUpdate(
-            { resetPasswordToken: req.params.token },
+            { reset_password_token: req.params.token },
             { $set: updatePassword },
             { new: true }
           )
             .then(user => res.json('Sua senha foi redefinida com sucesso'))
             .catch(() => {
-              errors.resetPassword = 'Um erro aconteceu ao atualizar sua senha'
+              errors.resetPassword = 'Um erro ocorreu ao atualizar a senha'
               return res.status(404).json(errors)
             })
         })
       })
     })
     .catch(() => {
-      errors.resetPassword = 'Um erro aconteceu ao tentar localizar o usuário'
+      errors.resetPassword = 'Um erro ocorreu ao localizar usuário'
       return res.status(404).json(errors)
     })
 })
