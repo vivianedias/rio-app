@@ -117,8 +117,8 @@ const Enterprise = () => {
             label="Links para site e redes socias da empresa"
             placeholder="Insira aqui links"
             rows={5}
-            error={errors.companySocialMidia && errors.companySocialMidia.message}
-            name="companySocialMidia"
+            error={errors.links && errors.links.message}
+            name="links"
             register={register({
               required: 'Esse campo é obrigatório',
               minLength: {
@@ -228,7 +228,7 @@ const Enterprise = () => {
             label="Funções que busca diversificar na empresa"
             register={register}
             fields={functions}
-            name="diversifyFunctions"
+            name="diversityFunctions"
           />
 
           <Select
