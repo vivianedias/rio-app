@@ -3,14 +3,17 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CandidateSchema = new Schema({
-  email:{
-    type: String,
+  userId:{
     required: true,
-    lowercase: true
+    unique: true,
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
-  name:{
-    type: String,
-    required: true
+  userEmail:{
+    required: true,
+    unique: true,
+    type: Schema.Types.String,
+    ref: 'users'
   },
   selfDeclaration:{
     type: String, 
@@ -90,13 +93,6 @@ const CandidateSchema = new Schema({
   links: {
     type: String,
     required: true
-  },
-  resetPasswordToken: {
-    type: String,
-    unique: true
-  },
-  resetPasswordExpires: {
-    type: Date
   },
   createdAt: {
     type: Date,
