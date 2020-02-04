@@ -10,7 +10,7 @@ const path = require('path')
 
 const candidate = require('./routes/api/candidate')
 const company = require('./routes/api/company')
-const admin = require('./routes/api/admin')
+const user = require('./routes/api/user')
 
 const app = express()
 
@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
 // Use Routes
 app.use('/api/candidate', candidate)
 app.use('/api/company', company)
-app.use('/api/admin', admin)
+app.use('/api/user', user)
 
 // Set static folder
 app.get('/*', (req, res) => {
