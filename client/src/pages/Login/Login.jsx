@@ -9,11 +9,11 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import SignupPopup from '../../components/popups/Signup'
 
-import { Form, InputWrapper } from './style'
+import { Form, InputWrapper, WrapperScreen, StyledButton, Title, StyledLink } from './style'
 import { emailValidation } from '../../utils/service'
 
 const Login = () => {
-  
+
   const [modalStatus, setModalStatus] = useState(false)
   const { register, handleSubmit, errors, clearError } = useForm()
 
@@ -25,7 +25,7 @@ const Login = () => {
   }
 
   return (
-    <Fragment>
+    <WrapperScreen>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Flexbox
@@ -38,10 +38,10 @@ const Login = () => {
               right: 0
             }}
           >
-            <h1 className="title has-text-danger">entre no rio</h1>
+            <Title>entre no rio</Title>
           </Flexbox>
           <InputWrapper>
-            <InputText 
+            <InputText
               label="E-mail"
               type="text"
               name="email"
@@ -57,7 +57,7 @@ const Login = () => {
                 }
               })}
             />
-            <InputText 
+            <InputText
               label="Senha"
               type="password"
               name="password"
@@ -73,23 +73,23 @@ const Login = () => {
                 }
               })}
             />
-            <Link 
-              to="/esqueci-senha" 
-              className="has-text-link"
+            <StyledLink
+              to="/esqueci-senha"
+
             >
               esqueceu sua senha?
-            </Link>
+            </StyledLink>
           </InputWrapper>
-          <Flexbox justify="space-around" className="control">    
+          <Flexbox justify="space-around" className="control">
             <Button
               onClick={toggleModal}
               styles="button is-rounded"
             >
               cadastre-se
             </Button>
-            <Button type="submit" styles="is-danger is-rounded">
+            <StyledButton type="submit" styles="is-danger is-rounded">
               entrar
-            </Button>     
+            </StyledButton>
           </Flexbox>
         </Form>
       </Flexbox>
@@ -100,7 +100,7 @@ const Login = () => {
       >
         <SignupPopup />
       </Modal>
-    </Fragment>
+    </WrapperScreen>
   )
 }
 
