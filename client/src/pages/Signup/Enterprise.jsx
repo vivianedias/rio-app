@@ -48,7 +48,6 @@ const Enterprise = () => {
     //   city: 'bla',
     //   state: 'bla',
     //   apanAssociate: true,
-    //   fieldsWork: 'bla',
     //   phone: 'bla',
     //   password:'bla'
     // }
@@ -80,6 +79,8 @@ const Enterprise = () => {
     register({ name: 'identityContent' });
     register({ name: 'apanAssociate' });
   }, [register]);
+
+  // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
 
   return (
     <Background>
@@ -216,13 +217,13 @@ const Enterprise = () => {
             label="Segmento de atuação"
             register={register}
             fields={segment}
-            name="businessSegment"
+            name="businessSegments"
           />
           <Checkboxes
             label="Campos de atuação"
             register={register}
             fields={actions}
-            name="businessField"
+            name="businessFields"
           />
           <Checkboxes
             label="Funções que busca diversificar na empresa"
@@ -254,7 +255,7 @@ const Enterprise = () => {
           <Checkboxes
             label="Se sim, em qual segmento?"
             fields={identitySegments}
-            name="identityContentSegment"
+            name="identitySegments"
             register={register}
           />
 

@@ -1,13 +1,12 @@
 import React, {
-  // useState
+  useState
 } from 'react';
-// import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components'
 
-// import Modal from '../components/Modal'
-// import SignupPopup from '../components/popups/Signup'
-// import Button from '../components/Button'
-
+import Modal from '../components/Modal'
+import SignupPopup from '../components/popups/Signup'
+import Button from '../components/Button'
 
 const Wrapper = styled.nav`
   background-color: #200122;
@@ -51,7 +50,7 @@ const Header = () => {
   // const { auth: { isAuthenticated, user }, history } = this.props;
   // const { isActive } = this.state;
 
-  // const [modalStatus, setModalStatus] = useState(false)
+  const [modalStatus, setModalStatus] = useState(false)
 
   return (
     <Wrapper
@@ -80,19 +79,13 @@ const Header = () => {
           <span aria-hidden="true"></span>
         </button>
       </div>
-      {/*<div id="navbarBasicExample" className="navbar-menu">
-
-               <div className="navbar-end">
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Button
-                onClick={() => setModalStatus(!modalStatus)}
-                styles=""
-
-              >
+              <Button onClick={() => setModalStatus(!modalStatus)}>
                 Cadastre-se
               </Button>
-
               <NavLink to="/entrar" className="button is-light">
                 Entrar
               </NavLink>
@@ -106,9 +99,9 @@ const Header = () => {
         width="500px"
       >
         <SignupPopup
-          onClick={() => setModalStatus(false)}
+          toggleModalStatus={() => setModalStatus(!modalStatus)}
         />
-      </Modal>*/}
+      </Modal>
     </Wrapper>
   );
 }
