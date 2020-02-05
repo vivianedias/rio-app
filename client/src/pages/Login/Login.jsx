@@ -3,19 +3,14 @@ import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 
-
-
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import SignupPopup from '../../components/popups/Signup'
 
-import { Form, InputWrapper, WrapperScreen, StyledFont } from './style'
+import { Form, InputWrapper, Title, StyledButton, StyledLink, WrapperScreen } from './style'
 import { emailValidation } from '../../utils/service'
-
-import style from './style.css'
-
 
 const Login = () => {
 
@@ -44,7 +39,7 @@ const Login = () => {
               right: 0
             }}
           >
-            <StyledFont>entre na raio</StyledFont>
+            <Title>entre no rio</Title>
           </Flexbox>
           <InputWrapper>
             <InputText
@@ -77,12 +72,12 @@ const Login = () => {
                 }
               })}
             />
-            <Link
+            <StyledLink
               to="/esqueci-senha"
-              className="has-link"
+
             >
               esqueceu sua senha?
-            </Link>
+            </StyledLink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
             <Button
@@ -91,20 +86,19 @@ const Login = () => {
             >
               cadastre-se
             </Button>
-            <Button type="submit" styles="is-danger is-rounded">
+            <StyledButton type="submit">
               entrar
-            </Button>
+            </StyledButton>
           </Flexbox>
         </Form>
       </Flexbox>
       <Modal
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
-        className="modal-register"
+        width="500px"
       >
         <SignupPopup />
       </Modal>
-
     </WrapperScreen>
   )
 }
