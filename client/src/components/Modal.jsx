@@ -24,10 +24,11 @@ const ModalContentStyled = styled.div`
   background-color: #6f0000;
   border: none;
   width: 500px;
-    @media(max-width: 425px) {
-      width: 100%;
-    }
+  @media(max-width: 425px) {
+    width: 100%;
+  }
 `
+
 
 const CloseButtonStyled = styled.div`
   color: #fc9b44;

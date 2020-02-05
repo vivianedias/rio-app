@@ -80,13 +80,15 @@ const Login = () => {
             </StyledLink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
-            <Button
+            <StyledButton
               onClick={toggleModal}
-              styles="button is-rounded"
+
+              backgroundColor="#6f0000"
+              color="#fc9b44"
             >
               cadastre-se
-            </Button>
-            <StyledButton type="submit">
+            </StyledButton>
+            <StyledButton type="submit" backgroundColor="#A03C25" color="#fc9b44" marginLeft="10px">
               entrar
             </StyledButton>
           </Flexbox>
@@ -95,7 +97,7 @@ const Login = () => {
       <Modal
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
-        width="500px"
+
       >
         <SignupPopup />
       </Modal>

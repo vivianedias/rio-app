@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+
 
 export const FullWidth = styled.div`
   width: 100%;
@@ -24,9 +25,11 @@ export const WrapperScreen = styled.div`
 `
 
 export const StyledButton = styled.button`
-  background-color: #A03C25;
-  color: #fc9b44;
-  border-radius: 290486px;
+  background-color: ${props => `${props.backgroundColor}`}; /* Could be more or less, depending on screen size */
+  color: ${props => `${props.color}`};
+  margin-left: ${props => `${props.marginLeft}`};
+  padding: 10px;
+  border-radius: 2px;
   padding-left: calc(1em + .25em);
   padding-right: calc(1em + .25em);
   min-width: 120px;
@@ -48,4 +51,4 @@ export const StyledLink = styled(Link)`
   &:hover{
     color: #FFFF;
   }
-`;
+`
