@@ -91,6 +91,8 @@ const Professionals = () => {
     register({ name: 'apan' });
   }, [register]);
 
+  // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
+
   return (
     <Background>
 

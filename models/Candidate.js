@@ -12,8 +12,8 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  selfDeclaration:{
-    type: String, 
+  self_declaration: {
+    type: String,
     required: true
   },
   gender: {
