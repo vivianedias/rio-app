@@ -1,0 +1,14 @@
+
+.has-link{
+  color:  #d1913c;
+}
+
+.modal-register{
+  width: 500px;
+}
+
+@media (max-width: 425px){
+  .modal-register{
+    width: 100%;
+  }
+}
