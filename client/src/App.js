@@ -2,7 +2,7 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 import { Route } from 'react-router'
-import { Router } from 'react-router-dom'
+import { Router, Switch } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy';
 // import jwtDecode from 'jwt-decode'
 import styled from 'styled-components'
@@ -16,8 +16,10 @@ import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login/Login'
 import Enterprise from './pages/Signup/Enterprise'
-import Professionals from './pages/Signup/Professionals'
+import Professionals from './pages/Signup/Professional'
+import Users from './pages/Signup/User'
 import Footer from './components/Footer'
+import PrivateRoute from './components/PrivateRoute'
 
 // if (localStorage.jwtToken) {
 //   // Set the auth token header auth
@@ -53,14 +55,17 @@ const App = ({ store }) => (
         <Header />
         <AppBody>
           <Route path="/" exact component={Home} />
-          <Route path='/entrar' exact component={Login} />
-          <Route path='/cadastro/empresas' component={Enterprise} />
-          <Route
-            path='/cadastro/profissional'
-            component={Professionals}
-          />
+          <Route path="/entrar" exact component={Login} />
+          <Route path="/cadastro" exact component={Users} />
+          <Switch>
+            <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
+            <PrivateRoute
+              path='/cadastro/profissional'
+              component={Professionals}
+            />
+            {/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
+          </Switch>
           <Footer fixed>
-
           </Footer>
         </AppBody>
       </AppWrapper>
