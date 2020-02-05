@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
+import { useStoreActions } from 'easy-peasy'
+import uuid from 'uuid'
 
 import { If } from '../../components/If'
 import InputText from '../../components/InputText'
@@ -24,49 +25,68 @@ import {
   cnpj_type
 } from './dicioFields'
 
-import { Form } from './styles'
-
-const Wrapper = styled.div`
-background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%); `
+import { Form, Success, Background } from './styles'
 
 const Enterprise = () => {
-  const { register, handleSubmit, errors, getValues, watch } = useForm({
+  const { register, handleSubmit, errors, getValues, setValue } = useForm()
+    // defaultValues: {
+    //   name: 'Viviane',
+    //   gender:'bla',
+    //   email: 'bla@gmail.com',
+    //   selfDeclaration: 'bla',
+    //   companyName:'bla',
+    //   foundationDate:'bla',
+    //   companyPresentation:'bla',
+    //   companySocialMidia:'bla',
+    //   diversifyFunctions:'bla',
+    //   identityContent: false,
+    //   companyRegistryType:'bla',
+    //   identityContentSegment:'bla',
+    //   businessSegment:'bla',
+    //   businessField: 'bla',
+    //   otherStates:'bla',
+    //   city: 'bla',
+    //   state: 'bla',
+    //   apanAssociate: true,
+    //   phone: 'bla',
+    //   password:'bla'
+    // }
+  // })
 
+  const registerUser = useStoreActions(actions => actions.user.registerCompany)
+  const [isSuccessful, setSuccess] = useState(false)
+  const [isLoading, setLoader] = useState({
+    city: false,
+    submit: false
   })
 
-  const identityYes = watch('identityContent');
-  const hasState = watch('state')
-  const onSubmit = (data, e) => {
-    e.preventDefault()
+  const onSubmit = (data) => {
+    setLoader({ ...isLoading, submit: true })
     console.log(data)
+    setSuccess(true)
+    setLoader({ ...isLoading, submit: false })
+    registerUser(data)
   }
-  const [isLoading, setLoader] = useState(false)
-  console.log({ errors, values: getValues() })
-  console.log(hasState)
 
   const programIsLoading = () => {
-    setLoader(true)
-    setTimeout(() => { setLoader(false) }, 2000);
+    setLoader({ ...isLoading, city: true })
+    setTimeout(() => { setLoader({...isLoading, city: false }) }, 2000);
   }
 
-  return (
+  const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
 
-    <Wrapper>
+  useEffect(() => {
+    register({ name: 'identityContent' });
+    register({ name: 'apanAssociate' });
+  }, [register]);
+
+  // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
+
+  return (
+    <Background>
+
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
-          <InputText
-            name="name"
-            type="text"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
-            label="Nome da pessoa responsável pelo cadastro"
-            placeholder="Insira o nome da pessoa responsável"
-            error={errors.responsibleName && errors.responsibleName.message}
-          />
-
-
           <InputText
             name="email"
             type="text"
@@ -82,6 +102,32 @@ const Enterprise = () => {
             error={errors.email && errors.email.message}
           />
 
+            <InputText
+              name="name"
+              type="text"
+              register={register({
+                required: 'Esse campo é obrigatório',
+              })}
+              label="Nome da pessoa responsável pelo cadastro"
+              placeholder="Insira o nome da pessoa responsável"
+              error={errors.responsibleName && errors.responsibleName.message}
+            />
+
+
+          <Textarea
+            label="Links para site e redes socias da empresa"
+            placeholder="Insira aqui links"
+            rows={5}
+            error={errors.companySocialMidia && errors.companySocialMidia.message}
+            name="companySocialMidia"
+            register={register({
+              required: 'Esse campo é obrigatório',
+              minLength: {
+                value: 10,
+                message: 'Insira pelo menos um link'
+              }
+            })}
+          />
 
           <InputText
             name="phone"
@@ -99,203 +145,139 @@ const Enterprise = () => {
             })}
             label="Contato Telefonico (DDD + nº)"
             placeholder="Insira aqui"
-            error={errors.tel && errors.tel.message}
-          />
-
-          <Radios
-            label="Auto Declaração (pessoa responsável pelo cadastro)"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
-            name="selfDeclaration"
-            fields={color}
-            error={errors.color && errors.color.message}
-          />
-
-          <Radios
-            label="Gênero (pessoa responsável pelo cadastro)"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
-            name="gender"
-            fields={gender}
-            error={errors.gender && errors.gender.message}
+            error={errors.phone && errors.phone.message}
           />
 
           <InputText
-            name="password"
-            type="password"
-            register={register({
-              minLength: {
-                value: 6,
-                message: 'A senha precisa ter no mínimo 6 caracteres'
-              }
-            })}
-            label="Senha"
-            placeholder="Insira uma senha"
-            error={errors.password && errors.password.message}
-          />
-
-          <InputText
-            name="confirmPassword"
-            type="password"
-            register={register({
-              validate: value => value === getValues().password || 'As senhas não são identicas'
-            })}
-            label="Confirme sua senha"
-            placeholder="Insira sua senha novamente"
-            error={errors.confirmPassword && errors.confirmPassword.message}
-          />
-
-
-          <InputText
-            name="companyName"
+            name="name"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
             })}
-            label="Nome da empresa"
-            placeholder="Insira o nome da empresa"
-            error={errors.companyName && errors.companyName.message}
+            label="Nome da pessoa responsável pelo cadastro"
+            placeholder="Insira o nome da pessoa responsável"
+            error={errors.name && errors.name.message}
           />
+          <Select
+            label="Auto Declaração (pessoa responsável pelo cadastro)"
+            register={register}
+            firstValue="Auto Declaração"
+            name="selfDeclaration"
+            error={errors.selfDeclaration && errors.selfDeclaration.message}
+          >
+            {color.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
 
-          <Textarea
-            label="Apresentação da empresa"
-            placeholder="Insira uma apresentação"
-            rows={5}
-            error={errors.companyPresentation && errors.companyPresentation.message}
-            name="companyPresentation"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              minLength: {
-                value: 15,
-                message: 'Apresentação curta demais'
-              }
-            })}
-          />
-
-          <Textarea
-            label="Links para site e redes socias da empresa"
-            placeholder="Insira aqui links"
-            rows={5}
-            error={errors.companyLinks && errors.companyLinks.message}
-            name="companySocialMidia"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              minLength: {
-                value: 10,
-                message: 'Insira pelo menos um link'
-              }
-            })}
-          />
+          <Select
+            label="Gênero (pessoa responsável pelo cadastro)"
+            error={errors.gender && errors.gender.message}
+            name="gender"
+            firstValue="Gênero"
+            register={register}
+          >
+            {gender.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
 
           <Select
             label="Estado"
             error={errors.state && errors.state.message}
-            name="headOfficeState"
+            name="state"
             firstValue="Estado Sede"
-            register={register({
-              required: 'Esse campo é obrigatório'
-            })}
+            register={register}
             onChange={programIsLoading}
-            isLoading={false}
           >
             {states.map(item =>
               <option value={item.id} key={item.id}>{item.name}</option>
             )}
           </Select>
-          <If condition={typeof hasState !== 'undefined'}>
-            <Select
-              label="Cidade"
-              error={errors.city && errors.city.message}
-              name="headOfficeCity"
-              firstValue="Cidade"
-              register={register({
-                required: 'Esse campo é obrigatório'
-              })}
-              isLoading={isLoading}
-            >
-              {cities
-                .filter(city => city['state_id'].toString() === getValues().state)
-                .map(filteredCities => (
-                  <option
-                    value={filteredCities.name}
-                    key={filteredCities.id}
-                  >
-                    {filteredCities.name}
-                  </option>
-                ))
-              }
-            </Select>
+          <If condition={typeof getValues().state !== 'undefined'}>
+            {cities
+              .filter(city => city['state_id'].toString() === getValues().state)
+              .map(filteredCities => (
+                <option
+                  value={filteredCities.name}
+                  key={filteredCities.id}
+                >
+                  {filteredCities.name}
+                </option>
+              ))
+            }
           </If>
           <Checkboxes
             label="Outros estados que a empresa tem atuação"
             register={register}
             fields={states}
-            name="otherStatesOperation"
+            name="otherStates"
           />
           <Checkboxes
             label="Segmento de atuação"
             register={register}
             fields={segment}
-            name="businessSegment"
+            name="businessSegments"
           />
           <Checkboxes
             label="Campos de atuação"
             register={register}
             fields={actions}
-            name="businessField"
+            name="businessFields"
           />
           <Checkboxes
-            label="Funções que busca diversificar na empresa :"
+            label="Funções que busca diversificar na empresa"
             register={register}
             fields={functions}
             name="diversifyFunctions"
           />
 
-          <Checkboxes
-            label="Qual o tipo do seu CNPJ ?"
+          <Select
+            label="Qual o tipo do seu CNPJ?"
             register={register}
+            firstValue="Tipo de CNPJ"
             fields={cnpj_type}
-            name="cnpjType"
-          />
+            name="companyRegistry"
+            error={errors.companyRegistry && errors.companyRegistry.message}
+          >
+            {cnpj_type.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
 
           <Radios
             label="Sua empresa é vocacionada para conteúdo identitário?"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
             name="identityContent"
-            fields={["Sim", "Não"]}
             error={errors.identityContent && errors.identityContent.message}
+            onChange={e => handleRadio('identityContent', e.target.value)}
           />
-          <If condition={identityYes === 'sim'}>
-            <Checkboxes
-              label="Se sim, em qual segmento?"
-              register={register({
-                required: 'Esse campo é obrigatório'
-              })}
-              fields={identitySegments}
-              name="identityContentSegment"
-            />
-          </If>
 
+          <Checkboxes
+            label="Se sim, em qual segmento?"
+            fields={identitySegments}
+            name="identitySegments"
+            register={register}
+          />
 
           <Radios
             label="A empresa é associado(a) da APAN?"
-            register={register({
-              required: 'Esse campo é obrigatório',
-            })}
             name="apanAssociate"
-            fields={["Sim", "Não"]}
-            error={errors.identityContent && errors.identityContent.message}
+            error={errors.apanAssociate && errors.apanAssociate.message}
+            onChange={e => handleRadio('apanAssociate', e.target.value)}
           />
 
-
-          <Button type="submit">Enviar</Button>
+          <Button
+            type="submit"
+            isLoading={isLoading.submit}
+          >
+            Enviar
+          </Button>
+          <If condition={isSuccessful}>
+            <Success>Seu cadastro foi realizado com sucesso!</Success>
+          </If>
         </Form>
       </Flexbox>
-    </Wrapper>
+    </Background>
   )
 }
 

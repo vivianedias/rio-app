@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-// import { useStoreState } from 'easy-peasy'
+import { useStoreActions } from 'easy-peasy'
 
 
 
@@ -21,8 +21,9 @@ const Login = () => {
 
   const [modalStatus, setModalStatus] = useState(false)
   const { register, handleSubmit, errors, clearError } = useForm()
+  const authUser = useStoreActions(actions => actions.auth.authUser)
 
-  const onSubmit = data => { console.log(data) }
+  const onSubmit = data => authUser(data)
 
   const toggleModal = () => {
     clearError()
@@ -52,8 +53,7 @@ const Login = () => {
               name="email"
               placeholder="e-mail"
               icon="fa-envelope"
-              error={errors && errors.email}
-              isEdit={true}
+              error={errors.email && errors.email.message}
               register={register({
                 required: 'Esse campo é obrigatório',
                 pattern: {
@@ -68,13 +68,12 @@ const Login = () => {
               name="password"
               placeholder="senha"
               icon="fa-lock"
-              error={errors && errors.password}
-              isEdit={true}
+              error={errors.password && errors.password.message}
               register={register({
                 required: 'Esse campo é obrigatório',
                 minLength: {
-                  value: 10,
-                  message: 'A senha deve ter no mínimo 10 caracteres'
+                  value: 6,
+                  message: 'A senha deve ter no mínimo 6 caracteres'
                 }
               })}
             />

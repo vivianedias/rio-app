@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {
+  useState
+} from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components'
 
@@ -6,18 +8,14 @@ import Modal from '../components/Modal'
 import SignupPopup from '../components/popups/Signup'
 import Button from '../components/Button'
 
-
 const Wrapper = styled.nav`
-background-color: #200122;
-padding: 5px;
-
+  background-color: #200122;
+  padding: 5px;
 `
 
 const StyledLogo = styled.img`
-margin-left: 30px;
+  margin-left: 30px;
 `
-
-
 
 // import { withRouter } from 'react-router';
 // import _ from 'lodash';
@@ -81,19 +79,13 @@ const Header = () => {
           <span aria-hidden="true"></span>
         </button>
       </div>
-      {/*<div id="navbarBasicExample" className="navbar-menu">
-
-               <div className="navbar-end">
+      <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Button
-                onClick={() => setModalStatus(!modalStatus)}
-                styles=""
-
-              >
+              <Button onClick={() => setModalStatus(!modalStatus)}>
                 Cadastre-se
               </Button>
-
               <NavLink to="/entrar" className="button is-light">
                 Entrar
               </NavLink>
@@ -107,9 +99,9 @@ const Header = () => {
         width="500px"
       >
         <SignupPopup
-          onClick={() => setModalStatus(false)}
+          toggleModalStatus={() => setModalStatus(!modalStatus)}
         />
-      </Modal>*/}
+      </Modal>
     </Wrapper>
   );
 }

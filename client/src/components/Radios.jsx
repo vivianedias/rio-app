@@ -1,6 +1,5 @@
 import React from 'react'
 import uuid from 'uuid'
-import { parseText as parse } from '../utils/service'
 import styled from 'styled-components'
 
 const StyledRadio = styled.label`

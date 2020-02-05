@@ -32,7 +32,7 @@ const Select = (
   )
 
 Select.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   error: PropTypes.string,
   name: PropTypes.string.isRequired,
   firstValue: PropTypes.string.isRequired,

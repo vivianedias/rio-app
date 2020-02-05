@@ -7,8 +7,7 @@ module.exports = function validateRegisterInput (data) {
   data.name = !isEmpty(data.name) ? data.name : ''
   data.email = !isEmpty(data.email) ? data.email : ''
   data.password = !isEmpty(data.password) ? data.password : ''
-  data.confirmPassword = !isEmpty(data.confirmPassword) ? data.confirmPassword : ''
-  data.phone = !isEmpty(data.phone) ? data.phone : ''
+  data.confirm_password = !isEmpty(data.confirm_password) ? data.confirm_password : ''
 
  // Name
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -33,18 +32,11 @@ module.exports = function validateRegisterInput (data) {
   if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.password = 'Senha precisa conter no mínimo 6 caracteres'
   }
-  if (Validator.isEmpty(data.confirmPassword)) {
+  if (Validator.isEmpty(data.confirm_password)) {
     errors.confirmPassword = 'Confirme sua senha'
   }
-  if (!Validator.equals(data.password, data.confirmPassword)) {
+  if (!Validator.equals(data.password, data.confirm_password)) {
     errors.confirmPassword = 'Essas senhas não coincidem'
-  }
-
-  if (!Validator.isLength(data.phone, { min: 10, max: 13 })) {
-    errors.phone = 'Esse não é um número válido'
-  }
-  if (Validator.isEmpty(data.phone)) {
-    errors.phone = 'Digite o seu telefone'
   }
 
   return {
