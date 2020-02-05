@@ -10,44 +10,56 @@ const VerticalLine = styled.div`
   border-left: 2px solid hsl(0, 0%, 29%);
 `
 
-const SignupPopup = ({ onClick }) => (
-  <Fragment>
-    <Flexbox
-      width="100%"
-      center
-      margin={{
-        top: 10,
-        bottom: 20,
-        left: 0,
-        right: 0
-      }}
-    >
-      <h1 className="title is-5">
-        Selecione o tipo de cadastro que deseja:
-      </h1>
-    </Flexbox>
-    <Flexbox
-      justify="space-evenly"
-      width="100%"
-      align="center"
-    >
-      <Link to="/cadastro/empresas" onClick={onClick}>
-        <Button
-          styles="is-link"
-        >
-          Empresa
-        </Button>
-      </Link>
-      <VerticalLine />
-      <Link to="/cadastro/profissional" onClick={onClick}>
-        <Button
-          styles="is-danger"
-        >
-          Profissional
-        </Button>
-      </Link>
-    </Flexbox>
-  </Fragment>
-)
+
+const SignupPopup = ({ toggleModalStatus }) => {
+
+  const handleClick = userType => {
+    console.log(userType)
+    // Where I set what type of user is being registered
+    localStorage.setItem('user_type', userType)
+    return toggleModalStatus()
+  }
+
+  return (
+    <Fragment>
+      <Flexbox
+        width="100%"
+        center
+        margin={{
+          top: 10,
+          bottom: 20,
+          left: 0,
+          right: 0
+        }}
+      >
+        <h1 className="title is-5">
+          Selecione o tipo de cadastro que deseja:
+        </h1>
+      </Flexbox>
+      <Flexbox
+        justify="space-evenly"
+        width="100%"
+        align="center"
+      >
+        <Link to="/cadastro" onClick={() => handleClick("empresa")}>
+          <Button
+            styles="is-link"
+          >
+            Empresa
+          </Button>
+        </Link>
+        <VerticalLine />
+        <Link to="/cadastro" onClick={() => handleClick("profissional")}>
+          <Button
+            styles="is-danger"
+          >
+            Profissional
+          </Button>
+        </Link>
+      </Flexbox>
+    </Fragment>
+  )
+}
+  
 
 export default SignupPopup

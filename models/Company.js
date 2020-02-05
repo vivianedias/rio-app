@@ -3,14 +3,17 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const CompanySchema = new Schema({
-  name: {
-    type: String,
+  userId:{
     required: true,
-    lowercase: true
+    unique: true,
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
-  email: {
-    type: String,
-    required: true
+  userEmail:{
+    required: true,
+    unique: true,
+    type: Schema.Types.String,
+    ref: 'users'
   },
   gender: {
     type: String,
@@ -37,15 +40,14 @@ const CompanySchema = new Schema({
     required: true
   },
   diversifyFunctions: {
-    type: String,
+    type: Array,
     required: true
   },
   identityContent: {
     type: Boolean,
     require: true,
   },
-
-  identityContentSegment: {
+  identitySegments: {
     type: String,
     require: false
   },
@@ -53,51 +55,33 @@ const CompanySchema = new Schema({
     type: Number,
     required: true
   },
-  businessSegment: {
-    type: String,
-    required: true
+  businessSegments: {
+    type: Array,
+    required: true,
   },
-  businessField: {
-    type: String,
+  businessFields: {
+    type: Array,
     required: true
   },
   apanAssociate: {
     type: Boolean,
     require: true
   },
-  otherStatesOperation: {
-    type: String,
+  otherStates: {
+    type: Array,
     required: true
   },
   headOfficeCity: {
     type: String,
     required: true
   },
-
   headOfficeState: {
-    type: String,
-    required: true
-  },
-
-  fieldsWork: {
     type: String,
     required: true
   },
   phone: {
     type: String,
     required: true
-  },
-  password: {
-    type: String,
-    required: true,
-    select: false,
-  },
-  resetPasswordToken: {
-    type: String,
-    unique: true
-  },
-  resetPasswordExpires: {
-    type: Date
   },
   createdAt: {
     type: Date,

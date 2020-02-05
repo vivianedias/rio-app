@@ -8,15 +8,8 @@ import { isEmpty } from '../utils/service'
 
 const authModel = {
   authUser: thunk(async (actions, payload) => {
-    const { value, query } = payload
     try {
-      const res = await axios.post('/api/users/login', value)
-      actions.setAuth({
-        user: {
-          email: undefined,
-          password: undefined
-        }
-      })
+      const res = await axios.post('/api/user/login', payload)
   
       // Set token to localStorage
       const { token } = res.data
@@ -27,18 +20,18 @@ const authModel = {
   
       // Decode token to get user data
       const decoded = jwtDecode(token)
-  
+      console.log({ user: decoded })
+
       // Set current user
       actions.setAuth({
         isAuthenticated: !isEmpty(decoded),
         user: decoded
       })
-  
-      history && query
-        ? history.push(`/${query}`)
-        : history.push('/dashboard')
-  
-      query && localStorage.removeItem('defaultLocation')
+
+      const user_type = localStorage.user_type
+      
+      history.push(`/cadastro/${user_type}`)
+      return user_type && localStorage.removeItem('user_type')
     }
     catch (e) {
       const errors = e.response.data
@@ -47,10 +40,7 @@ const authModel = {
   }),
   auth: {
     isAuthenticated: false,
-    user: {
-      email: undefined,
-      password: undefined
-    }
+    user: {}
   },
   recovery: {
     msg: '',
