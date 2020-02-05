@@ -37,7 +37,6 @@ router.post('/register', (req, res) => {
         password: req.body.password,
         type: req.body.type,
         gender: req.body.gender,
-        self_declaration: req.body.self_declaration,
         phone: req.body.phone
       })
 
