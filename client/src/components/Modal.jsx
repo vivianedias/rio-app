@@ -20,10 +20,13 @@ const ModalContentStyled = styled.div`
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: ${props => `${props.width}`}; /* Could be more or less, depending on screen size */
   background-image: linear-gradient(77deg,rgba(111,0,0,0) 20%,#200122 100%);
   background-color: #6f0000;
   border: none;
+  width: 500px;
+    @media(max-width: 425px) {
+      width: 100%;
+    }
 `
 
 const CloseButtonStyled = styled.div`
@@ -43,7 +46,7 @@ const CloseButtonStyled = styled.div`
 
 const Modal = ({ children, isOpen, onClose, width }) => (
   <ModalStyled isOpen={isOpen}>
-    <ModalContentStyled width={width}>
+    <ModalContentStyled>
       <CloseButtonStyled onClick={onClose}>&times;</CloseButtonStyled>
       {children}
     </ModalContentStyled>
