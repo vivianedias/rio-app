@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 import uuid from 'uuid'
@@ -7,6 +7,8 @@ import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Button from '../../components/Button'
 import Select from '../../components/Select'
+import Modal from '../../components/Modal'
+import SignupPopup from '../../components/popups/Signup'
 
 import { emailValidation } from '../../utils/service'
 import { gender } from './dicioFields'
@@ -26,11 +28,12 @@ const Users = () => {
   })
 
   const registerUser = useStoreActions(actions => actions.user.registerUser)
+  const [modalStatus, setModalStatus] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
-    const type = localStorage.user_type
-    console.log({type})
+    const type = localStorage.user_type === 'empresa'
+      ? 'enterprise'
+      : 'professional'
     const formatted = {
       ...data,
       confirm_password: data.confirmPassword,
@@ -39,6 +42,10 @@ const Users = () => {
 
     return registerUser(formatted)
   }
+
+  useEffect(() => {
+    if (typeof localStorage.user_type === 'undefined') return setModalStatus(true)
+  }, [localStorage]);
 
   return (
     <Background>
@@ -138,6 +145,15 @@ const Users = () => {
           {/* TODO: Tratar erros do request */}
         </Form>
       </Flexbox>
+      <Modal
+        isOpen={modalStatus}
+        onClose={() => setModalStatus(true)}
+        width="500px"
+      >
+        <SignupPopup
+          toggleModalStatus={() => setModalStatus(!modalStatus)}
+        />
+      </Modal>
     </Background>
   )
 }
