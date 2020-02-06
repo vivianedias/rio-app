@@ -1,12 +1,9 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { useStoreState } from 'easy-peasy'
 
-const PrivateRoute = ({ component: Component, auth, location, ...rest }) => {
-  const query = location.pathname.replace(/^\/+/g, '')
-  const newLocation = {
-    pathname: '/login',
-    search: query
-  }
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const auth = useStoreState(state => state.auth.auth)
 
   return (
     <Route
@@ -16,16 +13,12 @@ const PrivateRoute = ({ component: Component, auth, location, ...rest }) => {
           <Component {...props} />
         ) : (
           <Redirect
-            to={newLocation}
+            to={'/entrar'}
           />
         )
       }
     />
   )
 }
-
-// const mapStateToProps = state => ({
-//   auth: state.auth
-// })
 
 export default PrivateRoute

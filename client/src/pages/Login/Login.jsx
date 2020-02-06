@@ -97,7 +97,9 @@ const Login = () => {
         onClose={() => setModalStatus(false)}
         width="500px"
       >
-        <SignupPopup />
+        <SignupPopup
+          toggleModalStatus={() => setModalStatus(!modalStatus)}
+        />
       </Modal>
     </Fragment>
   )
