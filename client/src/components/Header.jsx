@@ -5,11 +5,12 @@ import React, {
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components'
 import jwtDecode from 'jwt-decode'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 
 import Modal from '../components/Modal'
 import SignupPopup from '../components/popups/Signup'
 import Button from '../components/Button'
+import { IfElse } from '../components/If'
 
 import setAuthToken from '../utils/setAuthToken'
 import { isEmpty } from '../utils/service'
@@ -56,6 +57,7 @@ const Header = () => {
   const [modalStatus, setModalStatus] = useState(false)
   const setAuth = useStoreActions(actions => actions.auth.setAuth)
   const logoutUser = useStoreActions(actions => actions.auth.logoutUser)
+  const auth = useStoreState(state => state.auth.auth)
 
   useEffect(() => {
     if (localStorage.jwtToken) {
@@ -81,6 +83,10 @@ const Header = () => {
       }
     }
   }, [setAuth, logoutUser])
+
+  const type = auth.user && auth.user.type === 'enterprise'
+    ? 'empresa'
+    : 'profissional'
 
   return (
     <Wrapper
@@ -113,12 +119,32 @@ const Header = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
-              <Button onClick={() => setModalStatus(!modalStatus)}>
-                Cadastre-se
-              </Button>
-              <NavLink to="/entrar" className="button is-light">
-                Entrar
-              </NavLink>
+              <IfElse
+                condition={auth.isAuthenticated}
+                True={
+                  <>
+                    <Button onClick={logoutUser}>
+                      Sair
+                    </Button>
+                    <NavLink
+                      to={`/dashboard${type}`}
+                      className="button is-light"
+                    >
+                      Dashboard
+                    </NavLink>
+                  </>
+                }
+                False={
+                  <>
+                    <Button onClick={() => setModalStatus(!modalStatus)}>
+                      Cadastre-se
+                    </Button>
+                    <NavLink to="/entrar" className="button is-light">
+                      Entrar
+                    </NavLink>
+                  </>
+                }
+              />
             </div>
           </div>
         </div>
