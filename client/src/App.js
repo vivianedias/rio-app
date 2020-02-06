@@ -20,7 +20,11 @@ import Professionals from './pages/Signup/Professional'
 import Users from './pages/Signup/User'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
-
+import ProfessionalProfile from './pages/Dashboard/Professional/Professional'
+import EnterpriseProfile from './pages/Dashboard/Enterprise/Enterprise'
+import Operator from './pages/Dashboard/Operator/Operator'
+import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
+import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
 // if (localStorage.jwtToken) {
 //   // Set the auth token header auth
 //   setAuthToken(localStorage.jwtToken)
@@ -57,8 +61,14 @@ const App = ({ store }) => (
           <Route path="/" exact component={Home} />
           <Route path="/entrar" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
+          <Route path="/profissional/meu-perfil" component={ProfessionalProfile} />
+          <Route path="/empresa/meu-perfil" component={EnterpriseProfile} />
+          <Route path='/admin/operadora' component={Operator} />
+          <Route path='/listagem/vagas' component={VacancyList} />
+          <Route path='/cadastro/vaga' component={VacancyRegister} />
+
           <Switch>
-            <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
+          <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
             <PrivateRoute
               path='/cadastro/profissional'
               component={Professionals}
