@@ -20,7 +20,6 @@ const authModel = {
   
       // Decode token to get user data
       const decoded = jwtDecode(token)
-      console.log({ user: decoded })
 
       // Set current user
       actions.setAuth({
@@ -37,6 +36,21 @@ const authModel = {
       const errors = e.response.data
       return actions.setErrors(errors)
     }
+  }),
+  logoutUser: thunk(async (actions, payload) => {
+     // Remove token from localStorage
+     localStorage.removeItem('jwtToken')
+
+     // Remove auth header for future requests
+     setAuthToken(false)
+ 
+     // Set the current user to {} wich will set isAuthenticated to false
+     actions.setAuth({
+       isAuthenticated: false,
+       user: {}
+     })
+ 
+     history ? history.push('/') : window.location.href = '/'
   }),
   auth: {
     isAuthenticated: false,
