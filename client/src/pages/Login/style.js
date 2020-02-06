@@ -18,10 +18,8 @@ export const InputWrapper = styled.div`
   margin-bottom: 20px;
 `
 
-
 export const WrapperScreen = styled.div`
-      background-image: linear-gradient(#200122, #6F0000);
-
+  background-image: linear-gradient(#200122, #6F0000);
 `
 
 export const StyledFont = styled.h1`

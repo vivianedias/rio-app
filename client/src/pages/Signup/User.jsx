@@ -45,7 +45,7 @@ const Users = () => {
 
   useEffect(() => {
     if (typeof localStorage.user_type === 'undefined') return setModalStatus(true)
-  }, [localStorage]);
+  }, []);
 
   return (
     <Background>
