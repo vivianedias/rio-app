@@ -6,7 +6,7 @@ export const FullWidth = styled.div`
 `
 
 export const Form = styled.form`
-  background-color: pink;
+  background-image: linear-gradient(#200122, #6F0000);
   width: 100%;
   padding: 20px;
   @media(min-width: 576px) {
@@ -17,3 +17,15 @@ export const Form = styled.form`
 export const InputWrapper = styled.div`
   margin-bottom: 20px;
 `
+
+
+export const WrapperScreen = styled.div`
+      background-image: linear-gradient(#200122, #6F0000);
+
+`
+
+export const StyledFont = styled.h1`
+  color:#fc9b44;
+  font-size: 40px;
+`
+
