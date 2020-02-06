@@ -4,19 +4,20 @@ import history from '../history'
 
 const registerModel = {
   registerProfessional: thunk(async (actions, payload) => {
-    return axios.post('/api/candidate/register', payload)
-      .then(() => {
-        history.push('/dashboard')
-      })
-      .catch(err => {
-        const errors = err.response.data
-        return actions.setErrors(errors)
-      })
+    try {
+      await axios.post('/api/candidate/register', payload)
+      return history.push(`/dashboard/${payload.type}`)
+    }
+    catch (err) {
+      console.log(err)
+      const errors = err.response.data
+      return actions.setErrors(errors)
+    }
   }),
   registerCompany: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/enterprise/register', payload)
-      return history.push('/dashboard')
+      return history.push(`/dashboard/${payload.type}`)
     }
     catch (err) {
       console.log(err)

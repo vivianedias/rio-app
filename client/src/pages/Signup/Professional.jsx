@@ -70,11 +70,12 @@ const Professionals = () => {
     submit: false
   })
   const onSubmit = (data) => {
-    setLoader({ ...isLoading, submit: true })
     console.log(data)
-    setSuccess(true)
-    setLoader({ ...isLoading, submit: false })
-    registerUser(data)
+    const formatted = {
+      ...data,
+      type: 'profissional'
+    }
+    registerUser(formatted)
   }
 
   const programIsLoading = () => {

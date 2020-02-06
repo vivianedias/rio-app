@@ -64,7 +64,8 @@ const Enterprise = () => {
       diversity_functions: formatCheckboxFields(data.diversityFunctions),
       business_segments: formatCheckboxFields(data.businessSegments),
       business_fields: formatCheckboxFields(data.businessFields),
-      identity_content: data.identityContent
+      identity_content: data.identityContent,
+      type: 'empresa'
     }
     registerCompany(formatted)
   }
