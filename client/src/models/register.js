@@ -28,7 +28,8 @@ const registerModel = {
       await axios.post('/api/user/register', payload)
       return history.push('/entrar')
     }
-    catch(err) {
+    catch (err) {
+      console.log(err)
       const errors = err.response.data
       return actions.setErrors(errors)
     }
