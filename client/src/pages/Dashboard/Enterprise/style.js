@@ -13,20 +13,19 @@ export const InputWrapper = styled.div`
 `
 export const Background = styled.div`
   display: flex;
+  height: inherit;
   flex-direction: column;
-  align-items: center;
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
 `
 export const Group = styled.div`
   display: flex;
-  width: 50%;
-  padding: 20px 20px;
-  justify-content: flex-end;
+  width: 80%;
+  margin: 1vh 0;
 `
-export const Label = styled.p`
-  font-size: 22px;
+export const Label = styled.label`
+  font-size: 16px;
   color: #FFFFFF;
-  margin: 2vh 0;
+  margin-right: 1vw;
 `
 export const ButtonDelete = styled.button`
   font-size: 16px;
@@ -37,6 +36,28 @@ export const ButtonDelete = styled.button`
   color: white;
   cursor: pointer;
   margin-left: 2vh;
+`
+export const Container = styled.div`
+    box-sizing: border-box;
+    width: 95%;
+    display: block;
+    margin: 10px 15vh;
+    min-height: 70vh;
+`
+export const Textarea = styled.p`
+    font-size: 16px; 
+    color: #FFFFFF; 
+`
+export const Title = styled.h1`
+  font-size: 22px;
+  color: #FFFFFF;
+  margin: 2vh 0;
+`
+export const GroupButton = styled.div`
+  display: flex;
+  width: 80%;
+  margin: 1vh 0;
+  justify-content: flex-end;
 `
 
 
