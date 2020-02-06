@@ -14,14 +14,15 @@ const registerModel = {
       })
   }),
   registerCompany: thunk(async (actions, payload) => {
-    return axios.post('/api/company/register', payload)
-      .then(() => {
-        history.push('/dashboard')
-      })
-      .catch(err => {
-        const errors = err.response.data
-        return actions.setErrors(errors)
-      })
+    try {
+      await axios.post('/api/enterprise/register', payload)
+      return history.push('/dashboard')
+    }
+    catch (err) {
+      console.log(err)
+      const errors = err.response.data
+      return actions.setErrors(errors)
+    }
   }),
   registerUser: thunk(async (actions, payload) => {
     try {
@@ -37,7 +38,7 @@ const registerModel = {
   errors: {},
   setErrors: action((state, payload) => {
     state.errors = payload
-  }),
+  })
 }
 
 

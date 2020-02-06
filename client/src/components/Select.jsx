@@ -15,13 +15,12 @@ const Select = (
     children,
     register,
     isLoading = false,
-    onChange
   }) => (
     <div className="field">
       <StyledLabel className="label">{label}</StyledLabel>
       <div className="control">
         <div className={`select ${error ? "is-focused is-danger" : ""} ${isLoading ? "is-loading" : ""}`}>
-          <select name={name} ref={register} onChange={onChange}>
+          <select name={name} ref={register}>
             <option value="">{firstValue}</option>
             {children}
           </select>

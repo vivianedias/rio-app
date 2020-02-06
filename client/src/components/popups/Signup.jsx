@@ -12,9 +12,7 @@ const VerticalLine = styled.div`
 
 
 const SignupPopup = ({ toggleModalStatus }) => {
-
   const handleClick = userType => {
-    console.log(userType)
     // Where I set what type of user is being registered
     localStorage.setItem('user_type', userType)
     return toggleModalStatus()
