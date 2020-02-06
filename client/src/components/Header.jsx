@@ -64,12 +64,13 @@ const Header = () => {
     
       // Decode token and get user info and exp
       const decoded = jwtDecode(localStorage.jwtToken)
-    
+      
       // Set user and auth
       setAuth({
         isAuthenticated: !isEmpty(decoded),
         user: decoded
       })
+
       // Check for expired token
       const currentTime = Date.now() / 1000
       if (decoded.exp < currentTime) {

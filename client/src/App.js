@@ -12,10 +12,15 @@ import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login/Login'
 import Enterprise from './pages/Signup/Enterprise'
-import Professionals from './pages/Signup/Professional'
+import Professional from './pages/Signup/Professional'
 import Users from './pages/Signup/User'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
+import ProfessionalProfile from './pages/Dashboard/Professional/Professional'
+import EnterpriseProfile from './pages/Dashboard/Enterprise/Enterprise'
+import Admin from './pages/Dashboard/Admin/Admin'
+import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
+import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -36,13 +41,23 @@ const App = ({ store }) => (
           <Route path="/" exact component={Home} />
           <Route path="/entrar" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
+          <Route path='/listagem/vagas' component={VacancyList} />
+          <Route path='/cadastro/vaga' component={VacancyRegister} />
           <Switch>
             <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
             <PrivateRoute
               path='/cadastro/profissional'
-              component={Professionals}
+              component={Professional}
             />
-            {/* <PrivateRoute path='/dashboard' component={Dashboard} /> */}
+            <PrivateRoute path='/dashboard/admin' component={Admin} />
+            <PrivateRoute
+              path='/dashboard/profissional'
+              component={ProfessionalProfile}
+            />
+            <PrivateRoute
+              path='/dashboard/empresa'
+              component={EnterpriseProfile}
+            />
           </Switch>
           <Footer fixed>
           </Footer>

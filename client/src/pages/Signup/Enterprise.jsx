@@ -57,7 +57,6 @@ const Enterprise = () => {
       ...data,
       foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
       city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
-      identity_content: data.identityContent,
       cnpj_type: data.cnpjType,
       apan_associate: data.apanAssociate,
       identity_segments: formatCheckboxFields(data.identitySegments),

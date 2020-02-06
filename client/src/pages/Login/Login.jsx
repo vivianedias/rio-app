@@ -1,9 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import { useStoreActions } from 'easy-peasy'
-
-
+import { useStoreActions, useStoreState } from 'easy-peasy'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
@@ -13,15 +11,14 @@ import SignupPopup from '../../components/popups/Signup'
 
 import { Form, InputWrapper, WrapperScreen, StyledFont } from './style'
 import { emailValidation } from '../../utils/service'
-
-import style from './style.css'
-
+import history from '../../history'
 
 const Login = () => {
 
   const [modalStatus, setModalStatus] = useState(false)
   const { register, handleSubmit, errors, clearError } = useForm()
   const authUser = useStoreActions(actions => actions.auth.authUser)
+  const auth = useStoreState(state => state.auth.auth)
 
   const onSubmit = data => authUser(data)
 
@@ -29,6 +26,11 @@ const Login = () => {
     clearError()
     return setModalStatus(!modalStatus)
   }
+
+  useEffect(() => {
+    const { user: { type = '' }, isAuthenticated } = auth
+    if (isAuthenticated) return history.push(`/dashboard/${type}`)
+  }, [auth])
 
   return (
     <WrapperScreen>

@@ -5,14 +5,10 @@ import styled from 'styled-components'
 import Flexbox from '../Flexbox'
 import Button from '../Button'
 
-import style from './style.css'
-
 const VerticalLine = styled.div`
   height: 150px;
   border-left: 2px solid hsl(0, 0%, 29%);
 `
-
-
 const SignupPopup = ({ toggleModalStatus }) => {
   const handleClick = userType => {
     // Where I set what type of user is being registered

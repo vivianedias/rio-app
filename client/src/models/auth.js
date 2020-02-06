@@ -20,7 +20,7 @@ const authModel = {
   
       // Decode token to get user data
       const decoded = jwtDecode(token)
-
+      console.log({ isEmpty: !isEmpty(decoded) })
       // Set current user
       actions.setAuth({
         isAuthenticated: !isEmpty(decoded),
@@ -56,20 +56,9 @@ const authModel = {
     isAuthenticated: false,
     user: {}
   },
-  recovery: {
-    msg: '',
-    isLoading: false
-  },
-  errors: {},
-  setAuth: action((state, payload) => {
-    state.auth = payload
-  }),
-  setRecovery: action((state, payload) => {
-    state.recovery = payload
-  }),
-  setErrors: action((state, payload) => {
-    state.errors = payload
-  }),
+  setAuth: action((state, payload) => ({
+    auth: { ...payload }
+  })),
 }
 
 export default authModel
