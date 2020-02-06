@@ -20,17 +20,30 @@ const authModel = {
   
       // Decode token to get user data
       const decoded = jwtDecode(token)
-      console.log({ isEmpty: !isEmpty(decoded) })
+
       // Set current user
       actions.setAuth({
         isAuthenticated: !isEmpty(decoded),
         user: decoded
       })
 
-      const user_type = localStorage.user_type
+      localStorage.removeItem('user_type')
       
-      history.push(`/cadastro/${user_type}`)
-      return user_type && localStorage.removeItem('user_type')
+      try {
+        const check = await axios.get('/api/user/has-additional-register')
+        const type = decoded.type === 'enterprise'
+          ? 'empresa'
+          : 'profissional'
+        
+        if (check.data.hasAdditionalRegister) {
+          return history.push(`/dashboard/${type}`)
+        }
+        
+        return history.push(`/cadastro/${type}`)
+      }
+      catch (err) {
+        throw err
+      }
     }
     catch (e) {
       const errors = e.response.data

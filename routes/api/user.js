@@ -12,6 +12,9 @@ const validateLoginInput = require('../../validator/login')
 
 // Load User model
 const User = require('../../models/User')
+const Candidate = require('../../models/Candidate')
+const Enterprise = require('../../models/Enterprise')
+
 
 // @route   POST api/user/register
 // @desc    Register user
@@ -115,6 +118,35 @@ router.get('/current',
       email: req.user.email,
       type: req.user.type
     })
+  }
+)
+
+// @route   GET api/users/has-additional-register
+// @desc    Return if user has related enterprise or candidate
+// @access  Private
+router.get('/has-additional-register',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    return Enterprise.findOne({ user_id: req.user.id })
+      .then(enterprise => {
+        if (enterprise) return res.json({
+          hasAdditionalRegister: true
+        })
+
+        else {
+          Candidate.findOne({ user_id: req.user.id })
+            .then(candidate => {
+              if (candidate) return res.json({
+                hasAdditionalRegister: true
+              })
+              else {
+                res.json({ hasAdditionalRegister: false })
+              }
+            })
+            .catch(err => res.status(500).json(err))
+        }
+      })
+      .catch(err => res.status(500).json(err))
   }
 )
 
