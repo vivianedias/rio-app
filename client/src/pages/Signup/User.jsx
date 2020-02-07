@@ -16,16 +16,16 @@ import { gender } from './dicioFields'
 import { Form, Background } from './styles'
 
 const Users = () => {
-  const { register, handleSubmit, errors, getValues } = useForm({
-    defaultValues: {
-      name: 'Viviane',
-      gender:'bla',
-      email: 'bla@gmail.com',
-      phone: '123123123',
-      password: 'blabla',
-      confirmPassword: 'blabla',
-    }
-  })
+  const { register, handleSubmit, errors, getValues } = useForm()
+  //   defaultValues: {
+  //     name: 'Viviane',
+  //     gender:'bla',
+  //     email: 'bla@gmail.com',
+  //     phone: '123123123',
+  //     password: 'blabla',
+  //     confirmPassword: 'blabla',
+  //   }
+  // })
 
   const registerUser = useStoreActions(actions => actions.user.registerUser)
   const [modalStatus, setModalStatus] = useState(false)

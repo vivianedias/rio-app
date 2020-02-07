@@ -69,15 +69,13 @@ const Professionals = () => {
     city: false,
     submit: false
   })
-  const onSubmit = async (data) => {
-    setLoader({ ...isLoading, submit: true })
+  const onSubmit = (data) => {
     console.log(data)
-    // const res = registerUser(data)
-    // console.log(res)
-    // if (res.status === 200) {
-    //   setSuccess(true)
-    //   setLoader({ ...isLoading, submit: false })
-    // }
+    const formatted = {
+      ...data,
+      type: 'profissional'
+    }
+    registerUser(formatted)
   }
 
   const programIsLoading = () => {
