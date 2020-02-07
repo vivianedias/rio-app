@@ -51,7 +51,10 @@ const Enterprise = () => {
   const [isLoading, setLoader] = useState(false)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   const formatCheckboxFields = (field) => {
     const identifiers = Object.keys(field)
     return identifiers.filter((i) => field[i])

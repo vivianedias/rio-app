@@ -35,6 +35,7 @@ const Professionals = () => {
     getValues,
     setValue
 <<<<<<< HEAD
+<<<<<<< HEAD
   } = useForm({
     mode: 'onBlur'
   })
@@ -65,6 +66,8 @@ const Professionals = () => {
   // links: "blablablablabldajsdnkasjdnsaja"
   // }
 =======
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   } = useForm()
     // defaultValues: {
       // name: "Viviane"
@@ -92,6 +95,9 @@ const Professionals = () => {
       // bio: "blasdjasjkdaskdbaskd",
       // links: "blablablablabldajsdnkasjdnsaja"
     // }
+<<<<<<< HEAD
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
+=======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   // })
 
@@ -106,6 +112,7 @@ const Professionals = () => {
     const formatted = {
       ...data,
 <<<<<<< HEAD
+<<<<<<< HEAD
       birthday: '22/01/1998',
       city: 'blabla',
       home_state: data.homeState,
@@ -116,6 +123,8 @@ const Professionals = () => {
       apan_associate: data.apanAssociate,
       formation_institution: data.formationInstitution,
       sexual_orientation: data.sexualOrientation,
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
       type: 'profissional'
@@ -145,12 +154,15 @@ const Professionals = () => {
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
           <Select
             name="sexualOrientation"
             label="Orientação sexual"
             error={errors.sexualOrientation && errors.sexualOrientation.message}
 =======
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
           <InputText
             name="email"
             type="text"
@@ -232,6 +244,9 @@ const Professionals = () => {
             label="Orientação sexual"
             error={errors.sexualOrientation && errors.sexualOrientation.message}
             name="sexualOrientation"
+<<<<<<< HEAD
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
+=======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
             firstValue="Orientação Sexual"
             register={register}
@@ -242,7 +257,10 @@ const Professionals = () => {
           </Select>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
           <Radios

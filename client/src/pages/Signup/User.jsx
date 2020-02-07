@@ -12,10 +12,14 @@ import SignupPopup from '../../components/popups/Signup'
 
 import { emailValidation } from '../../utils/service'
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   gender,
   color
 } from './dicioFields'
+=======
+import { gender } from './dicioFields'
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
 import { gender } from './dicioFields'
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
@@ -45,7 +49,10 @@ const Users = () => {
       ...data,
       confirm_password: data.confirmPassword,
 <<<<<<< HEAD
+<<<<<<< HEAD
       self_declaration: data.selfDeclaration,
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
       type
@@ -149,6 +156,7 @@ const Users = () => {
           </Select>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
           <Select
             name="selfDeclaration"
             label="Auto Declaração (pessoa responsável pelo cadastro)"
@@ -161,6 +169,8 @@ const Users = () => {
             )}
           </Select>
 
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
           <Button

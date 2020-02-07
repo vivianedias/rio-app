@@ -16,6 +16,7 @@ const Candidate = require('../../models/Candidate')
 // @desc    Register candidate
 // @access  Public
 <<<<<<< HEAD
+<<<<<<< HEAD
 router.post('/register', passport.authenticate('jwt', { session: false }),
   (req, res) => {
     let errors = {}
@@ -70,6 +71,16 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors)
   }
 
+=======
+router.post('/register', (req, res) => {
+  const { errors, isValid } = validateRegisterInput(req.body)
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   Candidate.findOne({ email: req.body.email })
     .then(candidate => {
       if (candidate) {
@@ -113,6 +124,7 @@ router.post('/register', (req, res) => {
               .catch(err => console.log(err))
           })
         })
+<<<<<<< HEAD
       }
     })
 })
@@ -167,6 +179,61 @@ router.post('/login', (req, res) => {
 })
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 
+=======
+      }
+    })
+})
+
+// @route   GET api/candidate/login
+// @desc    Login Candidate / Returning JWT Token
+// @access  Public
+router.post('/login', (req, res) => {
+  const { errors, isValid } = validateLoginInput(req.body)
+
+  // Check Validation
+  if (!isValid) {
+    return res.status(400).json(errors)
+  }
+
+  const email = req.body.email
+  const password = req.body.password
+
+  // Find candidate by email
+  Candidate.findOne({ email }).then(candidate => {
+    // Check for candidate
+    if (!candidate) {
+      errors.email = 'Verifique seu email ou senha e tente novamente.'
+      return res.status(400).json(errors)
+    }
+
+    // Check Password
+    bcrypt.compare(password, candidate.password).then(isMatch => {
+      if (isMatch) {
+        // Candidate Matched
+        // Create JWT Payload
+        const payload = { id: candidate.id, name: candidate.name, email: candidate.email }
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          process.env.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            })
+          }
+        )
+      } else {
+        errors.password = 'Verifique seu email ou senha e tente novamente.'
+        return res.status(400).json(errors)
+      }
+    })
+  })
+})
+
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 // @route   GET api/candidate/current
 // @desc    Return current candidate
 // @access  Private

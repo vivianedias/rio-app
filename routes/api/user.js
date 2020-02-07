@@ -41,8 +41,12 @@ router.post('/register', (req, res) => {
         type: req.body.type,
         gender: req.body.gender,
 <<<<<<< HEAD
+<<<<<<< HEAD
         phone: req.body.phone,
         self_declaration: req.body.self_declaration
+=======
+        phone: req.body.phone
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 =======
         phone: req.body.phone
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'

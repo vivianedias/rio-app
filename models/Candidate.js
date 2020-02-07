@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 // Create Schema
 const CandidateSchema = new Schema({
 <<<<<<< HEAD
+<<<<<<< HEAD
   user_id: {
 =======
   email:{
@@ -18,6 +19,28 @@ const CandidateSchema = new Schema({
     unique: true,
     type: Schema.Types.String,
     ref: 'User'
+=======
+  email:{
+    type: String,
+    required: true,
+    lowercase: true
+  },
+  name:{
+    type: String,
+    required: true
+  },
+  self_declaration: {
+    type: String,
+    required: true
+  },
+  gender: {
+    type: String,
+    required: true
+  },
+  sexualOrientation:{
+    type: String, 
+    require: false
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   },
   sexual_orientation: {
     type: String,
@@ -66,6 +89,7 @@ const CandidateSchema = new Schema({
     required: true
   },
   currentState:{
+<<<<<<< HEAD
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
     type: String,
     require: true,
@@ -75,6 +99,14 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
 =======
+  currentCity:{
+    type: String, 
+    require: true
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
+=======
+    type: String,
+    require: true,
+  },
   currentCity:{
     type: String, 
     require: true
@@ -93,6 +125,7 @@ const CandidateSchema = new Schema({
     required: true
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
   formation_institution: {
     type: String,
     required: true,
@@ -103,6 +136,8 @@ const CandidateSchema = new Schema({
   },
   cnpj_type: {
 =======
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   formationInstitution:{
     type: String, 
     required:true,
@@ -112,6 +147,7 @@ const CandidateSchema = new Schema({
     required: true
   },  
   cnpjType:{
+<<<<<<< HEAD
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
     type: String,
     required: true
@@ -134,9 +170,33 @@ const CandidateSchema = new Schema({
 >>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   },
   expertiseAreas: {
+=======
     type: String,
     required: true
   },
+  identityContent:{
+    type: Boolean, 
+    required: true
+  },
+  identitySegments:{
+    type: String,
+    required: true
+  },
+  expertiseAreas: {
+    type: String,
+    required: true
+  },
+  apanAssociate:{
+    type: Boolean,
+    require: true
+  },
+  password: {
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
+    type: String,
+    required: true,
+    select: false, 
+  },
+<<<<<<< HEAD
 <<<<<<< HEAD
   apan_associate: {
 =======
@@ -152,6 +212,10 @@ const CandidateSchema = new Schema({
   },
   resetPasswordToken: {
     type: String,
+=======
+  resetPasswordToken: {
+    type: String,
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
     unique: true
   },
   resetPasswordExpires: {
