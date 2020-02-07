@@ -127,7 +127,7 @@ const Header = () => {
                       Sair
                     </Button>
                     <NavLink
-                      to={`/dashboard${type}`}
+                      to={`/dashboard/${type}`}
                       className="button is-light"
                     >
                       Dashboard

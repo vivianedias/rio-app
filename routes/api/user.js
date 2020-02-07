@@ -40,7 +40,9 @@ router.post('/register', (req, res) => {
         password: req.body.password,
         type: req.body.type,
         gender: req.body.gender,
-        phone: req.body.phone
+        phone: req.body.phone,
+        sexual_orientation: req.body.sexual_orientation,
+        self_declaration: req.body.self_declaration
       })
 
       bcrypt.genSalt(10, (err, salt) => {
