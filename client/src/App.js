@@ -21,6 +21,13 @@ import EnterpriseProfile from './pages/Dashboard/Enterprise/Enterprise'
 import Admin from './pages/Dashboard/Admin/Admin'
 import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
 import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
+import SearchProfessionals from './pages/Search/SearchProfessionals';
+import SearchEnterprise from './pages/Search/SearchEnterprise';
+
+import ResultSearchProfessionals from './pages/Search/ResultSearchProfessionals';
+import ResultSearchEnterprise from './pages/Search/ResultSearchEnterprise';
+
+
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -58,6 +65,12 @@ const App = ({ store }) => (
               path='/dashboard/empresa'
               component={EnterpriseProfile}
             />
+
+            <Route path='/busca-profissionais' component={SearchProfessionals} />
+            <Route path='/resultado-profissionais' component={ResultSearchProfessionals} />
+
+            <Route path='/busca-empresas' component={SearchEnterprise} />
+            <Route path='/resultado-empresas' component={ResultSearchEnterprise} />
           </Switch>
           <Footer fixed>
           </Footer>
