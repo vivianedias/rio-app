@@ -31,6 +31,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  sexual_orientation: {
+    type: String,
+    required: true
+  },
+  self_declaration: {
+    type: String,
+    required: true
+  },
   reset_password_token: {
     type: String,
     unique: true

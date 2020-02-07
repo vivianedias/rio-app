@@ -11,7 +11,11 @@ import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
 
 import { emailValidation } from '../../utils/service'
-import { gender } from './dicioFields'
+import {
+  gender,
+  sexualOrientation,
+  color
+} from './dicioFields'
 
 import { Form, Background } from './styles'
 
@@ -34,9 +38,12 @@ const Users = () => {
     const type = localStorage.user_type === 'empresa'
       ? 'enterprise'
       : 'professional'
+
     const formatted = {
       ...data,
       confirm_password: data.confirmPassword,
+      sexual_orientation: data.sexualOrientation,
+      self_declaration: data.selfDeclaration,
       type
     }
 
@@ -133,6 +140,30 @@ const Users = () => {
             register={register}
           >
             {gender.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
+
+          <Select
+            name="sexualOrientation"
+            label="Orientação sexual"
+            error={errors.sexualOrientation && errors.sexualOrientation.message}
+            firstValue="Orientação Sexual"
+            register={register}
+          >
+            {sexualOrientation.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
+
+          <Select
+            name="selfDeclaration"
+            label="Auto Declaração (pessoa responsável pelo cadastro)"
+            register={register}
+            firstValue="Auto Declaração"
+            error={errors.selfDeclaration && errors.selfDeclaration.message}
+          >
+            {color.map(item =>
               <option value={item} key={uuid()}>{item}</option>
             )}
           </Select>

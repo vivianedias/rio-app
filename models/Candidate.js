@@ -3,52 +3,39 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CandidateSchema = new Schema({
-  email:{
-    type: String,
+  user_id:{
     required: true,
-    lowercase: true
+    unique: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
-  name:{
-    type: String,
-    required: true
-  },
-  self_declaration: {
-    type: String,
-    required: true
-  },
-  gender: {
-    type: String,
-    required: true
-  },
-  sexualOrientation:{
-    type: String, 
-    require: false
+  user_email:{
+    required: true,
+    unique: true,
+    type: Schema.Types.String,
+    ref: 'User'
   },
   pcd:{
     type: Boolean, 
-    require: true
+    required: true
   }, 
   birthday:{
     type: String, 
     required: true
   },
-  homeState:{
+  home_state:{
     type: String, 
     required: true
   },
-  currentState:{
+  state:{
     type: String,
-    require: true,
+    required: true,
   },
-  currentCity:{
+  city:{
     type: String, 
-    require: true
+    required: true
   },
   address: {
-    type: String,
-    required: true
-  },
-  phone: {
     type: String,
     required: true
   },
@@ -56,47 +43,41 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  formationInstitution:{
+  formation_institution:{
     type: String, 
     required:true,
   },
-  cpnj:{
+  cnpj:{
     type: Boolean, 
     required: true
   },  
-  cnpjType:{
+  cnpj_type:{
     type: String,
-    required: true
   },
-  identityContent:{
+  identity_content:{
     type: Boolean, 
     required: true
   },
-  identitySegments:{
-    type: String,
+  identity_segments:{
+    type: Array,
+  },
+  expertise_areas: {
+    type: Array,
     required: true
   },
-  expertiseAreas: {
-    type: String,
-    required: true
-  },
-  apanAssociate:{
+  apan_associate:{
     type: Boolean,
-    require: true
+    required: true
   },
-  password: {
+  bio: {
     type: String,
-    required: true,
-    select: false, 
+    required: true
   },
-  resetPasswordToken: {
+  links: {
     type: String,
-    unique: true
+    required: true
   },
-  resetPasswordExpires: {
-    type: Date
-  },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now
   }
