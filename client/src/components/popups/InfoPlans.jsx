@@ -19,7 +19,7 @@ const InfoDelete = ({ toggleModalStatus }) => {
                     right: 0
                 }}
             >
-                <a href="https://raio.agency/planos">
+                <a target="_blanck" href="https://raio.agency/planos">
                     <img src={seloPlans} />
                 </a>
             </Flexbox>
