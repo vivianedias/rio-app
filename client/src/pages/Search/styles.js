@@ -58,10 +58,7 @@ export const WrapperResultSearch = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #6F0000;
-  ${props => props.height && props.height && `height: ${props.height};`}
 `;
-
-
 
 export const SearchResultEnterprise = styled.div`
     text-align: center;

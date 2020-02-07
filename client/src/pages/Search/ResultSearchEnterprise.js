@@ -1,6 +1,6 @@
 import React from "react"
 import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, SearchResultEnterprise } from './styles'
-
+import CardProfessional from './components/CardProfessional'
 
 const ResultSearchProfessionals = () => {
   const vacancies = [
@@ -72,9 +72,23 @@ const ResultSearchProfessionals = () => {
         <SubTitle>Resultado de Busca para:</SubTitle>
 
         <SearchResultEnterprise>
-
-          Foram encontrados {} resultados de busca para a sua pesquisa
+          Foram encontrados {vacancies.length} resultados de busca para a sua pesquisa
        </SearchResultEnterprise>
+       <Group>
+          {vacancies.map((vacancy) => (
+            <CardProfessional
+              name={vacancy.name}
+              function={vacancy.function}
+              requirements={vacancy.requirements}
+              location={vacancy.location}
+              cnpj={vacancy.cnpj}
+              period={vacancy.period}
+              cache={vacancy.cache}
+              periodTotal={vacancy.periodTotal}
+            />
+          ))
+          }
+        </Group>
       </Wrapper>
     </WrapperResultSearch>
   )
