@@ -32,7 +32,7 @@ router.post('/register', (req, res) => {
       if (user) {
         errors.email = 'Opa! Já existe um usuário com esse e-mail.'
         return res.status(400).json(errors)
-      } 
+      }
 
       const newUser = new User({
         name: req.body.name,
@@ -41,7 +41,6 @@ router.post('/register', (req, res) => {
         type: req.body.type,
         gender: req.body.gender,
         phone: req.body.phone,
-        sexual_orientation: req.body.sexual_orientation,
         self_declaration: req.body.self_declaration
       })
 

@@ -10,7 +10,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true, 
+    unique: true,
     lowercase: true
   },
   password: {
@@ -21,17 +21,13 @@ const UserSchema = new Schema({
     required: true,
     type: String,
     lowercase: true,
-    enum : ['admin', 'professional', 'enterprise']
+    enum: ['admin', 'professional', 'enterprise']
   },
   phone: {
     type: String,
     required: true
   },
   gender: {
-    type: String,
-    required: true
-  },
-  sexual_orientation: {
     type: String,
     required: true
   },
