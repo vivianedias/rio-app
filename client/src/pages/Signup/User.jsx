@@ -13,7 +13,6 @@ import SignupPopup from '../../components/popups/Signup'
 import { emailValidation } from '../../utils/service'
 import {
   gender,
-  sexualOrientation,
   color
 } from './dicioFields'
 
@@ -42,7 +41,6 @@ const Users = () => {
     const formatted = {
       ...data,
       confirm_password: data.confirmPassword,
-      sexual_orientation: data.sexualOrientation,
       self_declaration: data.selfDeclaration,
       type
     }
@@ -113,13 +111,13 @@ const Users = () => {
             error={errors.name && errors.name.message}
           />
 
+
           <InputText
             name="phone"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
               pattern: {
-                value: /^[0-9]*$/gm,
                 message: 'Insira apenas números'
               },
               maxLength: {
@@ -140,18 +138,6 @@ const Users = () => {
             register={register}
           >
             {gender.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
-
-          <Select
-            name="sexualOrientation"
-            label="Orientação sexual"
-            error={errors.sexualOrientation && errors.sexualOrientation.message}
-            firstValue="Orientação Sexual"
-            register={register}
-          >
-            {sexualOrientation.map(item =>
               <option value={item} key={uuid()}>{item}</option>
             )}
           </Select>

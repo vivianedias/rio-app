@@ -18,6 +18,7 @@ import {
   registryTypes,
   formations,
   identitySegments,
+  sexualOrientation
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
@@ -34,30 +35,30 @@ const Professionals = () => {
     mode: 'onBlur'
   })
   // defaultValues: {
-    // name: "Viviane"
-    // email: "vivi@gmail.com",
-    // password: "123456",
-    // confirmPassword: "123456",
-    // birthday:"12/1/1995",
-    // gender: "bla",
-    // pcd: true,
-    // homeState: "bla",
-    // currentState:"bla",
-    // currentCity: "bla",
-    // selfDeclaration: "bla",
-    // address: "blabla",
-    // education: "blabla",
-    // formationInstitution: "bla",
-    // cnpj: true,
-    // cnpjType: "bla",
-    // identityContent: true,
-    // identitySegments: "",
-    // expertiseAreas: "bla",
-    // apanAssociate: true,
-    // phone: "13123123",
-    // sexualOrientation: "bla",
-    // bio: "blasdjasjkdaskdbaskd",
-    // links: "blablablablabldajsdnkasjdnsaja"
+  // name: "Viviane"
+  // email: "vivi@gmail.com",
+  // password: "123456",
+  // confirmPassword: "123456",
+  // birthday:"12/1/1995",
+  // gender: "bla",
+  // pcd: true,
+  // homeState: "bla",
+  // currentState:"bla",
+  // currentCity: "bla",
+  // selfDeclaration: "bla",
+  // address: "blabla",
+  // education: "blabla",
+  // formationInstitution: "bla",
+  // cnpj: true,
+  // cnpjType: "bla",
+  // identityContent: true,
+  // identitySegments: "",
+  // expertiseAreas: "bla",
+  // apanAssociate: true,
+  // phone: "13123123",
+  // sexualOrientation: "bla",
+  // bio: "blasdjasjkdaskdbaskd",
+  // links: "blablablablabldajsdnkasjdnsaja"
   // }
   // })
 
@@ -77,6 +78,7 @@ const Professionals = () => {
       expertise_areas: formatCheckboxFields(data.expertiseAreas),
       apan_associate: data.apanAssociate,
       formation_institution: data.formationInstitution,
+      sexual_orientation: data.sexualOrientation,
       type: 'profissional'
     }
     registerUser(formatted)
@@ -102,6 +104,20 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+
+          <Select
+            name="sexualOrientation"
+            label="Orientação sexual"
+            error={errors.sexualOrientation && errors.sexualOrientation.message}
+            firstValue="Orientação Sexual"
+            register={register}
+          >
+            {sexualOrientation.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
+
+
           <Radios
             label="PcD (Pessoa com deficiência)"
             error={errors.pcd && errors.pcd.message}
