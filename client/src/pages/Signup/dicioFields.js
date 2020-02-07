@@ -16,4 +16,4 @@ export const formations = ["Autodidata", "ONG ou Instituição Cultural", "Forma
 
 export const sexualOrientation = ["Lésbica", "Gay", "Bissexual", "Panssexual", "Assexual", "Heterossexual", "Outros"]
 
-export const cnpj_type = ["EIRELI", "LTDA", "ME", "S.A"]
+export const cnpj_type = ["EIRELI", "LTDA", "ME", "MEI", "S.A"]

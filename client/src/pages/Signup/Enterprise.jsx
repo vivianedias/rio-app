@@ -10,6 +10,10 @@ import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
 
+import InputText from '../../components/InputText'
+
+
+
 import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
@@ -45,7 +49,7 @@ const Enterprise = () => {
 
   const registerCompany = useStoreActions(actions => actions.user.registerCompany)
   const [isLoading, setLoader] = useState(false)
-  
+
   const onSubmit = (data) => {
     console.log(data)
     const formatted = {
@@ -82,6 +86,21 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+
+
+          <InputText
+            name="name_enterprise"
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Nome da Empresa"
+            placeholder="Insira o nome da empresa"
+            error={errors.name_enterprise && errors.name_enterprise.message}
+          />
+
+
+
           <Textarea
             label="Links para site e redes socias da empresa"
             placeholder="Insira aqui links"
@@ -107,7 +126,7 @@ const Enterprise = () => {
               required: 'Esse campo é obrigatório',
               minLength: {
                 value: 10,
-                message: 'Nos fale um pouco mais sobre sua empresa'
+                message: 'Fale um pouco mais sobre sua empresa'
               }
             })}
           />
