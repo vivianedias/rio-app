@@ -15,8 +15,8 @@ const CandidateSchema = new Schema({
     type: Schema.Types.String,
     ref: 'users'
   },
-  selfDeclaration:{
-    type: String, 
+  self_declaration: {
+    type: String,
     required: true
   },
   gender: {

@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-// import { useStoreState } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
@@ -9,23 +9,31 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import SignupPopup from '../../components/popups/Signup'
 
-import { Form, InputWrapper } from './style'
+import { Form, InputWrapper, WrapperScreen, StyledFont } from './style'
 import { emailValidation } from '../../utils/service'
+import history from '../../history'
 
 const Login = () => {
-  
+
   const [modalStatus, setModalStatus] = useState(false)
   const { register, handleSubmit, errors, clearError } = useForm()
+  const authUser = useStoreActions(actions => actions.auth.authUser)
+  const auth = useStoreState(state => state.auth.auth)
 
-  const onSubmit = data => { console.log(data) }
+  const onSubmit = data => authUser(data)
 
   const toggleModal = () => {
     clearError()
     return setModalStatus(!modalStatus)
   }
 
+  useEffect(() => {
+    const { user: { type = '' }, isAuthenticated } = auth
+    if (isAuthenticated) return history.push(`/dashboard/${type}`)
+  }, [auth])
+
   return (
-    <Fragment>
+    <WrapperScreen>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Flexbox
@@ -38,17 +46,16 @@ const Login = () => {
               right: 0
             }}
           >
-            <h1 className="title has-text-danger">entre no rio</h1>
+            <StyledFont>entre na raio</StyledFont>
           </Flexbox>
           <InputWrapper>
-            <InputText 
+            <InputText
               label="E-mail"
               type="text"
               name="email"
               placeholder="e-mail"
               icon="fa-envelope"
-              error={errors && errors.email}
-              isEdit={true}
+              error={errors.email && errors.email.message}
               register={register({
                 required: 'Esse campo é obrigatório',
                 pattern: {
@@ -57,30 +64,29 @@ const Login = () => {
                 }
               })}
             />
-            <InputText 
+            <InputText
               label="Senha"
               type="password"
               name="password"
               placeholder="senha"
               icon="fa-lock"
-              error={errors && errors.password}
-              isEdit={true}
+              error={errors.password && errors.password.message}
               register={register({
                 required: 'Esse campo é obrigatório',
                 minLength: {
-                  value: 10,
-                  message: 'A senha deve ter no mínimo 10 caracteres'
+                  value: 6,
+                  message: 'A senha deve ter no mínimo 6 caracteres'
                 }
               })}
             />
-            <Link 
-              to="/esqueci-senha" 
-              className="has-text-link"
+            <Link
+              to="/esqueci-senha"
+              className="has-link"
             >
               esqueceu sua senha?
             </Link>
           </InputWrapper>
-          <Flexbox justify="space-around" className="control">    
+          <Flexbox justify="space-around" className="control">
             <Button
               onClick={toggleModal}
               styles="button is-rounded"
@@ -89,18 +95,21 @@ const Login = () => {
             </Button>
             <Button type="submit" styles="is-danger is-rounded">
               entrar
-            </Button>     
+            </Button>
           </Flexbox>
         </Form>
       </Flexbox>
       <Modal
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
-        width="500px"
+        className="modal-register"
       >
-        <SignupPopup />
+        <SignupPopup
+          toggleModalStatus={() => setModalStatus(!modalStatus)}
+        />
       </Modal>
-    </Fragment>
+
+    </WrapperScreen>
   )
 }
 

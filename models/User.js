@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // Create Schema
-const AdminSchema = new Schema({
+const UserSchema = new Schema({
   name: {
     type: String,
     required: true
@@ -13,28 +13,37 @@ const AdminSchema = new Schema({
     unique: true, 
     lowercase: true
   },
+  password: {
+    type: String,
+    required: true
+  },
+  type: {
+    required: true,
+    type: String,
+    lowercase: true,
+    enum : ['admin', 'professional', 'enterprise']
+  },
   phone: {
     type: String,
     required: true
   },
-  password: {
+  gender: {
     type: String,
-    required: true,
-    select: false, 
+    required: true
   },
-  resetPasswordToken: {
+  reset_password_token: {
     type: String,
     unique: true
   },
-  resetPasswordExpires: {
+  reset_password_expires: {
     type: Date
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now
   }
 })
 
-const Admin = mongoose.model('Admin', AdminSchema)
+const User = mongoose.model('User', UserSchema)
 
-module.exports = Admin
+module.exports = User

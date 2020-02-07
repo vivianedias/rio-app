@@ -2,39 +2,25 @@ import React from 'react'
 
 import PropTypes from 'prop-types'
 import { Route } from 'react-router'
-import { Router } from 'react-router-dom'
+import { Router, Switch } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy';
-// import jwtDecode from 'jwt-decode'
 import styled from 'styled-components'
 
-// import setAuthToken from '../services/setAuthToken'
-// import { handleAuth, logoutUser } from '../actions/auth'
 import history from './history'
 
-// import PrivateRoute from './PrivateRoute/PrivateRoute'
 import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login/Login'
 import Enterprise from './pages/Signup/Enterprise'
-import Professionals from './pages/Signup/Professionals'
+import Professional from './pages/Signup/Professional'
+import Users from './pages/Signup/User'
 import Footer from './components/Footer'
-
-// if (localStorage.jwtToken) {
-//   // Set the auth token header auth
-//   setAuthToken(localStorage.jwtToken)
-//   // Decode token and get user info and exp
-//   const decoded = jwtDecode(localStorage.jwtToken)
-//   // Set user and auth
-//   store.dispatch(handleAuth(decoded))
-//   // Check for expired token
-//   const currentTime = Date.now() / 1000
-//   if (decoded.exp < currentTime) {
-//     // Logout user
-//     // Clear current profile
-//     // Redirect to login
-//     store.dispatch(logoutUser())
-//   }
-// }
+import PrivateRoute from './components/PrivateRoute'
+import ProfessionalProfile from './pages/Dashboard/Professional/Professional'
+import EnterpriseProfile from './pages/Dashboard/Enterprise/Enterprise'
+import Admin from './pages/Dashboard/Admin/Admin'
+import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
+import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -53,14 +39,27 @@ const App = ({ store }) => (
         <Header />
         <AppBody>
           <Route path="/" exact component={Home} />
-          <Route path='/entrar' exact component={Login} />
-          <Route path='/cadastro/empresas' component={Enterprise} />
-          <Route
-            path='/cadastro/profissional'
-            component={Professionals}
-          />
+          <Route path="/entrar" exact component={Login} />
+          <Route path="/cadastro" exact component={Users} />
+          <Route path='/listagem/vagas' component={VacancyList} />
+          <Route path='/cadastro/vaga' component={VacancyRegister} />
+          <Switch>
+            <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
+            <PrivateRoute
+              path='/cadastro/profissional'
+              component={Professional}
+            />
+            <PrivateRoute path='/dashboard/admin' component={Admin} />
+            <PrivateRoute
+              path='/dashboard/profissional'
+              component={ProfessionalProfile}
+            />
+            <PrivateRoute
+              path='/dashboard/empresa'
+              component={EnterpriseProfile}
+            />
+          </Switch>
           <Footer fixed>
-
           </Footer>
         </AppBody>
       </AppWrapper>

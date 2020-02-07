@@ -10,11 +10,14 @@ const crypto = require('crypto')
 const validateRegisterInput = require('../../validator/register')
 const validateLoginInput = require('../../validator/login')
 
-// Load admin model
-const Admin = require('../../models/Admin')
+// Load User model
+const User = require('../../models/User')
+const Candidate = require('../../models/Candidate')
+const Enterprise = require('../../models/Enterprise')
 
-// @route   POST api/Admin/register
-// @desc    Register Admin
+
+// @route   POST api/user/register
+// @desc    Register user
 // @access  Public
 router.post('/register', (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body)
@@ -24,37 +27,38 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  Admin.findOne({ email: req.body.email })
-    .then(admin => {
-      if (admin) {
-        errors.email = 'Favor checar as suas informações.'
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (user) {
+        errors.email = 'Opa! Já existe um usuário com esse e-mail.'
         return res.status(400).json(errors)
-      } else {
-        const newAdmin = new Admin({
-          name: req.body.name,
-          email: req.body.email,
-          phone: req.body.phone, 
-          password: req.body.password
-        })
+      } 
 
-        bcrypt.genSalt(10, (err, salt) => {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        type: req.body.type,
+        gender: req.body.gender,
+        phone: req.body.phone
+      })
+
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) throw err
+        bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err
-          bcrypt.hash(newAdmin.password, salt, (err, hash) => {
-            if (err) throw err
-            newAdmin.password = hash
-            newAdmin
-              .save()
-              .then(admin => res.json(admin))
-              .catch(err => console.log(err))
-          })
+          newUser.password = hash
+          newUser
+            .save()
+            .then(user => res.json(user))
+            .catch(err => console.log(err))
         })
-      }
+      })
     })
-    .catch(err => console.log(err))
 })
 
-// @route   GET api/admin/login
-// @desc    Login admin / Returning JWT Token
+// @route   GET api/user/login
+// @desc    Login User / Returning JWT Token
 // @access  Public
 router.post('/login', (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body)
@@ -67,20 +71,20 @@ router.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
-  // Find admin by email
-  Admin.findOne({ email }).then(admin => {
-    // Check for admin
-    if (!admin) {
-      errors.email = 'Verifique seu email ou senha e tente novamente.'
+  // Find user by email
+  User.findOne({ email }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.email = 'Usuário não encontrado'
       return res.status(400).json(errors)
     }
 
     // Check Password
-    bcrypt.compare(password, admin.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        // Admin Matched
+        // User Matched
         // Create JWT Payload
-        const payload = { id: admin.id, name: admin.name, email: admin.email }
+        const payload = { id: user.id, name: user.name, email: user.email }
 
         // Sign Token
         jwt.sign(
@@ -95,28 +99,58 @@ router.post('/login', (req, res) => {
           }
         )
       } else {
-        errors.password = 'Verifique seu email ou senha e tente novamente.'
+        errors.password = 'Senha incorreta'
         return res.status(400).json(errors)
       }
     })
   })
 })
 
-// @route   GET api/admin/current
-// @desc    Return current admin
+// @route   GET api/users/current
+// @desc    Return current user
 // @access  Private
 router.get('/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     res.json({
-      id: req.admin.id,
-      name: req.admin.name,
-      email: req.admin.email
+      id: req.user.id,
+      name: req.user.name,
+      email: req.user.email,
+      type: req.user.type
     })
   }
 )
 
-// @route   POST api/admin/forgot-password
+// @route   GET api/users/has-additional-register
+// @desc    Return if user has related enterprise or candidate
+// @access  Private
+router.get('/has-additional-register',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    return Enterprise.findOne({ user_id: req.user.id })
+      .then(enterprise => {
+        if (enterprise) return res.json({
+          hasAdditionalRegister: true
+        })
+
+        else {
+          Candidate.findOne({ user_id: req.user.id })
+            .then(candidate => {
+              if (candidate) return res.json({
+                hasAdditionalRegister: true
+              })
+              else {
+                res.json({ hasAdditionalRegister: false })
+              }
+            })
+            .catch(err => res.status(500).json(err))
+        }
+      })
+      .catch(err => res.status(500).json(err))
+  }
+)
+
+// @route   POST api/user/forgot-password
 // @desc    Send email to reset password
 // @access  Public
 router.post('/forgot-password', (req, res) => {
@@ -131,16 +165,16 @@ router.post('/forgot-password', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  Admin.findOne({ email: req.body.email })
-    .then(admin => {
-      // Check for admin
-      if (!admin) {
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      // Check for user
+      if (!user) {
         errors.recovery = 'Usuário não encontrado'
         return res.status(400).json(errors)
       }
 
       // Update reset password token and exp date
-      Admin.findOneAndUpdate(
+      User.findOneAndUpdate(
         { email },
         { $set: update },
         { new: true }
@@ -150,8 +184,8 @@ router.post('/forgot-password', (req, res) => {
 
           const msg = {
             to: email,
-            from: 'email@email.com',
-            subject: 'Recuperação de Senha - Rio',
+            from: 'raio@gmail.com',
+            subject: 'Recuperação de Senha - Raio',
             text: 'Você está recebendo esse e-mail porque você (ou outra pessoa fez um pedido de recuperação de senha para sua conta. \n\n' + 'Por favor, clique no link abaixo ou cole em seu navegador para completar o processo: \n\n' + 'http://' + req.headers.host + '/reset/' + token + '\n\n' + 'Se você não fez essa requisição, por favor ignore esse email e sua senha se manterá a mesma. \n'
           }
 
@@ -175,7 +209,6 @@ router.post('/forgot-password', (req, res) => {
 
 router.post('/reset/:token', (req, res, next) => {
   const errors = {}
-
   const { password, confirmedPassword } = req.body
 
   // if passwords don't match, flash error and send back to form
@@ -188,45 +221,42 @@ router.post('/reset/:token', (req, res, next) => {
   }
 
   // if we get to here, the passwords match
-  Admin.findOne({
-    resetPasswordToken: req.params.token,
-    resetPasswordExpires: { $gt: Date.now() }
+  User.findOne({
+    reset_password_token: req.params.token,
+    reset_password_expires: { $gt: Date.now() }
   })
-    .then(admin => {
-      if (!admin) {
+    .then(user => {
+      if (!user) {
         errors.resetPassword = 'Recuperação de senha é inválida ou expirou'
         return res.status(404).json(errors)
       }
 
-      var passwordHash = password
       bcrypt.genSalt(10, (err, salt) => {
         if (err) throw err
-        bcrypt.hash(passwordHash, salt, (err, hash) => {
+        bcrypt.hash(password, salt, (err, hash) => {
           if (err) throw err
-          passwordHash = hash
+          const passwordHash = hash
           // Update password and set password token and exp date to null
           const updatePassword = {
             password: passwordHash,
-            resetPasswordToken: null,
-            resetPasswordExpires: null
+            reset_password_token: null,
+            reset_password_expires: null
           }
-          Admin.findOneAndUpdate(
-            { resetPasswordToken: req.params.token },
+          User.findOneAndUpdate(
+            { reset_password_token: req.params.token },
             { $set: updatePassword },
             { new: true }
           )
-            .then(admin => {
-              res.json('Sua senha foi redefinida com sucesso')
-            })
+            .then(user => res.json('Sua senha foi redefinida com sucesso'))
             .catch(() => {
-              errors.resetPassword = 'Um erro aconteceu ao atualizar sua senha'
+              errors.resetPassword = 'Um erro ocorreu ao atualizar a senha'
               return res.status(404).json(errors)
             })
         })
       })
     })
     .catch(() => {
-      errors.resetPassword = 'Um erro aconteceu ao tentar localizar o usuário'
+      errors.resetPassword = 'Um erro ocorreu ao localizar usuário'
       return res.status(404).json(errors)
     })
 })
