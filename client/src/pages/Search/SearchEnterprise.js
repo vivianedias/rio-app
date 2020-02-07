@@ -25,6 +25,7 @@ import {
 import { TitleSearch } from './styles'
 
 import { Form, Background } from '../Signup/styles'
+import ResultSearchEnterprise from './ResultSearchEnterprise'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, setValue } = useForm({
@@ -47,6 +48,9 @@ const Enterprise = () => {
 
   const registerCompany = useStoreActions(actions => actions.user.registerCompany)
   const [isLoading, setLoader] = useState(false)
+  const [form, setForm] = useState(true)
+  const [dados, setDados] = useState(true)
+  
 
   const formatCheckboxFields = (field) => {
     const identifiers = Object.keys(field)
@@ -54,21 +58,23 @@ const Enterprise = () => {
   }
 
   const onSubmit = (data) => {
-    console.log(data)
-    const formatted = {
-      ...data,
-      foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
-      city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
-      cnpj_type: data.cnpjType,
-      apan_associate: data.apanAssociate,
-      identity_segments: formatCheckboxFields(data.identitySegments),
-      other_states: formatCheckboxFields(data.otherStates),
-      diversity_functions: formatCheckboxFields(data.diversityFunctions),
-      business_segments: formatCheckboxFields(data.businessSegments),
-      business_fields: formatCheckboxFields(data.businessFields),
-      identity_content: data.identityContent
-    }
-    registerCompany(formatted)
+    setForm(false)
+    console.log("data", data)
+    // const formatted = {
+    //   ...data,
+    //   foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
+    //   city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
+    //   cnpj_type: data.cnpjType,
+    //   apan_associate: data.apanAssociate,
+    //   identity_segments: formatCheckboxFields(data.identitySegments),
+    //   other_states: formatCheckboxFields(data.otherStates),
+    //   diversity_functions: formatCheckboxFields(data.diversityFunctions),
+    //   business_segments: formatCheckboxFields(data.businessSegments),
+    //   business_fields: formatCheckboxFields(data.businessFields),
+    //   identity_content: data.identityContent
+    // }
+    setDados(data)
+    console.log("formatted", data)
   }
 
   const programIsLoading = () => {
@@ -85,52 +91,57 @@ const Enterprise = () => {
 
   // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
   return (
-    <Background>
-      <Flexbox justify="center">
-        <Form onSubmit={handleSubmit(onSubmit)}>
+    <>
+      {
+        form ?
+          <Background>
+            <Flexbox justify="center">
+              <Form onSubmit={handleSubmit(onSubmit)}>
 
+                <TitleSearch>Busca de Empresas</TitleSearch>
+                <Checkboxes
+                  label="Segmento de atuação"
+                  register={register}
+                  fields={segment}
+                  name="businessSegments"
+                />
+                <Checkboxes
+                  label="Campos de atuação"
+                  register={register}
+                  fields={actions}
+                  name="businessFields"
+                />
+                <Checkboxes
+                  label="Funções que busca diversificar na empresa"
+                  register={register}
+                  fields={functions}
+                  name="diversityFunctions"
+                />
 
-          <TitleSearch>Busca de Empresas</TitleSearch>
-          <Checkboxes
-            label="Segmento de atuação"
-            register={register}
-            fields={segment}
-            name="businessSegments"
-          />
-          <Checkboxes
-            label="Campos de atuação"
-            register={register}
-            fields={actions}
-            name="businessFields"
-          />
-          <Checkboxes
-            label="Funções que busca diversificar na empresa"
-            register={register}
-            fields={functions}
-            name="diversityFunctions"
-          />
+                <Select
+                  label="Estado"
+                  error={errors.state && errors.state.message}
+                  name="state"
+                  firstValue="Estado Sede"
+                  register={register}
+                  onChange={programIsLoading}
+                  isLoading={isLoading}
+                >
+                  {states.map(item =>
+                    <option value={item.id} key={item.id}>{item.name}</option>
+                  )}
+                </Select>
 
-          <Select
-            label="Estado"
-            error={errors.state && errors.state.message}
-            name="state"
-            firstValue="Estado Sede"
-            register={register}
-            onChange={programIsLoading}
-            isLoading={isLoading}
-          >
-            {states.map(item =>
-              <option value={item.id} key={item.id}>{item.name}</option>
-            )}
-          </Select>
-
-
-          <Button type="submit">
-            Enviar
+                <Button type="submit">
+                  Enviar
           </Button>
-        </Form>
-      </Flexbox>
-    </Background>
+              </Form>
+            </Flexbox>
+          </Background>
+          :
+          <ResultSearchEnterprise data={dados} />
+      }
+    </>
   )
 }
 

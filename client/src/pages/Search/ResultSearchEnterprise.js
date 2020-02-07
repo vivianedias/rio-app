@@ -2,13 +2,14 @@ import React from "react"
 import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, SearchResultEnterprise } from './styles'
 import CardProfessional from './components/CardProfessional'
 
-const ResultSearchProfessionals = () => {
+const ResultSearchProfessionals = ({ data }) => {
+  console.log(data)
   const vacancies = [
     {
       name: "Desenvolvedora",
       function: "..",
       requirements: "..",
-      location: "Conceição - São Paulo, SP",
+      state: "sao paulo",
       cnpj: "000000000001-00",
       period: "10/03/2020 à 20/03/2020",
       cache: "R$: a combinar",
@@ -18,7 +19,7 @@ const ResultSearchProfessionals = () => {
       name: "Desenvolvedora",
       function: "..",
       requirements: "..",
-      location: "Conceição - São Paulo, SP",
+      state: "Conceição - São Paulo, SP",
       cnpj: "Sim",
       period: "10/03/2020 à 20/03/2020",
       cache: "R$: a combinar",
@@ -28,7 +29,7 @@ const ResultSearchProfessionals = () => {
       name: "Desenvolvedora",
       function: "..",
       requirements: "..",
-      location: "Conceição - São Paulo, SP",
+      state: "Conceição - São Paulo, SP",
       cnpj: "Sim",
       period: "10/03/2020 à 20/03/2020",
       cache: "R$: a combinar",
@@ -38,7 +39,7 @@ const ResultSearchProfessionals = () => {
       name: "Desenvolvedora",
       function: "..",
       requirements: "..",
-      location: "Conceição - São Paulo, SP",
+      state: "sao paulo",
       cnpj: "Sim",
       period: "10/03/2020 à 20/03/2020",
       cache: "R$: a combinar",
@@ -46,23 +47,40 @@ const ResultSearchProfessionals = () => {
     }
   ]
 
+  const obj = {
+    state: 'sao paulo',
+    diversity_functions: "nda",
+    business_segments: "nda",
+    business_fields: "nda",
+  }
 
-  console.log('vacancies: ', vacancies);
+  let result = []
+  let vagas = []
+  for (var i in obj) {
+    result.push(obj[i])
+  }
 
+  for (var i in vacancies) {
+    vagas.push(vacancies[i])
+  }
 
-  const searchTypes = vacancies
-    .map(dataItem => dataItem.periodTotal)
-    .filter((searchTypes, index, array) => array.indexOf(searchTypes) === index),
+  let count = []
 
-    counts = searchTypes
-      .map(searchTypes => ({
-        type: searchTypes,
-        count: searchTypes.length
-      }));
+  vacancies.map((item) => {
+    for (var i in item) {
+      vagas.push(item[i])
+    }
+  })
 
+  result.map((value) => (
+    vagas.map((item) => (
+      item === value ? count.push(1) : ""
+    ))
+  ))
 
+  console.log('vacancies: ', vagas);
 
-  console.log('counts', counts);
+  console.log('counts', count);
 
   return (
     <WrapperResultSearch height="100%" >
@@ -72,23 +90,9 @@ const ResultSearchProfessionals = () => {
         <SubTitle>Resultado de Busca para:</SubTitle>
 
         <SearchResultEnterprise>
-          Foram encontrados {vacancies.length} resultados de busca para a sua pesquisa
+          Foram encontrados {count.length} resultados de busca para a sua pesquisa
        </SearchResultEnterprise>
-       <Group>
-          {vacancies.map((vacancy) => (
-            <CardProfessional
-              name={vacancy.name}
-              function={vacancy.function}
-              requirements={vacancy.requirements}
-              location={vacancy.location}
-              cnpj={vacancy.cnpj}
-              period={vacancy.period}
-              cache={vacancy.cache}
-              periodTotal={vacancy.periodTotal}
-            />
-          ))
-          }
-        </Group>
+
       </Wrapper>
     </WrapperResultSearch>
   )
