@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 import uuid from 'uuid'
 
-import { If } from '../../components/If'
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Button from '../../components/Button'
@@ -12,18 +11,15 @@ import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
 
-import { emailValidation } from '../../utils/service'
 import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
   functions,
-  color as selfDeclaration,
-  gender,
   registryTypes,
   formations,
   identitySegments,
-  sexualOrientation
 } from './dicioFields'
+import { formatCheckboxFields } from '../../utils/service'
 
 import { Form, Success, Background } from './styles'
 
@@ -34,53 +30,61 @@ const Professionals = () => {
     errors,
     getValues,
     setValue
-  } = useForm()
-    // defaultValues: {
-      // name: "Viviane"
-      // email: "vivi@gmail.com",
-      // password: "123456",
-      // confirmPassword: "123456",
-      // birthday:"12/1/1995",
-      // gender: "bla",
-      // pcd: true,
-      // homeState: "bla",
-      // currentState:"bla",
-      // currentCity: "bla",
-      // selfDeclaration: "bla",
-      // address: "blabla",
-      // education: "blabla",
-      // formationInstitution: "bla",
-      // cnpj: true,
-      // cnpjType: "bla",
-      // identityContent: true,
-      // identitySegments: "",
-      // expertiseAreas: "bla",
-      // apanAssociate: true,
-      // phone: "13123123",
-      // sexualOrientation: "bla",
-      // bio: "blasdjasjkdaskdbaskd",
-      // links: "blablablablabldajsdnkasjdnsaja"
-    // }
+  } = useForm({
+    mode: 'onBlur'
+  })
+  // defaultValues: {
+    // name: "Viviane"
+    // email: "vivi@gmail.com",
+    // password: "123456",
+    // confirmPassword: "123456",
+    // birthday:"12/1/1995",
+    // gender: "bla",
+    // pcd: true,
+    // homeState: "bla",
+    // currentState:"bla",
+    // currentCity: "bla",
+    // selfDeclaration: "bla",
+    // address: "blabla",
+    // education: "blabla",
+    // formationInstitution: "bla",
+    // cnpj: true,
+    // cnpjType: "bla",
+    // identityContent: true,
+    // identitySegments: "",
+    // expertiseAreas: "bla",
+    // apanAssociate: true,
+    // phone: "13123123",
+    // sexualOrientation: "bla",
+    // bio: "blasdjasjkdaskdbaskd",
+    // links: "blablablablabldajsdnkasjdnsaja"
+  // }
   // })
 
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
-  const [isSuccessful, setSuccess] = useState(false)
-  const [isLoading, setLoader] = useState({
-    city: false,
-    submit: false
-  })
+  const [isLoading, setLoader] = useState(false)
+
   const onSubmit = (data) => {
     console.log(data)
     const formatted = {
       ...data,
+      birthday: '22/01/1998',
+      city: 'blabla',
+      home_state: data.homeState,
+      cnpj_type: data.cnpjType,
+      identity_content: data.identityContent,
+      identity_segments: formatCheckboxFields(data.identitySegments),
+      expertise_areas: formatCheckboxFields(data.expertiseAreas),
+      apan_associate: data.apanAssociate,
+      formation_institution: data.formationInstitution,
       type: 'profissional'
     }
     registerUser(formatted)
   }
 
   const programIsLoading = () => {
-    setLoader({ ...isLoading, city: true })
-    setTimeout(() => { setLoader({...isLoading, city: false }) }, 2000);
+    setLoader(true)
+    setTimeout(() => { setLoader(false) }, 2000)
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
@@ -96,107 +100,15 @@ const Professionals = () => {
 
   return (
     <Background>
-
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <InputText
-            name="email"
-            type="text"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              pattern: {
-                value: emailValidation(),
-                message: 'Insira um endereço de e-mail válido'
-              }
-            })}
-            label="Endereço de e-mail"
-            placeholder="Insira um endereço de e-mail válido"
-            error={errors.email && errors.email.message}
-          />
-
-          <InputText
-            name="password"
-            type="password"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              minLength: {
-                value: 6,
-                message: 'A senha precisa ter no mínimo 6 caracteres'
-              }
-            })}
-            label="Senha"
-            placeholder="Insira uma senha"
-            error={errors.password && errors.password.message}
-          />
-
-          <InputText
-            name="confirmPassword"
-            type="password"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              validate: value => value === getValues().password || 'As senhas não são identicas'
-            })}
-            label="Confirme sua senha"
-            placeholder="Insira sua senha novamente"
-            error={errors.confirmPassword && errors.confirmPassword.message}
-          />
-
-          <InputText
-            name="name"
-            type="text"
-            register={register({
-              required: ''
-            })}
-            label="Nome social"
-            placeholder="Insira seu nome"
-            error={errors.name && errors.name.message}
-          />
-
-          <Select
-            label="Auto Declaração"
-            register={register}
-            name="selfDeclaration"
-            error={errors.selfDeclaration && errors.selfDeclaration.message}
-            firstValue="Auto Declaração"
-          >
-            {selfDeclaration.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
-
-          <Select
-            label="Gênero"
-            register={register}
-            name="gender"
-            error={errors.gender && errors.gender.message}
-            firstValue="Gênero"
-          >
-            {gender.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
-
-          <Select
-            label="Orientação sexual"
-            error={errors.sexualOrientation && errors.sexualOrientation.message}
-            name="sexualOrientation"
-            firstValue="Orientação Sexual"
-            register={register}
-          >
-            {sexualOrientation.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
-
           <Radios
             label="PcD (Pessoa com deficiência)"
             error={errors.pcd && errors.pcd.message}
             onChange={e => handleRadio('pcd', e.target.value)}
             name="pcd"
           />
-
           {/* <Datepicker /> */}
-
           <Select
             label="Estado de origem"
             error={errors.homeState && errors.homeState.message}
@@ -211,8 +123,8 @@ const Professionals = () => {
 
           <Select
             label="Estado de residência"
-            error={errors.currentState && errors.currentState.message}
-            name="currentState"
+            error={errors.state && errors.state.message}
+            name="state"
             firstValue="Estado"
             register={register}
             onChange={programIsLoading}
@@ -222,28 +134,26 @@ const Professionals = () => {
             )}
           </Select>
 
-          <If condition={typeof getValues().currentState !== 'undefined'}>
-            <Select
-              label="Cidade de Residência"
-              error={errors.currentCity && errors.currentCity.message}
-              name="currentCity"
-              firstValue="Cidade"
-              register={register}
-              isLoading={isLoading.city}
-            >
-              {cities
-                .filter(city => city['state_id'].toString() === getValues().state)
-                .map(filteredCities => (
-                  <option
-                    value={filteredCities.name}
-                    key={filteredCities.id}
-                  >
-                    {filteredCities.name}
-                  </option>
-                ))
-              }
-            </Select>
-          </If>
+          <Select
+            label="Cidade de Residência"
+            error={errors.city && errors.city.message}
+            name="city"
+            firstValue="Cidade"
+            register={register}
+            isLoading={isLoading.city}
+          >
+            {cities
+              .filter(city => city['state_id'].toString() === getValues().state)
+              .map(filteredCities => (
+                <option
+                  value={filteredCities.name}
+                  key={filteredCities.id}
+                >
+                  {filteredCities.name}
+                </option>
+              ))
+            }
+          </Select>
 
           <InputText
             name="address"
@@ -254,25 +164,6 @@ const Professionals = () => {
             label="Endereço"
             placeholder="Insira seu endereço atual"
             error={errors.address && errors.address.message}
-          />
-
-          <InputText
-            name="phone"
-            type="text"
-            register={register({
-              required: 'Esse campo é obrigatório',
-              pattern: {
-                value: /^[0-9]*$/gm,
-                message: 'Insira apenas números'
-              },
-              maxLength: {
-                value: 11,
-                message: 'Máximo de onze números'
-              }
-            })}
-            label="Contato Telefonico (DDD + nº)"
-            placeholder="Insira seu telefone"
-            error={errors.phone && errors.phone.message}
           />
 
           <Select
@@ -330,7 +221,7 @@ const Professionals = () => {
             label="Se sim, em qual segmento?"
             register={register}
             fields={identitySegments}
-            name="companyIdentitySegments"
+            name="identitySegments"
           />
 
           <Checkboxes
@@ -376,15 +267,10 @@ const Professionals = () => {
               }
             })}
           />
-          <Button
-            type="submit"
-            isLoading={isLoading.submit}
-          >
+
+          <Button type="submit">
             Enviar
           </Button>
-          <If condition={isSuccessful}>
-            <Success>Seu cadastro foi realizado com sucesso!</Success>
-          </If>
         </Form>
       </Flexbox>
     </Background>

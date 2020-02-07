@@ -1,73 +1,93 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const passport = require('passport')
-const sgMail = require('@sendgrid/mail')
-const crypto = require('crypto')
 
 // Load Input Validation
-const validateRegisterInput = require('../../validator/register')
-const validateLoginInput = require('../../validator/login')
+// const validateRegisterInput = require('../../validator/register')
 // Load Candidate model
 const Candidate = require('../../models/Candidate')
 
 // @route   POST api/candidate/register
 // @desc    Register candidate
 // @access  Public
-router.post('/register', (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body)
+router.post('/register', passport.authenticate('jwt', { session: false }),
+(req, res) => {
+  let errors = {}
 
-  // Check Validation
-  if (!isValid) {
-    return res.status(400).json(errors)
-  }
+  // // Check Validation
+  // if (!isValid) {
+  //   return res.status(400).json(errors)
+  // }
 
-  Candidate.findOne({ email: req.body.email })
+  Candidate.findOne({ user_id: req.user.id })
     .then(candidate => {
       if (candidate) {
-        errors.email = 'Favor checar as suas informações.'
+        errors.user = 'Esse usuário já possui um cadastro.'
         return res.status(400).json(errors)
       } else {
         const newCandidate = new Candidate({
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password,
+          user_id: req.user.id,
+          user_email: req.user.email,
           birthday: req.body.birthday,
-          gender: req.body.gender,
           pcd: req.body.pcd,
-          homeState: req.body.homeState,
-          currentState: req.body.currentState,
-          currentCity: req.body.cityResidence,
-          selfDeclaration: req.body.selfDeclaration,
+          home_state: req.body.home_state,
+          state: req.body.state,
+          city: req.body.city,
           address: req.body.address,
           education: req.body.education,
-          formationInstitution: req.body.formationInstitution, 
+          formation_institution: req.body.formation_institution, 
           cnpj: req.body.cnpj,
-          cnpjType: req.body.cnpjType,
-          identityContent: req.body.identityContent,
-          identitySegments: req.body.identitySegments,
-          expertiseAreas: req.body.expertiseAreas,
-          apanAssociate: req.body.apanAssociate,
-          phone: req.body.phone,
+          cnpj_type: req.body.cnpj_type,
+          identity_content: req.body.identity_content,
+          identity_segments: req.body.identity_segments,
+          expertise_areas: req.body.expertise_areas,
+          apan_associate: req.body.apan_associate,
           links: req.body.links,
           bio: req.body.bio,
-          sexualOrientation: req.body.sexualOrientation
         })
 
-        bcrypt.genSalt(10, (err, salt) => {
-          if (err) throw err
-          bcrypt.hash(newCandidate.password, salt, (err, hash) => {
-            if (err) throw err
-            newCandidate.password = hash
-            newCandidate
-              .save()
-              .then(candidate => res.json(candidate))
-              .catch(err => console.error(err))
-          })
-        })
+        newCandidate
+          .save()
+          .then(candidate => res.json(candidate))
+          .catch(err => res.status(400).json(err))
       }
     })
+    .catch(err => res.status(400).json(err))
+})
+
+// @route   GET api/candidate/
+// @desc    Get candidate by id
+// @access  Private
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const errors = {}
+  Candidate.findOne({ user_id: req.user.id })
+    .then(candidate => {
+      if (!candidate) {
+        errors.nocandidate = 'Esse profissional não existe'
+        res.status(404).json(errors)
+      }
+      res.json(candidate)
+    })
+    .catch(() => res.status(404).json({ project: 'Não existe um usuário com esse identificador' }))
+})
+
+// @route   GET api/candidate/all
+// @desc    Get candidates
+// @access  Public
+router.get('/all', (req, res) => {
+  const errors = {}
+  Candidate.find()
+    .sort({ createdAt: -1 })
+    .then(candidates => {
+      if (!candidates) {
+        errors.nocandidates = 'Não existem candidatos cadastradas ainda'
+        return res.status(404).json(errors)
+      }
+      res.json(candidates)
+    })
+    .catch(() => res.status(404).json({
+      candidates: 'Não existem candidatos cadastradas ainda'
+    }))
 })
 
 module.exports = router

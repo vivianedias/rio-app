@@ -3,55 +3,39 @@ const Schema = mongoose.Schema
  
 // Create Schema
 const CandidateSchema = new Schema({
-  userId:{
+  user_id:{
     required: true,
     unique: true,
     type: Schema.Types.ObjectId,
-    ref: 'users'
+    ref: 'User'
   },
-  userEmail:{
+  user_email:{
     required: true,
     unique: true,
     type: Schema.Types.String,
-    ref: 'users'
-  },
-  self_declaration: {
-    type: String,
-    required: true
-  },
-  gender: {
-    type: String,
-    required: true
-  },
-  sexualOrientation:{
-    type: String, 
-    require: false
+    ref: 'User'
   },
   pcd:{
     type: Boolean, 
-    require: true
+    required: true
   }, 
   birthday:{
     type: String, 
     required: true
   },
-  homeState:{
+  home_state:{
     type: String, 
     required: true
   },
-  currentState:{
+  state:{
     type: String,
-    require: true,
+    required: true,
   },
-  currentCity:{
+  city:{
     type: String, 
-    require: true
+    required: true
   },
   address: {
-    type: String,
-    required: true
-  },
-  phone: {
     type: String,
     required: true
   },
@@ -59,7 +43,7 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  formationInstitution:{
+  formation_institution:{
     type: String, 
     required:true,
   },
@@ -67,24 +51,23 @@ const CandidateSchema = new Schema({
     type: Boolean, 
     required: true
   },  
-  cnpjType:{
+  cnpj_type:{
     type: String,
   },
-  identityContent:{
+  identity_content:{
     type: Boolean, 
     required: true
   },
-  identitySegments:{
-    type: String,
+  identity_segments:{
+    type: Array,
+  },
+  expertise_areas: {
+    type: Array,
     required: true
   },
-  expertiseAreas: {
-    type: String,
-    required: true
-  },
-  apanAssociate:{
+  apan_associate:{
     type: Boolean,
-    require: true
+    required: true
   },
   bio: {
     type: String,
@@ -94,7 +77,7 @@ const CandidateSchema = new Schema({
     type: String,
     required: true
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now
   }
