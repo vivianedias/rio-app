@@ -52,39 +52,4 @@ router.post('/register', passport.authenticate('jwt', { session: false }),
     }
   })
 
-// @route   GET api/enterprise/
-// @desc    Get enterprise by id
-// @access  Private
-router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
-  const errors = {}
-  Enterprise.findOne({ user_id: req.user.id })
-    .then(enterprise => {
-      if (!enterprise) {
-        errors.noenterprise = 'Essa empresa não existe'
-        res.status(404).json(errors)
-      }
-      res.json(enterprise)
-    })
-    .catch(() => res.status(404).json({ project: 'Não existe um usuário com esse identificador' }))
-})
-
-// @route   GET api/enterprise/all
-// @desc    Get enterprises
-// @access  Public
-router.get('/all', (req, res) => {
-  const errors = {}
-  Enterprise.find()
-    .sort({ createdAt: -1 })
-    .then(enterprises => {
-      if (!enterprises) {
-        errors.noenterprises = 'Não existem empresas cadastradas ainda'
-        return res.status(404).json(errors)
-      }
-      res.json(enterprises)
-    })
-    .catch(() => res.status(404).json({
-      enterprises: 'Não existem empresas cadastradas ainda'
-    }))
-})
-
 module.exports = router

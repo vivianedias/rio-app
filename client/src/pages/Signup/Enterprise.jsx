@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 import uuid from 'uuid'
 
+import { If } from '../../components/If'
 import Flexbox from '../../components/Flexbox'
 import Button from '../../components/Button'
 import Textarea from '../../components/Textarea'
@@ -20,36 +21,43 @@ import {
   segment,
   actions,
   functions,
+  color,
   identitySegments,
   cnpj_type
 } from './dicioFields'
-import { formatCheckboxFields } from '../../utils/service'
 
 import { Form, Background } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, setValue } = useForm({
-    mode: 'onBlur'
+    // defaultValues: {
+    //   foundation_date: '12/12/2020',
+    //   presentation: 'blablabla',
+    //   links: 'blablalba',
+    //   city: 'blabla',
+    //   state: 'blablalba',
+    //   cnpj_type: false,
+    //   apan_associate: false,
+    //   identity_content: true,
+    //   identity_segments: ['bla', 'bla'],
+    //   other_states: ['bla', 'bla', 'bla'],
+    //   diversity_functions: ['bla', 'bla'],
+    //   business_segments: ['bla', 'bla'],
+    //   business_fields: ['bla', 'bla'],
+    // }
   })
-  // defaultValues: {
-  //   foundation_date: '12/12/2020',
-  //   presentation: 'blablabla',
-  //   links: 'blablalba',
-  //   city: 'blabla',
-  //   state: 'blablalba',
-  //   cnpj_type: false,
-  //   apan_associate: false,
-  //   identity_content: true,
-  //   identity_segments: ['bla', 'bla'],
-  //   other_states: ['bla', 'bla', 'bla'],
-  //   diversity_functions: ['bla', 'bla'],
-  //   business_segments: ['bla', 'bla'],
-  //   business_fields: ['bla', 'bla'],
-  // }
 
   const registerCompany = useStoreActions(actions => actions.user.registerCompany)
   const [isLoading, setLoader] = useState(false)
 
+<<<<<<< HEAD
+=======
+  const formatCheckboxFields = (field) => {
+    const identifiers = Object.keys(field)
+    return identifiers.filter((i) => field[i])
+  }
+  
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   const onSubmit = (data) => {
     console.log(data)
     const formatted = {
@@ -132,6 +140,18 @@ const Enterprise = () => {
           />
 
           <Select
+            label="Auto Declaração (pessoa responsável pelo cadastro)"
+            register={register}
+            firstValue="Auto Declaração"
+            name="selfDeclaration"
+            error={errors.selfDeclaration && errors.selfDeclaration.message}
+          >
+            {color.map(item =>
+              <option value={item} key={uuid()}>{item}</option>
+            )}
+          </Select>
+
+          <Select
             label="Estado"
             error={errors.state && errors.state.message}
             name="state"
@@ -145,26 +165,28 @@ const Enterprise = () => {
             )}
           </Select>
 
-          <Select
-            label="Cidade"
-            error={errors.city && errors.city.message}
-            name="city"
-            firstValue="Cidade"
-            register={register}
-            isLoading={isLoading}
-          >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().state)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
-          </Select>
+          <If condition={typeof getValues().state !== 'undefined'}>
+            <Select
+              label="Cidade"
+              error={errors.city && errors.city.message}
+              name="city"
+              firstValue="Cidade"
+              register={register}
+              isLoading={isLoading}
+            >
+              {cities
+                .filter(city => city['state_id'].toString() === getValues().state)
+                .map(filteredCities => (
+                  <option
+                    value={filteredCities.name}
+                    key={filteredCities.id}
+                  >
+                    {filteredCities.name}
+                  </option>
+                ))
+              }
+            </Select>
+          </If>
 
           <Checkboxes
             label="Outros estados que a empresa tem atuação"

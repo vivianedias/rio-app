@@ -21,8 +21,3 @@ export const isEmpty = (value) => {
 }
 
 export const parseText = input => input.toLowerCase().split(' ').join('_').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-
-export const formatCheckboxFields = (field) => {
-  const identifiers = Object.keys(field)
-  return identifiers.filter((i) => field[i])
-}

@@ -31,10 +31,13 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+<<<<<<< HEAD
   self_declaration: {
     type: String,
     required: true
   },
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
   reset_password_token: {
     type: String,
     unique: true

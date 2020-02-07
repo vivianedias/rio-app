@@ -40,8 +40,12 @@ router.post('/register', (req, res) => {
         password: req.body.password,
         type: req.body.type,
         gender: req.body.gender,
+<<<<<<< HEAD
         phone: req.body.phone,
         self_declaration: req.body.self_declaration
+=======
+        phone: req.body.phone
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
       })
 
       bcrypt.genSalt(10, (err, salt) => {

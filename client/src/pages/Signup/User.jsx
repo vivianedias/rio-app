@@ -11,10 +11,14 @@ import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
 
 import { emailValidation } from '../../utils/service'
+<<<<<<< HEAD
 import {
   gender,
   color
 } from './dicioFields'
+=======
+import { gender } from './dicioFields'
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
 
 import { Form, Background } from './styles'
 
@@ -37,11 +41,13 @@ const Users = () => {
     const type = localStorage.user_type === 'empresa'
       ? 'enterprise'
       : 'professional'
-
     const formatted = {
       ...data,
       confirm_password: data.confirmPassword,
+<<<<<<< HEAD
       self_declaration: data.selfDeclaration,
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
       type
     }
 
@@ -142,6 +148,7 @@ const Users = () => {
             )}
           </Select>
 
+<<<<<<< HEAD
           <Select
             name="selfDeclaration"
             label="Auto Declaração (pessoa responsável pelo cadastro)"
@@ -154,6 +161,8 @@ const Users = () => {
             )}
           </Select>
 
+=======
+>>>>>>> parent of a11bd86... Merge branch 'feature/candidate'
           <Button
             type="submit"
           >
