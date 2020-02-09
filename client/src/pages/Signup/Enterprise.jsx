@@ -87,19 +87,16 @@ const Enterprise = () => {
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
 
-
           <InputText
-            name="name_enterprise"
+            name="name"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
             })}
             label="Nome da Empresa"
             placeholder="Insira o nome da empresa"
-            error={errors.name_enterprise && errors.name_enterprise.message}
+            error={errors.name && errors.name.message}
           />
-
-
 
           <Textarea
             label="Links para site e redes socias da empresa"

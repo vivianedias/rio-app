@@ -13,11 +13,10 @@ const EnterpriseSchema = new Schema({
     type: Schema.Types.String,
     ref: 'User'
   },
-  name_enterprise: {
+  name: {
     type: String,
     required: true
   },
-
   foundation_date: {
     type: String,
     required: true

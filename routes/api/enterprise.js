@@ -25,7 +25,7 @@ router.post('/register', passport.authenticate('jwt', { session: false }),
       const newEnterprise = new Enterprise({
         user_id: req.user.id,
         user_email: req.user.email,
-        name_enterprise: req.body.name_enterprise,
+        name: req.body.name,
         foundation_date: req.body.foundation_date,
         presentation: req.body.presentation,
         links: req.body.links,
