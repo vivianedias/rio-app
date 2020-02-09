@@ -5,4 +5,5 @@ client/node_modules
 yarn--*/
 public/uploads
 v8*
-.env
+.DS_Store
+/*.env

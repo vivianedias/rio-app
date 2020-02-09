@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "yarn --cwd client",
-    "start": "PORT=3000 node -r dotenv/config server.js",
+    "start": "PORT=5000 node -r dotenv/config server.js",
     "server": "nodemon -r dotenv/config server.js",
     "client": "yarn --cwd client start",
     "dev": "NODE_ENV=development concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client && yarn --cwd client run build"
   },
   "repository": {
     "type": "git",
