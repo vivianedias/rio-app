@@ -7,7 +7,7 @@ import Helper from '../../../utils/Helper'
 import { Background, Button, Group, Title, Label, Textarea, Container, GroupButton } from './style'
 
 const Professional = () => {
-  const getProfessional = useStoreActions(actions => actions.get.getEnterprise)
+  const getProfessional = useStoreActions(actions => actions.get.getProfessional)
 
   const [response, setResponse] = useState({})
   const [modalStatus, setModalStatus] = useState(false)
@@ -20,7 +20,7 @@ const Professional = () => {
   return (
     <>
       {
-        response ?
+        response.data ?
           <Background>
             <Container>
               <Title>Meu Perfil</Title>
