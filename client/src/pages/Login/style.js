@@ -19,6 +19,7 @@ export const InputWrapper = styled.div`
 `
 
 export const WrapperScreen = styled.div`
+  height: inherit; 
   background-image: linear-gradient(#200122, #6F0000);
 `
 

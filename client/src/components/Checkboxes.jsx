@@ -38,10 +38,10 @@ const Checkboxes = ({ label, register, name, fields }) => (
   <div className="field">
     <StyledDescription className="label">{label}</StyledDescription>
     <Wrapper>
-      {fields.map(item => {
+      {fields.map((item, index) => {
         const checkedItem = typeof item !== 'string' ? item.name : item
         return (
-          <Label key={uuid()} className="control checkbox">
+          <Label key={index} className="control checkbox">
             <Checkbox
               type="checkbox"
               name={`${name}[${parse(checkedItem)}]`}

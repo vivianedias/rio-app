@@ -25,7 +25,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background } from './styles'
+import { Form, Background, Title } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, getValues, setValue } = useForm({
@@ -86,7 +86,7 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
+        <Title>Cadastro</Title>
           <InputText
             name="name"
             type="text"

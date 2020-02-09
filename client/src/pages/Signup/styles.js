@@ -17,3 +17,8 @@ export const Success = styled.div`
 export const Background = styled.div`
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
 `
+export const Title = styled.h1`
+  font-size: 22px;
+  color: #FFFFFF;
+  margin-bottom: 2vh;
+`

@@ -22,7 +22,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Success, Background } from './styles'
+import { Form, Success, Background, Title } from './styles'
 
 const Professionals = () => {
   const {
@@ -34,53 +34,25 @@ const Professionals = () => {
   } = useForm({
     mode: 'onBlur'
   })
-  // defaultValues: {
-  // name: "Viviane"
-  // email: "vivi@gmail.com",
-  // password: "123456",
-  // confirmPassword: "123456",
-  // birthday:"12/1/1995",
-  // gender: "bla",
-  // pcd: true,
-  // homeState: "bla",
-  // currentState:"bla",
-  // currentCity: "bla",
-  // selfDeclaration: "bla",
-  // address: "blabla",
-  // education: "blabla",
-  // formationInstitution: "bla",
-  // cnpj: true,
-  // cnpjType: "bla",
-  // identityContent: true,
-  // identitySegments: "",
-  // expertiseAreas: "bla",
-  // apanAssociate: true,
-  // phone: "13123123",
-  // sexualOrientation: "bla",
-  // bio: "blasdjasjkdaskdbaskd",
-  // links: "blablablablabldajsdnkasjdnsaja"
-  // }
-  // })
 
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
     const formatted = {
       ...data,
       birthday: '22/01/1998',
-      city: 'blabla',
-      home_state: data.homeState,
-      cnpj_type: data.cnpjType,
+      apan_associate: data.apanAssociate,
       identity_content: data.identityContent,
       identity_segments: formatCheckboxFields(data.identitySegments),
       expertise_areas: formatCheckboxFields(data.expertiseAreas),
-      apan_associate: data.apanAssociate,
-      formation_institution: data.formationInstitution,
-      sexual_orientation: data.sexualOrientation,
       type: 'profissional'
     }
+    delete formatted.apanAssociate
+    delete formatted.identityContent
+    delete formatted.identitySegments
+    delete formatted.expertiseAreas
+ 
     registerUser(formatted)
   }
 
@@ -104,19 +76,18 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
+          <Title>Cadastro</Title>
           <Select
-            name="sexualOrientation"
+            name="sexual_orientation"
             label="Orientação sexual"
-            error={errors.sexualOrientation && errors.sexualOrientation.message}
+            error={errors.sexual_orientation && errors.sexual_orientation.message}
             firstValue="Orientação Sexual"
             register={register}
           >
-            {sexualOrientation.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
+            {sexualOrientation.map((item,index) =>
+              <option value={item} key={index}>{item}</option>
             )}
           </Select>
-
 
           <Radios
             label="PcD (Pessoa com deficiência)"
@@ -127,13 +98,13 @@ const Professionals = () => {
           {/* <Datepicker /> */}
           <Select
             label="Estado de origem"
-            error={errors.homeState && errors.homeState.message}
-            name="homeState"
+            error={errors.homeState && errors.home_state.message}
+            name="home_state"
             firstValue="Estado"
             register={register}
           >
             {states.map(item =>
-              <option value={item.id} key={item.id}>{item.name}</option>
+              <option value={item.name} key={item.id}>{item.name}</option>
             )}
           </Select>
 
@@ -146,11 +117,11 @@ const Professionals = () => {
             onChange={programIsLoading}
           >
             {states.map(item =>
-              <option value={item.id} key={item.id}>{item.name}</option>
+              <option value={item.name} key={item.id}>{item.name}</option>
             )}
           </Select>
 
-          <Select
+          {/* <Select
             label="Cidade de Residência"
             error={errors.city && errors.city.message}
             name="city"
@@ -169,7 +140,18 @@ const Professionals = () => {
                 </option>
               ))
             }
-          </Select>
+          </Select> */}
+
+          <InputText
+            name="city"
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Cidade de Residência"
+            placeholder="Insira sua cidade"
+            error={errors.city && errors.city.message}
+          />
 
           <InputText
             name="address"
@@ -189,13 +171,13 @@ const Professionals = () => {
             firstValue="Formação"
             register={register}
           >
-            {formations.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
+            {formations.map((item, index) =>
+              <option value={item} key={index}>{item}</option>
             )}
           </Select>
 
           <InputText
-            name="formationInstitution"
+            name="formation_institution"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
@@ -215,12 +197,12 @@ const Professionals = () => {
           <Select
             label="Se sim, qual o tipo do seu CNPJ ?"
             error={errors.cnpjType && errors.cnpjType.message}
-            name="cnpjType"
+            name="cnpj_type"
             firstValue="Tipo de CPNJ"
             register={register}
           >
-            {registryTypes.map(type => (
-              <option value={type} key={uuid()}>
+            {registryTypes.map((type, index) => (
+              <option value={type} key={index}>
                 {type}
               </option>
             ))}

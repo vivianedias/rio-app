@@ -45,8 +45,8 @@ const App = ({ store }) => (
       <AppWrapper>
         <Header />
         <AppBody>
-          <Route path="/" exact component={Home} />
-          <Route path="/entrar" exact component={Login} />
+          {/* <Route path="/" exact component={Home} /> */}
+          <Route path="/" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
           <Route path='/listagem/vagas' component={VacancyList} />
           <Route path='/cadastro/vaga' component={VacancyRegister} />

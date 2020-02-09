@@ -47,7 +47,8 @@ const authModel = {
     }
     catch (e) {
       const errors = e.response.data
-      return actions.setErrors(errors)
+      return errors
+      // return actions.setErrors(errors)
     }
   }),
   logoutUser: thunk(async (actions, payload) => {

@@ -11,7 +11,8 @@ const registerModel = {
     catch (err) {
       console.log(err)
       const errors = err.response.data
-      return actions.setErrors(errors)
+      return errors
+      // return actions.setErrors(errors)
     }
   }),
   registerCompany: thunk(async (actions, payload) => {
@@ -28,7 +29,7 @@ const registerModel = {
   registerUser: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/user/register', payload)
-      return history.push('/entrar')
+      return history.push('/')
     }
     catch (err) {
       console.log(err)

@@ -16,7 +16,7 @@ import {
   color
 } from './dicioFields'
 
-import { Form, Background } from './styles'
+import { Form, Background, Title } from './styles'
 
 const Users = () => {
   const { register, handleSubmit, errors, getValues } = useForm()
@@ -38,10 +38,13 @@ const Users = () => {
       ? 'enterprise'
       : 'professional'
 
+    data.confirm_password = data.confirmPassword
+    data.self_declaration = data.selfDeclaration
+    delete data.confirmPassword 
+    delete data.selfDeclaration
+  
     const formatted = {
       ...data,
-      confirm_password: data.confirmPassword,
-      self_declaration: data.selfDeclaration,
       type
     }
 
@@ -56,6 +59,7 @@ const Users = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Cadastro</Title>
           <InputText
             name="email"
             type="text"
@@ -137,8 +141,8 @@ const Users = () => {
             firstValue="Gênero"
             register={register}
           >
-            {gender.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
+            {gender.map((item, index) =>
+              <option value={item} key={index}>{item}</option>
             )}
           </Select>
 
@@ -149,8 +153,8 @@ const Users = () => {
             firstValue="Auto Declaração"
             error={errors.selfDeclaration && errors.selfDeclaration.message}
           >
-            {color.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
+            {color.map((item, index) =>
+              <option value={item} key={index}>{item}</option>
             )}
           </Select>
 
