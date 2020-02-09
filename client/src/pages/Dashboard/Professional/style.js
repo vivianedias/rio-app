@@ -21,6 +21,7 @@ export const Button = styled.button`
 `
 export const Group = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 80%;
   margin: 1vh 0;
 `
