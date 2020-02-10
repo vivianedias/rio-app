@@ -4,11 +4,11 @@ const passport = require('passport')
 
 // Load Input Validation
 // const validateRegisterInput = require('../../validator/register')
-// Load Candidate model
-const Candidate = require('../../models/Candidate')
+// Load professional model
+const Professional = require('../../models/Professional')
 
-// @route   POST api/candidate/register
-// @desc    Register candidate
+// @route   POST api/professional/register
+// @desc    Register professional
 // @access  Public
 router.post('/register', passport.authenticate('jwt', { session: false }),
   (req, res) => {
@@ -19,13 +19,13 @@ router.post('/register', passport.authenticate('jwt', { session: false }),
     //   return res.status(400).json(errors)
     // }
 
-    Candidate.findOne({ user_id: req.user.id })
-      .then(candidate => {
-        if (candidate) {
+    Professional.findOne({ user_id: req.user.id })
+      .then(professional => {
+        if (professional) {
           errors.user = 'Esse usuário já possui um cadastro.'
           return res.status(400).json(errors)
         } else {
-          const newCandidate = new Candidate({
+          const newProfessional = new Professional({
             user_id: req.user.id,
             user_email: req.user.email,
             birthday: req.body.birthday,
@@ -47,47 +47,47 @@ router.post('/register', passport.authenticate('jwt', { session: false }),
             bio: req.body.bio,
           })
 
-          newCandidate
+          newProfessional
             .save()
-            .then(candidate => res.json(candidate))
+            .then(professional => res.json(professional))
             .catch(err => res.status(400).json(err))
         }
       })
       .catch(err => res.status(400).json(err))
   })
 
-// @route   GET api/candidate/
-// @desc    Get candidate by id
+// @route   GET api/professional/
+// @desc    Get professional by id
 // @access  Private
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
   const errors = {}
-  Candidate.findOne({ user_id: req.user.id })
-    .then(candidate => {
-      if (!candidate) {
-        errors.nocandidate = 'Esse profissional não existe'
+  Professional.findOne({ user_id: req.user.id })
+    .then(professional => {
+      if (!professional) {
+        errors.noprofessional = 'Esse profissional não existe'
         res.status(404).json(errors)
       }
-      res.json(candidate)
+      res.json(professional)
     })
     .catch(() => res.status(404).json({ project: 'Não existe um usuário com esse identificador' }))
 })
 
-// @route   GET api/candidate/all
-// @desc    Get candidates
+// @route   GET api/professional/all
+// @desc    Get professionals
 // @access  Public
 router.get('/all', (req, res) => {
   const errors = {}
-  Candidate.find()
+  Professional.find()
     .sort({ createdAt: -1 })
-    .then(candidates => {
-      if (!candidates) {
-        errors.nocandidates = 'Não existem candidatos cadastradas ainda'
+    .then(professionals => {
+      if (!professionals) {
+        errors.noprofessionals = 'Não existem candidatos cadastradas ainda'
         return res.status(404).json(errors)
       }
-      res.json(candidates)
+      res.json(professionals)
     })
     .catch(() => res.status(404).json({
-      candidates: 'Não existem candidatos cadastradas ainda'
+      professionals: 'Não existem candidatos cadastradas ainda'
     }))
 })
 
