@@ -10,7 +10,7 @@ import Select from '../../components/Select'
 import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
 
-import { emailValidation } from '../../utils/service'
+import { emailValidation, getUserType } from '../../utils/service'
 import {
   gender,
   color
@@ -30,13 +30,11 @@ const Users = () => {
   //   }
   // })
 
-  const registerUser = useStoreActions(actions => actions.user.registerUser)
+  const registerUser = useStoreActions(actions => actions.register.registerUser)
   const [modalStatus, setModalStatus] = useState(false)
 
   const onSubmit = (data) => {
-    const type = localStorage.user_type === 'empresa'
-      ? 'enterprise'
-      : 'professional'
+    const type = getUserType(localStorage.user_type)
 
     const formatted = {
       ...data,

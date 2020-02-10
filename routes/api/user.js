@@ -159,6 +159,24 @@ router.get('/has-additional-register',
   }
 )
 
+// @route   GET api/user/all
+// @desc    Get users
+// @access  Public
+router.get('/all', (req, res) => {
+  User.find()
+    .sort({ createdAt: -1 })
+    .then(users => {
+      if (!users) {
+        errors.nousers = 'Não existem usuários cadastradas ainda'
+        return res.status(404).json(errors)
+      }
+      res.json(users)
+    })
+    .catch(() => res.status(404).json({
+      users: 'Não existem usuários cadastradas ainda'
+    }))
+})
+
 // @route   POST api/user/forgot-password
 // @desc    Send email to reset password
 // @access  Public

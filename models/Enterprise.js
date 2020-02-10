@@ -70,7 +70,12 @@ const EnterpriseSchema = new Schema({
     required: true
   },
   vacancies: {
-    type: number
+    type: Number,
+    default: 0
+  },
+  usedVacancies: {
+    type: Number,
+    default: 0
   },
   created_at: {
     type: Date,

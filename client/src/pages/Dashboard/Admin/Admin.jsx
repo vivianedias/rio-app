@@ -21,6 +21,7 @@ const Admin = () => {
               name={enterprise.name}
               email={enterprise.email}
               phone={enterprise.phone}
+              id={enterprise._id}
             />
           ))
         }
