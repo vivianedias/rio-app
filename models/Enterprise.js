@@ -69,6 +69,9 @@ const EnterpriseSchema = new Schema({
     type: String,
     required: true
   },
+  vacancies: {
+    type: number
+  },
   created_at: {
     type: Date,
     default: Date.now

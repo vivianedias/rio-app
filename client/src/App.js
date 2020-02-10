@@ -44,9 +44,9 @@ const App = ({ store }) => (
         <AppBody>
           <Route path="/" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
-          <Route path='/listagem/vagas' component={VacancyList} />
-          <Route path='/cadastro/vaga' component={VacancyRegister} />
           <Switch>
+            <PrivateRoute path='/listagem/vagas' component={VacancyList} />
+            <PrivateRoute path='/cadastro/vaga' component={VacancyRegister} />
             <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
             <PrivateRoute
               path='/cadastro/profissional'
