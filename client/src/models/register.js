@@ -28,7 +28,7 @@ const registerModel = {
   registerUser: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/user/register', payload)
-      return history.push('/entrar')
+      return history.push('/')
     }
     catch (err) {
       console.log(err)

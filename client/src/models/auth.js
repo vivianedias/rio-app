@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import setAuthToken from '../utils/setAuthToken'
 import history from '../history'
-import { isEmpty } from '../utils/service'
+import { isEmpty, getUserType } from '../utils/service'
 
 const authModel = {
   authUser: thunk(async (actions, payload) => {
@@ -31,11 +31,9 @@ const authModel = {
       
       try {
         const check = await axios.get('/api/user/has-additional-register')
-        const type = decoded.type === 'enterprise'
-          ? 'empresa'
-          : 'profissional'
+        const type = getUserType(decoded.type)
         
-        if (check.data.hasAdditionalRegister) {
+        if (check.data.hasAdditionalRegister || type === 'admin') {
           return history.push(`/dashboard/${type}`)
         }
         

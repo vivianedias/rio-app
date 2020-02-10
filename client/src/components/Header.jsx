@@ -139,7 +139,7 @@ const Header = () => {
                     <Button onClick={() => setModalStatus(!modalStatus)}>
                       Cadastre-se
                     </Button>
-                    <NavLink to="/entrar" className="button is-light">
+                    <NavLink to="/" className="button is-light">
                       Entrar
                     </NavLink>
                   </>

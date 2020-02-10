@@ -6,6 +6,7 @@ const {
   authModel,
   registerModel,
   userModel,
+  vacancyModel,
   enterpriseModel
 } = GlobalModels
 
@@ -14,6 +15,7 @@ const storeModel = {
   auth: authModel,
   register: registerModel,
   user: userModel,
+  vacancy: vacancyModel,
   enterprise: enterpriseModel
 };
 

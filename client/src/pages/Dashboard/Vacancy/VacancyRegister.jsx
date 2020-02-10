@@ -1,83 +1,93 @@
-import React from "react"
+import React, { useState } from "react"
 import { useForm } from 'react-hook-form'
-import InputText from '../../../components/InputText'
-import Radios from '../../../components/Radios'
-import Button from '../../../components/Button'
+import styled from 'styled-components'
+import { useStoreActions, } from 'easy-peasy'
 
+import InputText from '../../../components/InputText'
+import Button from '../../../components/Button'
+import { If } from '../../../components/If'
+
+import history from '../../../history'
 import { Form, Background, Group, Title } from './style'
+
+const Text = styled.p`
+  font-size: 16px; 
+  color: #FFFFFF; 
+  font-weight: 600;
+`;
 
 const Vacancy = () => {
   const {
     register,
     handleSubmit,
     errors,
-    setValue
   } = useForm()
 
-  const onSubmit = (data) => {
+  const registerJob = useStoreActions(actions => actions.enterprise.registerJob)
+  const [status, setStatus] = useState('')
+  const onSubmit = async (data) => {
+    const res = await registerJob({
+      ...data,
+      total_period: data.start + '-' + data.end
+    })
 
+    if (res.status === 200) {
+      setStatus(res.msg)
+      return history.push('/dashboard/empresa')
+    }
   }
-
-  const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
 
   return (
     <Background>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Title>Cadastro de Vaga</Title>
         <InputText
-          name="name"
+          name="title"
           type="text"
           register={register({
-            required: ''
+            required: 'Esse campo é obrigatório'
           })}
           label="Nome da Vaga"
           placeholder="Insira o nome da vaga"
-          error={errors.name && errors.name.message}
+          error={errors.title && errors.title.message}
         />
 
         <InputText
           name="function"
           type="text"
           register={register({
-            required: ''
+            required: 'Esse campo é obrigatório'
           })}
           label="Função"
           placeholder="Insira a função"
-          error={errors.name && errors.name.message}
+          error={errors.function && errors.function.message}
         />
 
         <InputText
           name="requirements"
           type="text"
           register={register({
-            required: ''
+            required: 'Esse campo é obrigatório'
           })}
           label="Requisitos"
           placeholder="Insira os requisitos da vaga"
-          error={errors.name && errors.name.message}
+          error={errors.requirements && errors.requirements.message}
         />
 
         <InputText
-          name="address"
+          name="location"
           type="text"
           register={register({
             required: 'Esse campo é obrigatório',
           })}
           label="Endereço"
           placeholder="Insira o endereço"
-          error={errors.address && errors.address.message}
-        />
-
-        <Radios
-          label="CNPJ"
-          error={errors.pcd && errors.pcd.message}
-          onChange={e => handleRadio('pcd', e.target.value)}
-          name="cnpj"
+          error={errors.location && errors.location.message}
         />
 
         <Group>
           <InputText
-            name="periodStart"
+            name="start"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
@@ -87,7 +97,7 @@ const Vacancy = () => {
             error={errors.address && errors.address.message}
           />
           <InputText
-            name="periodEnd"
+            name="end"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
@@ -108,16 +118,9 @@ const Vacancy = () => {
           placeholder="Insira o valor do cachê"
           error={errors.formationInstitution && errors.formationInstitution.message}
         />
-        <InputText
-          name="periodTotal"
-          type="text"
-          register={register({
-            required: 'Esse campo é obrigatório',
-          })}
-          label="Periodo total da vaga"
-          placeholder="Periodo total da vaga"
-          error={errors.formationInstitution && errors.formationInstitution.message}
-        />
+        <If condition={status !== ''}>
+          <Text>{status}</Text>
+        </If>
         <Button type="submit">
           Enviar
         </Button>

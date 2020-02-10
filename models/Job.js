@@ -6,56 +6,36 @@ const JobSchema = new Schema({
   company: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
-    require: true,
+    required: true,
   },
   companyName: {
     type: Schema.Types.String,
-    ref: 'Company'
+    ref: 'Company',
+    required: true
   },
-  name: {
+  title: {
     type: String,
     required: true
   },
-  occupation: {
+  function: {
     type: String,
     required: true
   },
-  requeriment: {
+  requirements: {
     type: String,
     required: true
   },
-  state: {
+  location: {
     type: String,
-    required: true
-  },
-  cnpj: {
-    type: Boolean,
     required: true
   },
   cache: {
     type: String,
     required: true
   },
-  setForecast: {
+  total_period: {
     type: String,
     required: true
-  },
-  totalPeriod: {
-    type: String,
-    required: true
-  },
-  availableJobs: {
-    type: Boolean,
-    require: true,
-    default: false
-  },
-  countJobs: {
-    type: Number,
-    require: true
-  },
-  totalJobs: {
-    type: Number,
-    require: true
   },
   createAt: {
     type: Date,

@@ -24,7 +24,7 @@ const Dashboard = () => {
   const user = useStoreState(state => state.user.user)
 
   const [modalStatus, setModalStatus] = useState(false)
-  const [disabledButton, setDisabledButton] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
   const [modalInfoPlans, setModalInfoPlans] = useState(false)
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Dashboard = () => {
       <GroupButtons>
         <If condition={userType.type === "enterprise"}>
           <Link to="/cadastrar/vagas">
-            <Button disabled={disabledButton} >
+            <Button disabled={disabledButton}> 
               Cadastrar Vagas
             </Button>
           </Link>
