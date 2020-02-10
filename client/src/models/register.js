@@ -5,7 +5,7 @@ import history from '../history'
 const registerModel = {
   registerProfessional: thunk(async (actions, payload) => {
     try {
-      await axios.post('/api/candidate/register', payload)
+      await axios.post('/api/professional/register', payload)
       return history.push(`/dashboard/${payload.type}`)
     }
     catch (err) {
@@ -28,7 +28,7 @@ const registerModel = {
   registerUser: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/user/register', payload)
-      return history.push('/entrar')
+      return history.push('/')
     }
     catch (err) {
       console.log(err)

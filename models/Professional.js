@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // Create Schema
-const CandidateSchema = new Schema({
+const ProfessionalSchema = new Schema({
   user_id: {
     required: true,
     unique: true,
@@ -88,6 +88,6 @@ const CandidateSchema = new Schema({
 })
 
 
-const Candidate = mongoose.model('Candidate', CandidateSchema)
+const Professional = mongoose.model('Professional', ProfessionalSchema)
 
-module.exports = Candidate
+module.exports = Professional

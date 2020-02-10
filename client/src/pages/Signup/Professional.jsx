@@ -11,7 +11,6 @@ import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
 
-import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
   functions,
@@ -22,56 +21,22 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Success, Background } from './styles'
+import { Form, Background } from './styles'
 
 const Professionals = () => {
   const {
     register,
     handleSubmit,
     errors,
-    getValues,
     setValue
-  } = useForm({
-    mode: 'onBlur'
-  })
-  // defaultValues: {
-  // name: "Viviane"
-  // email: "vivi@gmail.com",
-  // password: "123456",
-  // confirmPassword: "123456",
-  // birthday:"12/1/1995",
-  // gender: "bla",
-  // pcd: true,
-  // homeState: "bla",
-  // currentState:"bla",
-  // currentCity: "bla",
-  // selfDeclaration: "bla",
-  // address: "blabla",
-  // education: "blabla",
-  // formationInstitution: "bla",
-  // cnpj: true,
-  // cnpjType: "bla",
-  // identityContent: true,
-  // identitySegments: "",
-  // expertiseAreas: "bla",
-  // apanAssociate: true,
-  // phone: "13123123",
-  // sexualOrientation: "bla",
-  // bio: "blasdjasjkdaskdbaskd",
-  // links: "blablablablabldajsdnkasjdnsaja"
-  // }
-  // })
+  } = useForm()
 
-  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
-  const [isLoading, setLoader] = useState(false)
+  const registerUser = useStoreActions(actions => actions.register.registerProfessional)
 
   const onSubmit = (data) => {
-    console.log(data)
     const formatted = {
       ...data,
       birthday: '22/01/1998',
-      city: 'blabla',
-      home_state: data.homeState,
       cnpj_type: data.cnpjType,
       identity_content: data.identityContent,
       identity_segments: formatCheckboxFields(data.identitySegments),
@@ -79,14 +44,11 @@ const Professionals = () => {
       apan_associate: data.apanAssociate,
       formation_institution: data.formationInstitution,
       sexual_orientation: data.sexualOrientation,
+      home_state: data.homeState,
       type: 'profissional'
     }
+    console.log(formatted)
     registerUser(formatted)
-  }
-
-  const programIsLoading = () => {
-    setLoader(true)
-    setTimeout(() => { setLoader(false) }, 2000)
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
@@ -104,7 +66,6 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
           <Select
             name="sexualOrientation"
             label="Orientação sexual"
@@ -117,7 +78,6 @@ const Professionals = () => {
             )}
           </Select>
 
-
           <Radios
             label="PcD (Pessoa com deficiência)"
             error={errors.pcd && errors.pcd.message}
@@ -125,11 +85,12 @@ const Professionals = () => {
             name="pcd"
           />
           {/* <Datepicker /> */}
+
           <Select
             label="Estado de origem"
             error={errors.homeState && errors.homeState.message}
             name="homeState"
-            firstValue="Estado"
+            firstValue="Estado de origem"
             register={register}
           >
             {states.map(item =>
@@ -138,38 +99,27 @@ const Professionals = () => {
           </Select>
 
           <Select
-            label="Estado de residência"
+            label="Estado"
             error={errors.state && errors.state.message}
             name="state"
             firstValue="Estado"
             register={register}
-            onChange={programIsLoading}
           >
             {states.map(item =>
               <option value={item.id} key={item.id}>{item.name}</option>
             )}
           </Select>
 
-          <Select
-            label="Cidade de Residência"
-            error={errors.city && errors.city.message}
+          <InputText
             name="city"
-            firstValue="Cidade"
-            register={register}
-            isLoading={isLoading.city}
-          >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().state)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
-          </Select>
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Cidade de Residência"
+            placeholder="Cidade"
+            error={errors.city && errors.city.message}
+          />
 
           <InputText
             name="address"

@@ -26,3 +26,14 @@ export const formatCheckboxFields = (field = []) => {
   const identifiers = Object.keys(field)
   return identifiers.filter((i) => field[i])
 }
+
+export const getUserType = (type) => {
+  switch (type) {
+    case 'enterprise':
+      return'empresa'
+    case 'professional':
+      return'profissional'
+    default:
+      return'admin'
+  }
+}

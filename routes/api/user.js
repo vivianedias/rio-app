@@ -12,7 +12,7 @@ const validateLoginInput = require('../../validator/login')
 
 // Load User model
 const User = require('../../models/User')
-const Candidate = require('../../models/Candidate')
+const Professional = require('../../models/Professional')
 const Enterprise = require('../../models/Enterprise')
 
 
@@ -112,7 +112,7 @@ router.post('/login', (req, res) => {
   })
 })
 
-// @route   GET api/users/current
+// @route   GET api/user/current
 // @desc    Return current user
 // @access  Private
 router.get('/current',
@@ -122,13 +122,16 @@ router.get('/current',
       id: req.user.id,
       name: req.user.name,
       email: req.user.email,
-      type: req.user.type
+      type: req.user.type,
+      gender: req.user.gender,
+      phone: req.user.phone,
+      self_declaration: req.user.self_declaration
     })
   }
 )
 
 // @route   GET api/users/has-additional-register
-// @desc    Return if user has related enterprise or candidate
+// @desc    Return if user has related enterprise or professional
 // @access  Private
 router.get('/has-additional-register',
   passport.authenticate('jwt', { session: false }),
@@ -140,9 +143,9 @@ router.get('/has-additional-register',
         })
 
         else {
-          Candidate.findOne({ user_id: req.user.id })
-            .then(candidate => {
-              if (candidate) return res.json({
+          Professional.findOne({ user_id: req.user.id })
+            .then(professional => {
+              if (professional) return res.json({
                 hasAdditionalRegister: true
               })
               else {
@@ -155,6 +158,24 @@ router.get('/has-additional-register',
       .catch(err => res.status(500).json(err))
   }
 )
+
+// @route   GET api/user/all
+// @desc    Get users
+// @access  Public
+router.get('/all', (req, res) => {
+  User.find()
+    .sort({ createdAt: -1 })
+    .then(users => {
+      if (!users) {
+        errors.nousers = 'Não existem usuários cadastradas ainda'
+        return res.status(404).json(errors)
+      }
+      res.json(users)
+    })
+    .catch(() => res.status(404).json({
+      users: 'Não existem usuários cadastradas ainda'
+    }))
+})
 
 // @route   POST api/user/forgot-password
 // @desc    Send email to reset password

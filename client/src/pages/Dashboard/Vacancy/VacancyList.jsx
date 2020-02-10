@@ -1,71 +1,44 @@
-import React from "react"
-import { Container, Group, Title } from './style'
+import React, { useEffect } from "react"
+import { useStoreState, useStoreActions } from 'easy-peasy'
+import { Container, Group, Title, Background, Textarea } from './style'
 import CardVacacy from '../../../components/CardVacancy'
+import { IfElse } from '../../../components/If'
+
 
 const Operator = () => {
-  const vacancies = [
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "000000000001-00",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
-    }
-  ]
+  const vacancies = useStoreState(state => state.vacancy.vacancies)
+  const getAllVacancies = useStoreActions(actions => actions.vacancy.getAllVacancies)
 
+  useEffect(() => {
+    getAllVacancies()
+  }, [getAllVacancies])
 
   return (
-    <Container>
-      <Title>Suas Vagas</Title>
-      <Group>
-        {vacancies.map((vacancy) => (
-          <CardVacacy
-            name={vacancy.name}
-            function={vacancy.function}
-            requirements={vacancy.requirements}
-            location={vacancy.location}
-            cnpj={vacancy.cnpj}
-            period={vacancy.period}
-            cache={vacancy.cache}
-            periodTotal={vacancy.periodTotal}
+    <Background>
+      <Container>
+        <Title>Vagas</Title>
+        <Group>
+          <IfElse
+            condition={typeof vacancies !== 'undefined' && vacancies.length > 0}
+            True={
+              vacancies && vacancies.map((vacancy) => (
+                <CardVacacy
+                  name={vacancy.name}
+                  function={vacancy.function}
+                  requirements={vacancy.requirements}
+                  location={vacancy.location}
+                  period={vacancy.total_period}
+                  cache={vacancy.cache}
+                />
+              ))
+            }
+            False={
+              <Textarea>Não há vagas cadastradas</Textarea>
+            }
           />
-        ))
-        }
-      </Group>
-    </Container>
+        </Group>
+      </Container>
+    </Background>
   )
 }
 

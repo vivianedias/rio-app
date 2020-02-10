@@ -2,6 +2,25 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
+const Job = require('../../models/Job')
+
+// @route   GET api/job/all
+// @desc    Get jobs
+// @access  Public
+router.get('/all', (req, res) => {
+  Job.find()
+    .sort({ createdAt: -1 })
+    .then(jobs => {
+      if (!jobs) {
+        errors.nojobs = 'Não existem vagas cadastradas ainda'
+        return res.status(404).json(errors)
+      }
+      res.json(jobs)
+    })
+    .catch(() => res.status(404).json({
+      jobs: 'Não existem vagas cadastradas ainda'
+    }))
+})
 
 // @route   GET api/job/
 // @desc    Return all company jobs

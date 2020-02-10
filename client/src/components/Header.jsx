@@ -13,7 +13,7 @@ import Button from '../components/Button'
 import { IfElse } from '../components/If'
 
 import setAuthToken from '../utils/setAuthToken'
-import { isEmpty } from '../utils/service'
+import { isEmpty, getUserType } from '../utils/service'
 
 const Wrapper = styled.nav`
   background-color: #200122;
@@ -84,9 +84,7 @@ const Header = () => {
     }
   }, [setAuth, logoutUser])
 
-  const type = auth.user && auth.user.type === 'enterprise'
-    ? 'empresa'
-    : 'profissional'
+  const type = getUserType(auth.user && auth.user.type)
 
   return (
     <Wrapper
@@ -139,7 +137,7 @@ const Header = () => {
                     <Button onClick={() => setModalStatus(!modalStatus)}>
                       Cadastre-se
                     </Button>
-                    <NavLink to="/entrar" className="button is-light">
+                    <NavLink to="/" className="button is-light">
                       Entrar
                     </NavLink>
                   </>

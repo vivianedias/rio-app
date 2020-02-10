@@ -12,9 +12,6 @@ import Select from '../../components/Select'
 
 import InputText from '../../components/InputText'
 
-
-
-import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
   segment,
@@ -28,34 +25,15 @@ import { formatCheckboxFields } from '../../utils/service'
 import { Form, Background } from './styles'
 
 const Enterprise = () => {
-  const { register, handleSubmit, errors, getValues, setValue } = useForm({
-    mode: 'onBlur'
-  })
-  // defaultValues: {
-  //   foundation_date: '12/12/2020',
-  //   presentation: 'blablabla',
-  //   links: 'blablalba',
-  //   city: 'blabla',
-  //   state: 'blablalba',
-  //   cnpj_type: false,
-  //   apan_associate: false,
-  //   identity_content: true,
-  //   identity_segments: ['bla', 'bla'],
-  //   other_states: ['bla', 'bla', 'bla'],
-  //   diversity_functions: ['bla', 'bla'],
-  //   business_segments: ['bla', 'bla'],
-  //   business_fields: ['bla', 'bla'],
-  // }
+  const { register, handleSubmit, errors, setValue } = useForm()
 
-  const registerCompany = useStoreActions(actions => actions.user.registerCompany)
+  const registerCompany = useStoreActions(actions => actions.register.registerCompany)
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
     const formatted = {
       ...data,
       foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
-      city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
       cnpj_type: data.cnpjType,
       apan_associate: data.apanAssociate,
       identity_segments: formatCheckboxFields(data.identitySegments),
@@ -66,6 +44,7 @@ const Enterprise = () => {
       identity_content: data.identityContent,
       type: 'empresa'
     }
+    console.log(formatted)
     registerCompany(formatted)
   }
 
@@ -86,7 +65,6 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
           <InputText
             name="name"
             type="text"
@@ -142,26 +120,16 @@ const Enterprise = () => {
             )}
           </Select>
 
-          <Select
-            label="Cidade"
-            error={errors.city && errors.city.message}
+          <InputText
             name="city"
-            firstValue="Cidade"
-            register={register}
-            isLoading={isLoading}
-          >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().state)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
-          </Select>
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Cidade"
+            placeholder="Insira o nome da sua cidade"
+            error={errors.city && errors.city.message}
+          />
 
           <Checkboxes
             label="Outros estados que a empresa tem atuação"
@@ -192,9 +160,8 @@ const Enterprise = () => {
             label="Qual o tipo do seu CNPJ?"
             register={register}
             firstValue="Tipo de CNPJ"
-            fields={cnpj_type}
-            name="companyRegistry"
-            error={errors.companyRegistry && errors.companyRegistry.message}
+            name="cnpjType"
+            error={errors.cnpjType && errors.cnpjType.message}
           >
             {cnpj_type.map(item =>
               <option value={item} key={uuid()}>{item}</option>

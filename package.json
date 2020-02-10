@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "yarn --cwd client",
     "start": "node -r dotenv/config server.js",
+    "server": "nodemon -r dotenv/config server.js",
     "client": "yarn --cwd client start",
     "dev": "NODE_ENV=development concurrently \"yarn run server\" \"yarn run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd client && yarn --cwd client run build"

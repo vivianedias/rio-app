@@ -8,9 +8,10 @@ require('dotenv').config();
 
 const path = require('path')
 
-const candidate = require('./routes/api/candidate')
+const professional = require('./routes/api/professional')
 const enterprise = require('./routes/api/enterprise')
 const user = require('./routes/api/user')
+const job = require('./routes/api/job')
 
 const app = express()
 
@@ -37,9 +38,10 @@ app.use((err, req, res, next) => {
 })
 
 // Use Routes
-app.use('/api/candidate', candidate)
+app.use('/api/professional', professional)
 app.use('/api/enterprise', enterprise)
 app.use('/api/user', user)
+app.use('/api/job', job)
 
 // Set static folder
 app.get('/*', (req, res) => {
