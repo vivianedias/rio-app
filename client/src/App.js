@@ -16,25 +16,22 @@ import Professional from './pages/Signup/Professional'
 import Users from './pages/Signup/User'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
-import ProfessionalProfile from './pages/Dashboard/Professional/Professional'
-import EnterpriseProfile from './pages/Dashboard/Enterprise/Enterprise'
+import Dashboard from './pages/Dashboard/index'
+
 import Admin from './pages/Dashboard/Admin/Admin'
 import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
 import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
 import SearchProfessionals from './pages/Search/SearchProfessionals';
 import SearchEnterprise from './pages/Search/SearchEnterprise';
-
 import ResultSearchProfessionals from './pages/Search/ResultSearchProfessionals';
 import ResultSearchEnterprise from './pages/Search/ResultSearchEnterprise';
-
-
 
 const AppWrapper = styled.div`
   height: 100vh;
 `
 
 const AppBody = styled.div`
-  height: calc(100vh - 3.25rem);
+  min-height: 100vh;
   width: 100%;
   font-family: "Montserrat";
 `
@@ -59,16 +56,20 @@ const App = ({ store }) => (
             <PrivateRoute path='/dashboard/admin' component={Admin} />
             <PrivateRoute
               path='/dashboard/profissional'
-              component={ProfessionalProfile}
+              component={Dashboard}
             />
             <PrivateRoute
               path='/dashboard/empresa'
-              component={EnterpriseProfile}
+              component={Dashboard}
             />
-
-            <Route path='/busca-profissionais' component={SearchProfessionals} />
-            <Route path='/resultado-profissionais' component={ResultSearchProfessionals} />
-
+            <Route
+              path='/busca-profissionais'
+              component={SearchProfessionals}
+            />
+            <Route
+              path='/resultado-profissionais'
+              component={ResultSearchProfessionals}
+            />
             <Route path='/busca-empresas' component={SearchEnterprise} />
             <Route path='/resultado-empresas' component={ResultSearchEnterprise} />
           </Switch>

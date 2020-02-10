@@ -32,7 +32,7 @@ const Professionals = () => {
     setValue
   } = useForm()
 
-  const registerUser = useStoreActions(actions => actions.user.registerProfessional)
+  const registerUser = useStoreActions(actions => actions.register.registerProfessional)
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {

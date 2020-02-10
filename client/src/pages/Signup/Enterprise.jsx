@@ -47,7 +47,7 @@ const Enterprise = () => {
   //   business_fields: ['bla', 'bla'],
   // }
 
-  const registerCompany = useStoreActions(actions => actions.user.registerCompany)
+  const registerCompany = useStoreActions(actions => actions.register.registerCompany)
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
@@ -86,7 +86,6 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-
           <InputText
             name="name"
             type="text"
@@ -192,9 +191,8 @@ const Enterprise = () => {
             label="Qual o tipo do seu CNPJ?"
             register={register}
             firstValue="Tipo de CNPJ"
-            fields={cnpj_type}
-            name="companyRegistry"
-            error={errors.companyRegistry && errors.companyRegistry.message}
+            name="cnpjType"
+            error={errors.cnpjType && errors.cnpjType.message}
           >
             {cnpj_type.map(item =>
               <option value={item} key={uuid()}>{item}</option>
