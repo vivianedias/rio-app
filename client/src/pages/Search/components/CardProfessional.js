@@ -5,37 +5,33 @@ const CardProfessional = (props) => {
   return (
     <Container>
       <Card>
-        <Group>
+        {/* <Group>
           <Label>Nome:</Label>
           <Textarea>{props.name}</Textarea>
+        </Group> */}
+        <Group>
+          <Label>Estado:</Label>
+          <Textarea>{props.state}</Textarea>
         </Group>
         <Group>
-          <Label>Função:</Label>
-          <Textarea>{props.function}</Textarea>
-        </Group>
-        <Group>
-          <Label>Requisitos:</Label>
-          <Textarea>{props.requirements}</Textarea>
-        </Group>
-        <Group>
-          <Label>Endereço:</Label>
-          <Textarea>{props.location}</Textarea>
-        </Group>
-        <Group>
-          <Label>CNPJ:</Label>
+          <Label>Cnpj:</Label>
           <Textarea>{props.cnpj}</Textarea>
         </Group>
         <Group>
-          <Label>Periodo:</Label>
-          <Textarea>{props.period}</Textarea>
+          <Label>Orientação sexual:</Label>
+          <Textarea>{props.self_declaration}</Textarea>
         </Group>
         <Group>
-          <Label>Cachê:</Label>
-          <Textarea>{props.cache}</Textarea>
+          <Label>Áreas de atuação:</Label>
+          <Textarea>{props.expertise_areas}</Textarea>
         </Group>
         <Group>
-          <Label>Periodo Total:</Label>
-          <Textarea>{props.periodTotal}</Textarea>
+          <Label>Pcd:</Label>
+          <Textarea>{props.pcd}</Textarea>
+        </Group>
+        <Group>
+          <Label>Bio:</Label>
+          <Textarea>{props.bio}</Textarea>
         </Group>
       </Card>
     </Container>

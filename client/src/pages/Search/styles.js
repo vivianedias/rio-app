@@ -6,8 +6,7 @@ export const TitleSearch = styled.h1`
     color: #fc9b44;
     text-align: center;
     font-size: 40px;
-    margin-bottom: 50px;
-   
+    margin: 5vh 0 ;
 `
 
 export const SubTitle = styled.h3`
@@ -15,7 +14,7 @@ export const SubTitle = styled.h3`
     color: #fc9b44;
     text-align: center;
     font-size: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 2vh;
    
 `
 export const Container = styled.div`
@@ -50,7 +49,6 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
-  height: inherit;
 `
 
 export const WrapperResultSearch = styled.div`
@@ -58,6 +56,7 @@ export const WrapperResultSearch = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #6F0000;
+  height: inherit;
 `;
 
 export const SearchResultEnterprise = styled.div`

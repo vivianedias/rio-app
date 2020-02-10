@@ -49,7 +49,7 @@ const Enterprise = () => {
   const registerCompany = useStoreActions(actions => actions.user.registerCompany)
   const [isLoading, setLoader] = useState(false)
   const [form, setForm] = useState(true)
-  const [dados, setDados] = useState(true)
+  const [dados, setDados] = useState()
   
 
   const formatCheckboxFields = (field) => {
@@ -58,23 +58,14 @@ const Enterprise = () => {
   }
 
   const onSubmit = (data) => {
+    const formatted = {
+      state: data.state,
+      diversity_functions: formatCheckboxFields(data.diversityFunctions),
+      business_segments: formatCheckboxFields(data.businessSegments),
+      business_fields: formatCheckboxFields(data.businessFields),
+    }
+    setDados(formatted)
     setForm(false)
-    console.log("data", data)
-    // const formatted = {
-    //   ...data,
-    //   foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
-    //   city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
-    //   cnpj_type: data.cnpjType,
-    //   apan_associate: data.apanAssociate,
-    //   identity_segments: formatCheckboxFields(data.identitySegments),
-    //   other_states: formatCheckboxFields(data.otherStates),
-    //   diversity_functions: formatCheckboxFields(data.diversityFunctions),
-    //   business_segments: formatCheckboxFields(data.businessSegments),
-    //   business_fields: formatCheckboxFields(data.businessFields),
-    //   identity_content: data.identityContent
-    // }
-    setDados(data)
-    console.log("formatted", data)
   }
 
   const programIsLoading = () => {
@@ -83,11 +74,6 @@ const Enterprise = () => {
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
-
-  useEffect(() => {
-    register({ name: 'identityContent' });
-    register({ name: 'apanAssociate' });
-  }, [register]);
 
   // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
   return (
@@ -128,7 +114,7 @@ const Enterprise = () => {
                   isLoading={isLoading}
                 >
                   {states.map(item =>
-                    <option value={item.id} key={item.id}>{item.name}</option>
+                    <option value={item.name} key={item.id}>{item.name}</option>
                   )}
                 </Select>
 

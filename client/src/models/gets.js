@@ -38,6 +38,34 @@ const getModel = {
             return err.response
         }
     }),
+    getUser: thunk(async () => {
+        try {
+            return await api.get('/api/user/current')
+            
+        }
+        catch (err) {
+            console.log(err)
+            return err.response
+        }
+    }),
+    getEnterpriseAll: thunk(async () => {
+        try {
+            return await api.get('/api/enterprise/all')
+        }
+        catch (err) {
+            console.log(err)
+            return err.response
+        }
+    }),
+    getProfessionalAll: thunk(async () => {
+        try {
+            return await api.get('/api/candidate/all')
+        }
+        catch (err) {
+            console.log(err)
+            return err.response
+        }
+    }),
 }
 
 

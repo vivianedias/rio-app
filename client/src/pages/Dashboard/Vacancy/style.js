@@ -31,7 +31,6 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
-  height: inherit;
 `
 
 export const Form = styled.form`

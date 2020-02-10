@@ -10,6 +10,7 @@ import Button from '../../components/Button'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
+import ResultSearchProfessionals from './ResultSearchProfessionals'
 
 
 import states from '../../assets/states.json'
@@ -39,16 +40,31 @@ const SearchProfessionals = () => {
 
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
   const [isSuccessful, setSuccess] = useState(false)
+  const [form, setForm] = useState(true)
+  const [dados, setDados] = useState()
   const [isLoading, setLoader] = useState({
     city: false,
     submit: false
   })
+
+  const formatCheckboxFields = (field) => {
+    const identifiers = Object.keys(field)
+    return identifiers.filter((i) => field[i])
+  }
+
   const onSubmit = (data) => {
-    setLoader({ ...isLoading, submit: true })
-    console.log(data)
-    setSuccess(true)
-    setLoader({ ...isLoading, submit: false })
-    registerUser(data)
+    const formatted = {
+      pcd: data.pcd,
+      gender: data.gender,
+      cnpj: data.companyRegistry,
+      self_declaration: data.selfDeclaration,
+      state: data.currentState,
+      sexual_orientation: data.sexualOrientation,
+      expertise_areas: formatCheckboxFields(data.expertiseAreas)
+    }
+    console.log(formatted)
+    setDados(formatted)
+    setForm(false)
   }
 
   const programIsLoading = () => {
@@ -61,108 +77,102 @@ const SearchProfessionals = () => {
   useEffect(() => {
     register({ name: 'pcd' });
     register({ name: 'companyRegistry' });
-    register({ name: 'identityContent' });
-    register({ name: 'apan' });
   }, [register]);
 
   // TODO: req hasNoRegister p/ validar se o usuário tem algum registro como profissional ou empresa. Se sim, redireciona para o dashboard, se não, mantém na página.
 
   return (
-    <Background>
+    <>
+      {
+        form ?
+          <Background>
+            <Flexbox justify="center">
+              <Form onSubmit={handleSubmit(onSubmit)}>
 
-      <Flexbox justify="center">
-        <Form onSubmit={handleSubmit(onSubmit)}>
+                <TitleSearch>Busca de profissionais</TitleSearch>
+                <Checkboxes
+                  label="Áreas de atuação"
+                  register={register}
+                  fields={functions}
+                  name="expertiseAreas"
+                />
 
-          <TitleSearch>Busca de profissionais</TitleSearch>
-          <Checkboxes
-            label="Áreas de atuação"
-            register={register}
-            fields={functions}
-            name="expertiseAreas"
-          />
+                <Select
+                  label="Auto Declaração"
+                  register={register}
+                  name="selfDeclaration"
+                  error={errors.selfDeclaration && errors.selfDeclaration.message}
+                  firstValue="Auto Declaração"
+                >
+                  {selfDeclaration.map(item =>
+                    <option value={item} key={uuid()}>{item}</option>
+                  )}
+                </Select>
 
+                <Select
+                  label="Gênero"
+                  register={register}
+                  name="gender"
+                  error={errors.gender && errors.gender.message}
+                  firstValue="Gênero"
+                >
+                  {gender.map(item =>
+                    <option value={item} key={uuid()}>{item}</option>
+                  )}
+                </Select>
 
+                <Select
+                  label="Orientação sexual"
+                  error={errors.sexualOrientation && errors.sexualOrientation.message}
+                  name="sexualOrientation"
+                  firstValue="Orientação Sexual"
+                  register={register}
+                >
+                  {sexualOrientation.map(item =>
+                    <option value={item} key={uuid()}>{item}</option>
+                  )}
+                </Select>
 
-          <Select
-            label="Auto Declaração"
-            register={register}
-            name="selfDeclaration"
-            error={errors.selfDeclaration && errors.selfDeclaration.message}
-            firstValue="Auto Declaração"
-          >
-            {selfDeclaration.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
+                <Radios
+                  label="PcD (Pessoa com deficiência)"
+                  error={errors.pcd && errors.pcd.message}
+                  onChange={e => handleRadio('pcd', e.target.value)}
+                  name="pcd"
+                />
 
-          <Select
-            label="Gênero"
-            register={register}
-            name="gender"
-            error={errors.gender && errors.gender.message}
-            firstValue="Gênero"
-          >
-            {gender.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
+                <Select
+                  label="Estado de residência"
+                  error={errors.currentState && errors.currentState.message}
+                  name="currentState"
+                  firstValue="Estado"
+                  register={register}
+                  onChange={programIsLoading}
+                >
+                  {states.map(item =>
+                    <option value={item.name} key={item.id}>{item.name}</option>
+                  )}
+                </Select>
 
-          <Select
-            label="Orientação sexual"
-            error={errors.sexualOrientation && errors.sexualOrientation.message}
-            name="sexualOrientation"
-            firstValue="Orientação Sexual"
-            register={register}
-          >
-            {sexualOrientation.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
+                <Radios
+                  label="Possui CNPJ"
+                  onChange={e => handleRadio('companyRegistry', e.target.value)}
+                  error={errors.companyRegistry && errors.companyRegistry.message}
+                  name="companyRegistry"
+                />
 
-          <Radios
-            label="PcD (Pessoa com deficiência)"
-            error={errors.pcd && errors.pcd.message}
-            onChange={e => handleRadio('pcd', e.target.value)}
-            name="pcd"
-          />
-
-
-
-          <Select
-            label="Estado de residência"
-            error={errors.currentState && errors.currentState.message}
-            name="currentState"
-            firstValue="Estado"
-            register={register}
-            onChange={programIsLoading}
-          >
-            {states.map(item =>
-              <option value={item.id} key={item.id}>{item.name}</option>
-            )}
-          </Select>
-
-
-          <Radios
-            label="Possui CNPJ"
-            onChange={e => handleRadio('companyRegistry', e.target.value)}
-            error={errors.companyRegistry && errors.companyRegistry.message}
-            name="companyRegistry"
-          />
-
-
-
-          <Button
-            type="submit"
-            isLoading={isLoading.submit}
-          >
-            Buscar
+                <Button
+                  type="submit"
+                  isLoading={isLoading.submit}
+                >
+                  Buscar
           </Button>
-          <If condition={isSuccessful}>
-            <Success>Seu cadastro foi realizado com sucesso!</Success>
-          </If>
-        </Form>
-      </Flexbox>
-    </Background >
+              </Form>
+            </Flexbox>
+          </Background >
+          :
+          <ResultSearchProfessionals data={dados} />
+      }
+    </>
   )
 }
 

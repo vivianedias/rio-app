@@ -1,61 +1,43 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { useStoreActions } from 'easy-peasy'
 import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle } from './styles'
 import CardProfessional from './components/CardProfessional'
+import Helper from '../../utils/Helper'
 
-const ResultSearchProfessionals = () => {
-  const vacancies = [
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "000000000001-00",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "20 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "30 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "0 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Conceição - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
-    },
-    {
-      name: "Desenvolvedora",
-      function: "..",
-      requirements: "..",
-      location: "Butantã - São Paulo, SP",
-      cnpj: "Sim",
-      period: "10/03/2020 à 20/03/2020",
-      cache: "R$: a combinar",
-      periodTotal: "10 dias"
+
+const ResultSearchProfessionals = ({ data }) => {
+  const [notRegister, setNotRegister] = useState()
+  const [vacancies, setVacancies] = useState([])
+  const getProfessionalAll = useStoreActions(actions => actions.get.getProfessionalAll)
+
+  useEffect(async () => {
+    const professionalAll = await getProfessionalAll()
+
+    if (professionalAll.data.candidates === "Não existem candidatos cadastradas ainda" || professionalAll) {
+      setNotRegister("Não existem candidatos cadastradas ainda")
+    } else {
+
+      professionalAll.data.filter((item, index) => (
+        item.expertise_areas.map((obj) => (
+          data.expertise_areas.map((data) => {
+            if (obj === data) {
+              // vacancies.push()
+            }
+          })
+        ))
+      ))
+
+      let filter = professionalAll.data.filter((item) => {
+        return (item.gender === data.gender ||
+          item.cnpj === data.cnpj ||
+          item.self_declaration === data.self_declaration ||
+          item.state === data.state ||
+          item.sexual_orientation === data.sexual_orientation)
+      })
+
+      setVacancies(filter)
     }
-  ]
-
+  }, [])
 
   return (
     < WrapperResultSearch >
@@ -64,18 +46,27 @@ const ResultSearchProfessionals = () => {
         <TitleSearch>Resultado de busca de Profissionais</TitleSearch>
         <SubTitle>Resultado de Busca para:</SubTitle>
         <Group>
-          {vacancies.map((vacancy) => (
-            <CardProfessional
-              name={vacancy.name}
-              function={vacancy.function}
-              requirements={vacancy.requirements}
-              location={vacancy.location}
-              cnpj={vacancy.cnpj}
-              period={vacancy.period}
-              cache={vacancy.cache}
-              periodTotal={vacancy.periodTotal}
-            />
-          ))
+          {
+            notRegister ?
+              <p>"Não existem candidatos cadastradas ainda"</p>
+              :
+              vacancies.map((vacancy) => (
+                <CardProfessional
+                  state={vacancy.state}
+                  cnpj={vacancy.cnpj ? "Sim" : "Não"}
+                  expertise_areas={
+                    Helper.validatingFields(vacancy.expertise_areas) &&
+                    vacancy.expertise_areas.map((state, index) => (
+                      vacancy.expertise_areas.length === index + 1 ?
+                        `${state}` :
+                        `${state}, `
+                    ))}
+                    self_declaration={vacancy.self_declaration}
+                  pcd={vacancy.pcd ? "SIm" : "Não"}
+                  bio={vacancy.bio}
+                />
+              ))
+
           }
         </Group>
       </Wrapper>
