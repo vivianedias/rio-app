@@ -51,11 +51,9 @@ const Enterprise = () => {
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
     const formatted = {
       ...data,
       foundation_date: '12/12/2010', // TODO: Arrumar isso, deixar dinamico
-      city: 'blablalba', // TODO: Arrumar isso, deixar o select dinamico
       cnpj_type: data.cnpjType,
       apan_associate: data.apanAssociate,
       identity_segments: formatCheckboxFields(data.identitySegments),
@@ -66,6 +64,7 @@ const Enterprise = () => {
       identity_content: data.identityContent,
       type: 'empresa'
     }
+    console.log(formatted)
     registerCompany(formatted)
   }
 
@@ -141,26 +140,16 @@ const Enterprise = () => {
             )}
           </Select>
 
-          <Select
-            label="Cidade"
-            error={errors.city && errors.city.message}
+          <InputText
             name="city"
-            firstValue="Cidade"
-            register={register}
-            isLoading={isLoading}
-          >
-            {cities
-              .filter(city => city['state_id'].toString() === getValues().state)
-              .map(filteredCities => (
-                <option
-                  value={filteredCities.name}
-                  key={filteredCities.id}
-                >
-                  {filteredCities.name}
-                </option>
-              ))
-            }
-          </Select>
+            type="text"
+            register={register({
+              required: 'Esse campo é obrigatório',
+            })}
+            label="Cidade"
+            placeholder="Insira o nome da sua cidade"
+            error={errors.city && errors.city.message}
+          />
 
           <Checkboxes
             label="Outros estados que a empresa tem atuação"

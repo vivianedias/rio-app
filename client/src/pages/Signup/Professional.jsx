@@ -36,11 +36,9 @@ const Professionals = () => {
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
-    console.log(data)
     const formatted = {
       ...data,
       birthday: '22/01/1998',
-      city: 'blabla',
       cnpj_type: data.cnpjType,
       identity_content: data.identityContent,
       identity_segments: formatCheckboxFields(data.identitySegments),
@@ -53,11 +51,6 @@ const Professionals = () => {
     }
     console.log(formatted)
     registerUser(formatted)
-  }
-
-  const programIsLoading = () => {
-    setLoader(true)
-    setTimeout(() => { setLoader(false) }, 2000)
   }
 
   const handleRadio = (field, selectedOption) => setValue(field, (selectedOption.toLowerCase() === 'true'))
