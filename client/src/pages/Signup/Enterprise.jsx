@@ -12,9 +12,6 @@ import Select from '../../components/Select'
 
 import InputText from '../../components/InputText'
 
-
-
-import cities from '../../assets/cities.json'
 import states from '../../assets/states.json'
 import {
   segment,
@@ -28,24 +25,7 @@ import { formatCheckboxFields } from '../../utils/service'
 import { Form, Background } from './styles'
 
 const Enterprise = () => {
-  const { register, handleSubmit, errors, getValues, setValue } = useForm({
-    mode: 'onBlur'
-  })
-  // defaultValues: {
-  //   foundation_date: '12/12/2020',
-  //   presentation: 'blablabla',
-  //   links: 'blablalba',
-  //   city: 'blabla',
-  //   state: 'blablalba',
-  //   cnpj_type: false,
-  //   apan_associate: false,
-  //   identity_content: true,
-  //   identity_segments: ['bla', 'bla'],
-  //   other_states: ['bla', 'bla', 'bla'],
-  //   diversity_functions: ['bla', 'bla'],
-  //   business_segments: ['bla', 'bla'],
-  //   business_fields: ['bla', 'bla'],
-  // }
+  const { register, handleSubmit, errors, setValue } = useForm()
 
   const registerCompany = useStoreActions(actions => actions.register.registerCompany)
   const [isLoading, setLoader] = useState(false)

@@ -9,7 +9,7 @@ const Admin = () => {
 
   useEffect(() => {
     getAllEnterprises()
-  }, [])
+  }, [getAllEnterprises])
 
   return (
     <Container>

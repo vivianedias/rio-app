@@ -30,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     getUser(userType.type)
     if(userType.type === "enterprise") setModalInfoPlans(true)
-  }, [userType])
+  }, [userType, getUser])
 
   return (
     <Background>

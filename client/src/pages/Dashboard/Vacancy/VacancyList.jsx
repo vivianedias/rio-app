@@ -9,7 +9,7 @@ const Operator = () => {
 
   useEffect(() => {
     getAllVacancies()
-  }, [])
+  }, [getAllVacancies])
 
   return (
     <Container>

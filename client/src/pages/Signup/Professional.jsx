@@ -28,12 +28,10 @@ const Professionals = () => {
     register,
     handleSubmit,
     errors,
-    getValues,
     setValue
   } = useForm()
 
   const registerUser = useStoreActions(actions => actions.register.registerProfessional)
-  const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
     const formatted = {
