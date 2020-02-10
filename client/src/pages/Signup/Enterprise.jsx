@@ -42,7 +42,7 @@ const Enterprise = () => {
       business_segments: formatCheckboxFields(data.businessSegments),
       business_fields: formatCheckboxFields(data.businessFields),
       identity_content: data.identityContent,
-      type: 'empresa'
+      type: 'enterprise'
     }
     console.log(formatted)
     registerCompany(formatted)

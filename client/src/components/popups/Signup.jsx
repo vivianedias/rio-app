@@ -37,7 +37,7 @@ const SignupPopup = ({ toggleModalStatus }) => {
         width="100%"
         align="center"
       >
-        <Link to="/cadastro" onClick={() => handleClick("empresa")}>
+        <Link to="/cadastro" onClick={() => handleClick("enterprise")}>
           <Button
             styles="is-link"
           >
@@ -45,7 +45,7 @@ const SignupPopup = ({ toggleModalStatus }) => {
           </Button>
         </Link>
         <VerticalLine />
-        <Link to="/cadastro" onClick={() => handleClick("profissional")}>
+        <Link to="/cadastro" onClick={() => handleClick("professional")}>
           <Button
             styles="is-danger"
           >

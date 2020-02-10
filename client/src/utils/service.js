@@ -30,8 +30,10 @@ export const formatCheckboxFields = (field = []) => {
 export const getUserType = (type) => {
   switch (type) {
     case 'enterprise':
+    case 'empresa':
       return'empresa'
     case 'professional':
+    case 'profissional':
       return'profissional'
     default:
       return'admin'

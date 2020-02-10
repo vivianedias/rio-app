@@ -45,7 +45,7 @@ const Professionals = () => {
       formation_institution: data.formationInstitution,
       sexual_orientation: data.sexualOrientation,
       home_state: data.homeState,
-      type: 'profissional'
+      type: 'professional'
     }
     console.log(formatted)
     registerUser(formatted)

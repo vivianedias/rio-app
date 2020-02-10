@@ -34,13 +34,11 @@ const Users = () => {
   const [modalStatus, setModalStatus] = useState(false)
 
   const onSubmit = (data) => {
-    const type = getUserType(localStorage.user_type)
-
     const formatted = {
       ...data,
       confirm_password: data.confirmPassword,
       self_declaration: data.selfDeclaration,
-      type
+      type: localStorage.user_type
     }
 
     return registerUser(formatted)

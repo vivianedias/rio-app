@@ -1,12 +1,13 @@
 import { thunk, action } from 'easy-peasy'
 import axios from 'axios'
 import history from '../history'
+import { getUserType } from '../utils/service'
 
 const registerModel = {
   registerProfessional: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/professional/register', payload)
-      return history.push(`/dashboard/${payload.type}`)
+      return history.push(`/dashboard/${getUserType(payload.type)}`)
     }
     catch (err) {
       console.log(err)
@@ -17,7 +18,7 @@ const registerModel = {
   registerCompany: thunk(async (actions, payload) => {
     try {
       await axios.post('/api/enterprise/register', payload)
-      return history.push(`/dashboard/${payload.type}`)
+      return history.push(`/dashboard/${getUserType(payload.type)}`)
     }
     catch (err) {
       console.log(err)
