@@ -28,6 +28,10 @@ export const fields = [
     display: 'Data de Aniversário'
   },
   {
+    name: 'foundation_date',
+    display: 'Data de fundação da empresa'
+  },
+  {
     name: 'city',
     display: 'Cidade'
   },
