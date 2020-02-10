@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uuid from 'uuid'
 import styled from 'styled-components'
-import { parseText as parse } from '../utils/service'
 
 const mobile = '576px'
 
@@ -44,7 +43,7 @@ const Checkboxes = ({ label, register, name, fields }) => (
           <Label key={uuid()} className="control checkbox">
             <Checkbox
               type="checkbox"
-              name={`${name}[${parse(checkedItem)}]`}
+              name={`${name}[${checkedItem}]`}
               ref={register}
             />
             <span>{checkedItem}</span>
