@@ -5,14 +5,16 @@ const {
   example,
   authModel,
   registerModel,
-  userModel
+  userModel,
+  enterpriseModel
 } = GlobalModels
 
 const storeModel = {
   products: example,
   auth: authModel,
   register: registerModel,
-  user: userModel
+  user: userModel,
+  enterprise: enterpriseModel
 };
 
 const store = createStore(storeModel);
