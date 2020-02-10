@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 
+const Job = require('../../models/Job')
+
 // @route   GET api/job/all
 // @desc    Get jobs
 // @access  Public

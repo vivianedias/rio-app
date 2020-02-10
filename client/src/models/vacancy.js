@@ -4,20 +4,22 @@ import axios from 'axios'
 const vacancyModel = {
   setVacancy: thunk(async (actions, payload) => {
     try {
-      await axios.post('/api/jobs', payload)
+      await axios.post('/api/job', payload)
     }
     catch (e) {
-      const errors = e.response.data
+      console.log(e)
+      // const errors = e.response.data
       // return actions.setErrors(errors)
     }
   }),
   getAllVacancies: thunk(async (actions, payload) => {
     try {
       const res = await axios.get('/api/job/all')
-      actions.setVacancies(res)
+      actions.setVacancies(res.data)
     }
     catch (e) {
-      const errors = e.response.data
+      console.log(e)
+      // const errors = e.response.data
       // return actions.setErrors(errors)
     }
   }),
