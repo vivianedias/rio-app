@@ -9,7 +9,6 @@ import styled from 'styled-components'
 
 import history from './history'
 
-import Home from './pages/Home'
 import Header from './components/Header'
 import Login from './pages/Login/Login'
 import Enterprise from './pages/Signup/Enterprise'
@@ -18,12 +17,7 @@ import Users from './pages/Signup/User'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './pages/Dashboard/index'
-
 import Admin from './pages/Dashboard/Admin/Admin'
-import AllEnterprise from './pages/Dashboard/Admin/AllEnterprise'
-
-
-
 import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
 import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
 import SearchProfessionals from './pages/Search/SearchProfessionals';
@@ -40,8 +34,6 @@ const AppBody = styled.div`
   width: 100%;
   font-family: "Montserrat";
 `
-
-
 
 const App = ({ store }) => (
   <StoreProvider store={store}>
@@ -60,9 +52,7 @@ const App = ({ store }) => (
               component={Professional}
             />
             <PrivateRoute path='/dashboard/admin' component={Admin} />
-            <PrivateRoute path='/empresas' component={AllEnterprise} />
-
-
+            {/* <PrivateRoute path='/empresas' component={AllEnterprise} /> */}
             <PrivateRoute
               path='/dashboard/profissional'
               component={Dashboard}

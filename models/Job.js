@@ -3,12 +3,12 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const JobSchema = new Schema({
-  company: {
+  company_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
     required: true,
   },
-  companyName: {
+  company_name: {
     type: Schema.Types.String,
     ref: 'Company',
     required: true

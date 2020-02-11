@@ -67,16 +67,33 @@ router.get('/:jobId', passport.authenticate('jwt', { session: false }),
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
   try {
-    const job = await Job.create({ ...req.body, company: req.companyId });
-
-    return res.send({
-      job
-    });
-
+    const company = Company.findOne({ user_id: req.user.id })
+    try {
+      const newJob = new Job({
+        company_id: company.id,
+        company_email: company.email,
+        company: req.body.company,
+        company_name: req.body.company_name,
+        title: req.body.title,
+        function: req.body.function,
+        requirements: req.body.requirements,
+        location: req.body.location,
+        cache: req.body.cache,
+        total_period: req.body.total_period,
+      })
+  
+      const data = newJob.save()
+      return res.json(data)
+    }
+    catch (err) {
+      res.status(400).send({
+        error: 'Erro ao criar a vaga',
+      });
+    }
   }
   catch (err) {
     res.status(400).send({
-      error: ' Erro ao criar a vaga',
+      error: 'Erro ao encontrar uma empresa para esse usuário',
     });
   }
 });

@@ -4,7 +4,7 @@ import axios from 'axios'
 const enterpriseModel = {
   registerJob: thunk(async (actions, payload) => {
     try {
-      await axios.post('/api/enterprise/job', payload)
+      await axios.post('/api/job', payload)
       return {
         status: 200,
         msg: 'Sua vaga foi postada!'

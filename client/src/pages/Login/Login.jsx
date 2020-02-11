@@ -6,7 +6,6 @@ import { useStoreActions, useStoreState } from 'easy-peasy'
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Modal from '../../components/Modal'
-import Button from '../../components/Button'
 import SignupPopup from '../../components/popups/Signup'
 
 import { Form, InputWrapper, WrapperScreen, StyledFont, StyledButton, Styledlink } from './style'
@@ -79,19 +78,15 @@ const Login = () => {
                 }
               })}
             />
-            <Styledlink
-              to="/esqueci-senha"
-
-            >
+            <Styledlink to="/esqueci-senha">
               esqueceu sua senha?
             </Styledlink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
             <StyledButton
               onClick={toggleModal}
-              background="linear-gradient(101deg, #200122 0%,rgb(65, 1, 20) 80%)"
+              background="linear-gradient(101deg, #200122 0%, rgb(65,1,20) 80%)"
               color=" #FC9B55"
-
             >
               cadastre-se
             </StyledButton>

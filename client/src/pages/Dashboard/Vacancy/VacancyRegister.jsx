@@ -28,6 +28,7 @@ const Vacancy = () => {
   const onSubmit = async (data) => {
     const res = await registerJob({
       ...data,
+      company_name: data.companyName,
       total_period: data.start + '-' + data.end
     })
 

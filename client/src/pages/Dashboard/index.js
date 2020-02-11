@@ -31,9 +31,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser(userType.type)
-    console.log('userType: ', userType.type)
-    if (userType.type === "enterprise") setModalInfoPlans(true)
     if (userType.type === "professional") setModalBoasVindas(true)
+    if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
 
   return (
@@ -79,9 +78,7 @@ const Dashboard = () => {
         onClose={() => setModalBoasVindas(false)}
         width="500px"
       >
-        <BoasVindas
-          toggleModalStatus={() => setModalBoasVindas(!modalBoasVindas)}
-        />
+        <BoasVindas />
       </Modal>
       <Modal
         isOpen={modalStatus}

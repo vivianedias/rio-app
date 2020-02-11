@@ -57,35 +57,6 @@ const StyledNavlink = styled(NavLink)(props => ({
 
 
 const Header = () => {
-  // constructor(props) {
-  // 	super(props);
-  // 	this.state = {
-  // 		isActive: false,
-  // 		isBurguerOpen: false,
-  // 	}
-  // }
-
-  // componentDidMount() {
-  // 	window.addEventListener('resize', _.throttle(this.setWindowWidth, 500), false);
-  // 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);
-  // }
-
-  // componentWillUnmount() {
-  // 	window.removeEventListener('scroll', this.setWindowWidth, false);
-  // }
-
-  // setWindowWidth = () => {
-  // 	// this.props.dispatchScreenSize(document.documentElement.clientWidth);		
-  // }
-
-  // handleClick = (e) => {
-  // 	e.preventDefault();
-  // 	this.setState(prevState => ({ isBurguerOpen: !prevState.isBurguerOpen }));
-  // }
-
-  // const { auth: { isAuthenticated, user }, history } = this.props;
-  // const { isActive } = this.state;
-
   const [modalStatus, setModalStatus] = useState(false)
   const setAuth = useStoreActions(actions => actions.auth.setAuth)
   const logoutUser = useStoreActions(actions => actions.auth.logoutUser)
@@ -153,18 +124,24 @@ const Header = () => {
                 condition={auth.isAuthenticated}
                 True={
                   <>
-                    <StyledButton background=" #200122" color="#FC9B55" onClick={logoutUser}>
-                      Sair
+                    <StyledButton
+                      background="#200122"
+                      color="#FC9B55"
+                      href="https://raio.agency/"
+                    >
+                      Home
                     </StyledButton>
                     <StyledNavlink
                       to={`/dashboard/${type}`}
-
-
                     >
                       Dashboard
                     </StyledNavlink>
-                    <StyledButton background=" #200122" color=" #FC9B55" href="https://raio.agency/">
-                      Home
+                    <StyledButton
+                      background="#200122"
+                      color="#FC9B55"
+                      onClick={logoutUser}
+                    >
+                      Sair
                     </StyledButton>
                   </>
                 }
@@ -179,9 +156,11 @@ const Header = () => {
                     <StyledNavlink to="/" >
                       Entrar
                     </StyledNavlink>
-
-
-                    <StyledButton background=" #200122" color=" #FC9B55" href="https://raio.agency/">
+                    <StyledButton
+                      background="#200122"
+                      color="#FC9B55"
+                      href="https://raio.agency/"
+                    >
                       Home
                     </StyledButton>
                   </>
