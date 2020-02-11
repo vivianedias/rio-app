@@ -29,27 +29,27 @@ const Dashboard = () => {
 
   useEffect(() => {
     getUser(userType.type)
-    if(userType.type === "enterprise") setModalInfoPlans(true)
+    if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
 
   return (
     <Background>
       <Container>
         <Title>Meu Perfil</Title>
-          {fields.map(field => {
-            if (typeof user[field.name] !== 'undefined') {
-              return (
-                <>
-                  <Field name={field.display} content={user[field.name]} />
-                </>
-              )
-            }
-          })}
+        {fields.map(field => {
+          if (typeof user[field.name] !== 'undefined') {
+            return (
+              <>
+                <Field name={field.display} content={user[field.name]} />
+              </>
+            )
+          }
+        })}
       </Container>
       <GroupButtons>
         <If condition={userType.type === "enterprise"}>
-          <Link to="/cadastrar/vagas">
-            <Button disabled={disabledButton}> 
+          <Link to="/cadastro/vaga">
+            <Button disabled={disabledButton}>
               Cadastrar Vagas
             </Button>
           </Link>

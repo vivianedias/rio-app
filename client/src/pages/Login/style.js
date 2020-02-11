@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Button from '../../components/Button'
 
 export const FullWidth = styled.div`
   width: 100%;
@@ -20,6 +21,7 @@ export const InputWrapper = styled.div`
 
 export const WrapperScreen = styled.div`
   background-image: linear-gradient(#200122, #6F0000);
+  height: 100%;
 `
 
 export const StyledFont = styled.h1`
