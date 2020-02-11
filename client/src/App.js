@@ -44,7 +44,7 @@ const App = ({ store }) => (
           <Route path="/" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
           <Switch>
-            <PrivateRoute path='/listagem/vagas' component={VacancyList} />
+            {/* <PrivateRoute path='/listagem/vagas' component={VacancyList} /> */}
             <PrivateRoute path='/cadastro/vaga' component={VacancyRegister} />
             <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
             <PrivateRoute
@@ -52,7 +52,7 @@ const App = ({ store }) => (
               component={Professional}
             />
             <PrivateRoute path='/dashboard/admin' component={Admin} />
-            {/* <PrivateRoute path='/empresas' component={AllEnterprise} /> */}
+            <PrivateRoute path='/empresas' component={VacancyList} />
             <PrivateRoute
               path='/dashboard/profissional'
               component={Dashboard}

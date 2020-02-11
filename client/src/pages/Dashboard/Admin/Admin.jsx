@@ -2,17 +2,16 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import { WrapperChoices, Title, Background } from './style'
 
-const Admin = () => {
+const DashboardWrapper = () => {
 
   return (
     <Background>
       <Title>Escolha uma visão: </Title>
-
       <WrapperChoices>
         <Link to="/empresas">
           <Title>Empresarial</Title>
         </Link>
-        <Link to="">
+        <Link to="/profissionais">
           <Title>Profissional</Title>
         </Link>
       </WrapperChoices>
@@ -21,4 +20,4 @@ const Admin = () => {
 
 }
 
-export default Admin
+export default DashboardWrapper
