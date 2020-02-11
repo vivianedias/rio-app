@@ -1,33 +1,24 @@
-import React, { useEffect } from "react"
-import CardEnterprise from '../../../components/CardEnterprise'
-import { Container, Title, Group } from './style'
-import { useStoreActions, useStoreState } from 'easy-peasy'
+import React from "react"
+import { Link } from 'react-router-dom'
+import { WrapperChoices, Title, Background } from './style'
 
 const Admin = () => {
-  const getAllEnterprises = useStoreActions(actions => actions.enterprise.getAllEnterprises)
-  const enterprises = useStoreState(state => state.enterprise.enterprises)
-
-  useEffect(() => {
-    getAllEnterprises()
-  }, [getAllEnterprises])
 
   return (
-    <Container>
-      <Title>Empresas Cadastradas</Title>
-      <Group>
-        {
-          enterprises.map((enterprise) => (
-            <CardEnterprise
-              name={enterprise.name}
-              email={enterprise.email}
-              phone={enterprise.phone}
-              id={enterprise._id}
-            />
-          ))
-        }
-      </Group>
-    </Container>
+    <Background>
+      <Title>Escolha uma visão: </Title>
+
+      <WrapperChoices>
+        <Link to="/empresas">
+          <Title>Empresarial</Title>
+        </Link>
+        <Link to="">
+          <Title>Profissional</Title>
+        </Link>
+      </WrapperChoices>
+    </Background>
   )
+
 }
 
 export default Admin

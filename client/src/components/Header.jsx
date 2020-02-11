@@ -24,6 +24,38 @@ const StyledLogo = styled.img`
   margin-left: 30px;
 `
 
+const StyledButton = styled.button(props => ({
+  background: props.background,
+  lineHeight: '1.5',
+  paddingBottom: 'calc(.5em - 1px)',
+  paddingLeft: 'calc(.75em - 1px)',
+  paddingRight: 'calc(.75em - 1px)',
+  paddingTop: 'calc(.5em - 1px)',
+  borderRadius: '4px',
+  fontSize: '1rem',
+  marginBottom: '.5rem',
+  marginRight: '10px',
+  color: props.color,
+  border: 'none',
+}));
+
+const StyledNavlink = styled(NavLink)(props => ({
+  background: 'linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)',
+  lineHeight: '1.5',
+  paddingBottom: 'calc(.5em - 1px)',
+  paddingLeft: 'calc(.75em - 1px)',
+  paddingRight: 'calc(.75em - 1px)',
+  paddingTop: 'calc(.5em - 1px)',
+  borderRadius: '4px',
+  fontSize: '1rem',
+  marginBottom: '.5rem',
+  marginRight: '10px',
+  color: "#FC9B55",
+  border: 'none'
+}));
+
+
+
 const Header = () => {
   // constructor(props) {
   // 	super(props);
@@ -63,10 +95,10 @@ const Header = () => {
     if (localStorage.jwtToken) {
       // Set the auth token header auth
       setAuthToken(localStorage.jwtToken)
-    
+
       // Decode token and get user info and exp
       const decoded = jwtDecode(localStorage.jwtToken)
-      
+
       // Set user and auth
       setAuth({
         isAuthenticated: !isEmpty(decoded),
@@ -121,25 +153,37 @@ const Header = () => {
                 condition={auth.isAuthenticated}
                 True={
                   <>
-                    <Button onClick={logoutUser}>
+                    <StyledButton background=" #200122" color="#FC9B55" onClick={logoutUser}>
                       Sair
-                    </Button>
-                    <NavLink
+                    </StyledButton>
+                    <StyledNavlink
                       to={`/dashboard/${type}`}
-                      className="button is-light"
+
+
                     >
                       Dashboard
-                    </NavLink>
+                    </StyledNavlink>
+                    <StyledButton background=" #200122" color=" #FC9B55" href="https://raio.agency/">
+                      Home
+                    </StyledButton>
                   </>
                 }
                 False={
                   <>
-                    <Button onClick={() => setModalStatus(!modalStatus)}>
+                    <StyledButton
+                      background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
+                      color=" #FC9B55"
+                      onClick={() => setModalStatus(!modalStatus)}>
                       Cadastre-se
-                    </Button>
-                    <NavLink to="/" className="button is-light">
+                    </StyledButton>
+                    <StyledNavlink to="/" >
                       Entrar
-                    </NavLink>
+                    </StyledNavlink>
+
+
+                    <StyledButton background=" #200122" color=" #FC9B55" href="https://raio.agency/">
+                      Home
+                    </StyledButton>
                   </>
                 }
               />

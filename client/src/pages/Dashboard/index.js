@@ -8,6 +8,7 @@ import Button from '../../components/Button'
 import { If } from '../../components/If'
 import InfoDelete from '../../components/popups/InfoDelete'
 import InfoPlans from '../../components/popups/InfoPlans'
+import BoasVindas from '../../components/popups/BoasVindas'
 
 import { fields } from './dicio'
 import {
@@ -26,30 +27,33 @@ const Dashboard = () => {
   const [modalStatus, setModalStatus] = useState(false)
   const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
   const [modalInfoPlans, setModalInfoPlans] = useState(false)
+  const [modalBoasVindas, setModalBoasVindas] = useState(false)
 
   useEffect(() => {
     getUser(userType.type)
-    if(userType.type === "enterprise") setModalInfoPlans(true)
+    console.log('userType: ', userType.type)
+    if (userType.type === "enterprise") setModalInfoPlans(true)
+    if (userType.type === "professional") setModalBoasVindas(true)
   }, [userType, getUser])
 
   return (
     <Background>
       <Container>
         <Title>Meu Perfil</Title>
-          {fields.map(field => {
-            if (typeof user[field.name] !== 'undefined') {
-              return (
-                <>
-                  <Field name={field.display} content={user[field.name]} />
-                </>
-              )
-            }
-          })}
+        {fields.map(field => {
+          if (typeof user[field.name] !== 'undefined') {
+            return (
+              <>
+                <Field name={field.display} content={user[field.name]} />
+              </>
+            )
+          }
+        })}
       </Container>
       <GroupButtons>
         <If condition={userType.type === "enterprise"}>
-          <Link to="/cadastrar/vagas">
-            <Button disabled={disabledButton}> 
+          <Link to="/cadastro/vaga">
+            <Button disabled={disabledButton}>
               Cadastrar Vagas
             </Button>
           </Link>
@@ -68,6 +72,15 @@ const Dashboard = () => {
       >
         <InfoPlans
           toggleModalStatus={() => setModalInfoPlans(!modalInfoPlans)}
+        />
+      </Modal>
+      <Modal
+        isOpen={modalBoasVindas}
+        onClose={() => setModalBoasVindas(false)}
+        width="500px"
+      >
+        <BoasVindas
+          toggleModalStatus={() => setModalBoasVindas(!modalBoasVindas)}
         />
       </Modal>
       <Modal

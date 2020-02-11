@@ -7,8 +7,28 @@
   width: 500px;
 }
 
+
+
+.title.is-5{
+  color: #d1913c !important; 
+}
+
+
+.styled-background{
+
+  background-color:  #200122 ; 
+}
+
+
 @media (max-width: 425px){
   .modal-register{
     width: 100%;
   }
+}
+
+
+.is-styled-button{
+  background-color: #200122 !important;
+    color: #FC9B55;
+    border-color: #FC9B55;
 }

@@ -22,19 +22,15 @@ const CardVacancy = ({ name, email, phone, id }) => {
           </Group>
         </GroupCard>
         <Group>
-          <Path>
-            <Link to={`perfil/empresa/${id}`}>
-              Visualizar perfil completo
-            </Link>
-          </Path>
+
           <form>
             <InputText
-                name="name"
-                type="text"
-                label="Quantidade de vagas"
-                placeholder="Insira quantidade de vagas"
+              name="name"
+              type="text"
+              label="Quantidade de vagas"
+              placeholder="Insira quantidade de vagas"
             />
-            <Button>Aprovar</Button>  
+            <Button>Aprovar</Button>
           </form>
         </Group>
       </Card>
@@ -51,10 +47,6 @@ export const Container = styled.div`
   transition: border 300ms ease-in;
   min-width: 22vw;
   min-height: 30vh;
-
-  &:hover {
-    border: 1px solid #200112;
-  }
 `;
 export const Card = styled.div`
   display: flex;
