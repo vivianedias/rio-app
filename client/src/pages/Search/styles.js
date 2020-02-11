@@ -6,7 +6,7 @@ export const TitleSearch = styled.h1`
     color: #fc9b44;
     text-align: center;
     font-size: 40px;
-    margin-bottom: 50px;
+    margin: 2vh 0;
    
 `
 
@@ -50,14 +50,14 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
-  height: inherit;
 `
 
 export const WrapperResultSearch = styled.div`
- display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #6F0000;
+  height: 100vh;
 `;
 
 export const SearchResultEnterprise = styled.div`
@@ -73,5 +73,11 @@ export const Form = styled.form`
 export const Wrapper = styled.div`
   flex-direction: column;
   display: flex;
+`
+
+export const Text = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
 `
 

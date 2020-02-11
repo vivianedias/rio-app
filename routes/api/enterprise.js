@@ -68,4 +68,20 @@ router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => 
     .catch(() => res.status(404).json({ project: 'Não existe um usuário com esse identificador' }))
 })
 
+router.get('/all', (req, res) => {
+  const errors = {}
+  Enterprise.find()
+    .sort({ createdAt: -1 })
+    .then(enterprises => {
+      if (!enterprises) {
+        errors.noenterprises = 'Não existem empresas cadastradas ainda'
+        return res.status(404).json(errors)
+      }
+      res.json(enterprises)
+    })
+    .catch(() => res.status(404).json({
+      enterprises: 'Não existem empresas cadastradas ainda'
+    }))
+})
+
 module.exports = router

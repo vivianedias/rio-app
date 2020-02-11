@@ -10,32 +10,24 @@ const CardProfessional = (props) => {
           <Textarea>{props.name}</Textarea>
         </Group>
         <Group>
-          <Label>Função:</Label>
-          <Textarea>{props.function}</Textarea>
+          <Label>Email:</Label>
+          <Textarea>{props.email}</Textarea>
         </Group>
         <Group>
-          <Label>Requisitos:</Label>
-          <Textarea>{props.requirements}</Textarea>
+          <Label>Genero:</Label>
+          <Textarea>{props.gender}</Textarea>
         </Group>
         <Group>
-          <Label>Endereço:</Label>
-          <Textarea>{props.location}</Textarea>
+          <Label>Telefone:</Label>
+          <Textarea>{props.phone}</Textarea>
         </Group>
         <Group>
-          <Label>CNPJ:</Label>
-          <Textarea>{props.cnpj}</Textarea>
+          <Label>Orientação Sexual:</Label>
+          <Textarea>{props.sexual_orientation}</Textarea>
         </Group>
         <Group>
-          <Label>Periodo:</Label>
-          <Textarea>{props.period}</Textarea>
-        </Group>
-        <Group>
-          <Label>Cachê:</Label>
-          <Textarea>{props.cache}</Textarea>
-        </Group>
-        <Group>
-          <Label>Periodo Total:</Label>
-          <Textarea>{props.periodTotal}</Textarea>
+          <Label>Auti Declaração:</Label>
+          <Textarea>{props.self_declaration}</Textarea>
         </Group>
       </Card>
     </Container>

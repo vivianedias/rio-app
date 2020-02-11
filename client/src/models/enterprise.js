@@ -28,9 +28,18 @@ const enterpriseModel = {
       // return actions.setErrors(errors)
     }
   }),
+  getAll: thunk(async (actions, payload) => {
+    try {
+      return await axios.get('/api/enterprise/all')
+    }
+    catch (err) {
+      console.log(err)
+      return err.response
+    } 
+  }),
   enterprises: [],
   setEnterprises: action((state, payload) => ({
-    enterprises: [ ...payload ]
+    enterprises: [...payload]
   })),
 }
 
