@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+
 import { useForm } from 'react-hook-form'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 
@@ -9,7 +9,7 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import SignupPopup from '../../components/popups/Signup'
 
-import { Form, InputWrapper, WrapperScreen, StyledFont } from './style'
+import { Form, InputWrapper, WrapperScreen, StyledFont, StyledButton, Styledlink } from './style'
 import { emailValidation } from '../../utils/service'
 import history from '../../history'
 
@@ -79,23 +79,27 @@ const Login = () => {
                 }
               })}
             />
-            <Link
+            <Styledlink
               to="/esqueci-senha"
-              className="has-link"
+
             >
               esqueceu sua senha?
-            </Link>
+            </Styledlink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
-            <Button
+            <StyledButton
               onClick={toggleModal}
-              styles="button is-rounded"
+              background="linear-gradient(101deg, #200122 0%,rgb(65, 1, 20) 80%)"
+              color=" #FC9B55"
+
             >
               cadastre-se
-            </Button>
-            <Button type="submit" styles="is-danger is-rounded">
+            </StyledButton>
+            <StyledButton type="submit"
+              background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
+              color=" #FC9B55">
               entrar
-            </Button>
+            </StyledButton>
           </Flexbox>
         </Form>
       </Flexbox>
@@ -103,6 +107,7 @@ const Login = () => {
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
         className="modal-register"
+        width='500px'
       >
         <SignupPopup
           toggleModalStatus={() => setModalStatus(!modalStatus)}

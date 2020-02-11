@@ -25,3 +25,10 @@
     width: 100%;
   }
 }
+
+
+.is-styled-button{
+  background-color: #200122 !important;
+    color: #FC9B55;
+    border-color: #FC9B55;
+}

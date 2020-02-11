@@ -24,8 +24,8 @@ export const Background = styled.div`
   align-items: center;
   width: 100%;
   background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
-  height: 100%;
-justify-content: center;
+  height: 40rem;
+  justify-content: center;
 `
 export const WrapperChoices = styled.div`
     display: flex;

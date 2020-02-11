@@ -8,6 +8,7 @@ import Button from '../../components/Button'
 import { If } from '../../components/If'
 import InfoDelete from '../../components/popups/InfoDelete'
 import InfoPlans from '../../components/popups/InfoPlans'
+import BoasVindas from '../../components/popups/BoasVindas'
 
 import { fields } from './dicio'
 import {
@@ -26,10 +27,13 @@ const Dashboard = () => {
   const [modalStatus, setModalStatus] = useState(false)
   const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
   const [modalInfoPlans, setModalInfoPlans] = useState(false)
+  const [modalBoasVindas, setModalBoasVindas] = useState(false)
 
   useEffect(() => {
     getUser(userType.type)
+    console.log('userType: ', userType.type)
     if (userType.type === "enterprise") setModalInfoPlans(true)
+    if (userType.type === "professional") setModalBoasVindas(true)
   }, [userType, getUser])
 
   return (
@@ -68,6 +72,15 @@ const Dashboard = () => {
       >
         <InfoPlans
           toggleModalStatus={() => setModalInfoPlans(!modalInfoPlans)}
+        />
+      </Modal>
+      <Modal
+        isOpen={modalBoasVindas}
+        onClose={() => setModalBoasVindas(false)}
+        width="500px"
+      >
+        <BoasVindas
+          toggleModalStatus={() => setModalBoasVindas(!modalBoasVindas)}
         />
       </Modal>
       <Modal
