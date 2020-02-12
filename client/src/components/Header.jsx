@@ -87,7 +87,7 @@ const Header = () => {
     }
   }, [setAuth, logoutUser])
 
-  const type = getUserType(auth.user && auth.user.type)
+  const type = getUserType(auth && auth.user.type)
 
   return (
     <Wrapper
@@ -121,7 +121,7 @@ const Header = () => {
           <div className="navbar-item">
             <div className="buttons">
               <IfElse
-                condition={auth.isAuthenticated}
+                condition={auth && auth.isAuthenticated}
                 True={
                   <>
                     <StyledButton
@@ -148,21 +148,22 @@ const Header = () => {
                 False={
                   <>
                     <StyledButton
-                      background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
-                      color=" #FC9B55"
-                      onClick={() => setModalStatus(!modalStatus)}>
-                      Cadastre-se
-                    </StyledButton>
-                    <StyledNavlink to="/" >
-                      Entrar
-                    </StyledNavlink>
-                    <StyledButton
                       background="#200122"
                       color="#FC9B55"
                       href="https://raio.agency/"
                     >
                       Home
                     </StyledButton>
+                    <StyledButton
+                      background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
+                      color=" #FC9B55"
+                      onClick={() => setModalStatus(!modalStatus)}
+                    >
+                      Cadastre-se
+                    </StyledButton>
+                    <StyledNavlink to="/" >
+                      Entrar
+                    </StyledNavlink>
                   </>
                 }
               />

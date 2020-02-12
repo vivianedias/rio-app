@@ -6,26 +6,17 @@ export const FullWidth = styled.div`
   padding: 40px;
 `
 
-export const Form = styled.form`
-  background-image: linear-gradient(#200122, #6F0000);
-  width: 100%;
-  padding: 20px;
-  @media(min-width: 576px) {
-    width: unset;
-  }
-`
-
 export const InputWrapper = styled.div`
   margin-bottom: 20px;
 `
 
-export const WrapperScreen = styled.div`
-  background-image: linear-gradient(#200122, #6F0000);
-  height: 40rem;
+export const Wrapper = styled.div`
+  height: calc(100vh - 200px);
+  background-color: #fff;
 `
 
-export const StyledFont = styled.h1`
-  color:#fc9b44;
+export const Title = styled.h1`
+  color:#000;
   font-size: 40px;
 `
 
@@ -43,6 +34,9 @@ export const StyledButton = styled.button(props => ({
   color: props.color
 }));
 
-export const Styledlink = styled(Link)`
-  color:#fc9b44
+export const StyledLink = styled(Link)`
+  color: #000;
+  &:hover {
+    color: #fc9b44;
+  }
 `;
