@@ -45,7 +45,6 @@ const authModel = {
       }
     }
     catch (err) {
-      console.log(3, {err})
       const error = err.response.data && err.response.data.login
       return actions.setErrors(error)
     }

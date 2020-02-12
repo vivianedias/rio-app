@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        errors.email = 'Opa! Já existe um usuário com esse e-mail.'
+        errors.register = 'Opa! Já existe um usuário com esse e-mail.'
         return res.status(400).json(errors)
       }
 
@@ -46,12 +46,12 @@ router.post('/register', (req, res) => {
 
       bcrypt.genSalt(10, (err, salt) => {
         if (err) {
-          errors.user = 'Erro ao criptografar senha'
+          errors.register = 'Erro ao criptografar senha'
           return res.status(400).json(errors)
         }
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) {
-            errors.user = 'Erro ao criptografar senha'
+            errors.register = 'Erro ao criptografar senha'
             return res.status(400).json(errors)
           }
           newUser.password = hash
@@ -60,7 +60,7 @@ router.post('/register', (req, res) => {
             .then(user => res.json(user))
             .catch(err => {
               console.log(err)
-              errors.user = 'Erro ao salvar usuário na base de dados'
+              errors.register = 'Erro ao salvar usuário na base de dados'
               return res.status(400).json(errors)
             })
         })
@@ -68,7 +68,7 @@ router.post('/register', (req, res) => {
     })
     .catch(err => {
       console.log(err)
-      errors.user = 'Houve um problema ao criar o usuário'
+      errors.register = 'Houve um problema ao criar o usuário'
       return res.status(400).json(errors)
     })
 })

@@ -9,6 +9,7 @@ import Button from '../../components/Button'
 import Select from '../../components/Select'
 import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
+import Error from '../../components/Error'
 
 import { emailValidation, getUserType } from '../../utils/service'
 import {
@@ -19,13 +20,11 @@ import {
 import { Form, Background, WrapButton, Title } from './styles'
 
 const Users = () => {
-  const { register, handleSubmit, errors, getValues } = useForm()
+  const { register, handleSubmit, errors, getValues, reset } = useForm()
 
   const registerUser = useStoreActions(actions => actions.register.registerUser)
   const [modalStatus, setModalStatus] = useState(false)
-  const registerErrors = useStoreState(state => state.register.errors)
-
-  console.log({ registerErrors })
+  const registerError = useStoreState(state => state.register.error)
 
   const onSubmit = (data) => {
     const formatted = {
@@ -34,6 +33,8 @@ const Users = () => {
       self_declaration: data.selfDeclaration,
       type: localStorage.user_type
     }
+
+    reset()
 
     return registerUser(formatted)
   }
@@ -144,6 +145,9 @@ const Users = () => {
               <option value={item} key={uuid()}>{item}</option>
             )}
           </Select>
+
+          <Error msg={registerError && registerError.user} />
+
           <WrapButton>
             <Button
               type="submit"
