@@ -14,7 +14,6 @@ const EnterprisesList = () => {
   useEffect(() => {
     getAllEnterprises()
   }, [getAllEnterprises])
-  console.log(enterprises)
   return (
     <Background>
       <Container>

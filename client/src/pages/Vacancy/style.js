@@ -27,7 +27,7 @@ export const Label = styled.p`
 `
 export const Group = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
 export const Textarea = styled.p`
