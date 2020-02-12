@@ -21,7 +21,7 @@ const EnterprisesList = () => {
       <Container>
         <Title>Empresas</Title>
         <GroupButton>
-          <Link to="/busca-empresas">
+          <Link to="/busca/empresas">
             <Button
             background="#200122"
             color="#FC9B55">Buscar Empresas</Button>

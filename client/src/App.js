@@ -68,15 +68,18 @@ const App = ({ store }) => (
               component={Dashboard}
             />
             <Route
-              path='/busca-profissionais'
+              path='/busca/profissionais'
               component={SearchProfessionals}
             />
             <Route
-              path='/resultado-profissionais'
+              path='/resultados/profissionais'
               component={ResultSearchProfessionals}
             />
-            <Route path='/busca-empresas' component={SearchEnterprise} />
-            <Route path='/resultado-empresas' component={ResultSearchEnterprise} />
+            <Route path='/busca/empresas' component={SearchEnterprise} />
+            <Route
+              path='/resultados/empresas'
+              component={ResultSearchEnterprise}
+            />
           </Switch>
           <Footer fixed>
           </Footer>

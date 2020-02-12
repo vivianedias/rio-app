@@ -94,7 +94,7 @@ const ResultSearchProfessionals = ({ data }) => {
   return (
     <WrapperResultSearch>
       <Group>
-        <Link href="/busca-empresas">Voltar</Link>
+        <Link href="/busca/empresas">Voltar</Link>
       </Group>
       <Wrapper>
         <TitleSearch>Resultado de busca de Empresas</TitleSearch>
