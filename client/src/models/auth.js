@@ -10,7 +10,7 @@ const authModel = {
   authUser: thunk(async (actions, payload) => {
     try {
       const res = await axios.post('/api/user/login', payload)
-      console.log(1, {res})
+
       // Set token to localStorage
       const { token } = res.data
       localStorage.setItem('jwtToken', token)

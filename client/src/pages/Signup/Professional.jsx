@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import uuid from 'uuid'
@@ -10,7 +10,7 @@ import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
-import Error from '../../components/Error'
+import { Error } from '../../components/Status'
 
 import states from '../../assets/states.json'
 import {
@@ -22,7 +22,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background } from './styles'
+import { Form, Background, Title } from './styles'
 
 const Professionals = () => {
   const {
@@ -68,6 +68,7 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Formulário de Cadastro da Empresa</Title>
           <Select
             name="sexualOrientation"
             label="Orientação sexual"

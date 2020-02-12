@@ -5,9 +5,9 @@ import styled from 'styled-components'
 const StyledButton = styled.button`
   ${props => `min-width: ${props.minWidth || '120px'};`}
   ${props => props.margin && props.margin.top && `margin-top: ${props.margin.top};`}
-  ${props => `margin-bottom: ${props.margin && props.margin.bottom || '.5rem'};`}
+  ${props => `margin-bottom: ${(props.margin && props.margin.bottom) || '.5rem'};`}
   ${props => props.margin && props.margin.left && `margin-left: ${props.margin.left};`}
-  ${props => `margin-right: ${props.margin && props.margin.right || '10px'};`}
+  ${props => `margin-right: ${(props.margin && props.margin.right) || '10px'};`}
   ${props => `color: ${props.color || '#fc9b44'};`}
   ${props => `background: ${props.background || 'linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)'};`}
   line-height: 1.5;
@@ -20,6 +20,8 @@ const StyledButton = styled.button`
   &:hover {
     color: #fff;
   }
+  border: none;
+  text-decoration: none;
 `
 
 const Button = ({ type, onClick, children, disabled, styles, isLoading }) => (

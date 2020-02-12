@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Form from '../../components/Form'
-import Error from '../../components/Error'
+import { Error } from '../../components/Status'
 import Button from '../../components/Button'
 
 import {

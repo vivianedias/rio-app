@@ -188,13 +188,13 @@ router.get('/all', (req, res) => {
     .sort({ createdAt: -1 })
     .then(users => {
       if (!users) {
-        errors.nousers = 'Não existem usuários cadastradas ainda'
+        errors.users = 'Não existem usuários cadastradas ainda'
         return res.status(404).json(errors)
       }
       res.json(users)
     })
     .catch(() => res.status(404).json({
-      users: 'Não existem usuários cadastradas ainda'
+      users: 'Não foi possível buscar os usuários cadastrados. Tente novamente'
     }))
 })
 

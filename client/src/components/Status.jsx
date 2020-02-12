@@ -2,7 +2,7 @@ import React from 'react'
 import { If } from './If'
 import Text from './Text'
 
-const Error = ({ msg }) => (
+export const Error = ({ msg }) => (
   <If condition={typeof msg === 'string'}>
     <Text
       color="#f14668"
@@ -15,4 +15,15 @@ const Error = ({ msg }) => (
   </If>
 )
 
-export default Error
+export const Success = ({ msg }) => (
+  <If condition={typeof msg !== ''}>
+    <Text
+      color="#1ee81e"
+      size=".75rem"
+      margin="0 0 .75rem 0"
+      weight="600"
+    >
+      {msg}
+    </Text>
+  </If>
+)

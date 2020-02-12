@@ -10,37 +10,30 @@ const enterpriseModel = {
         msg: 'Sua vaga foi postada!'
       }
     }
-    catch (e) {
-      const errors = e.response.data
-      // return actions.setErrors(errors)
+    catch (err) {
+      console.log(err)
+      const error = err.response.data && err.response.data.job
+      actions.setError(error)
     }
   }),
   getAllEnterprises: thunk(async (actions, payload) => {
-    try {
-      const res = await axios.get('/api/user/all')
-
-      actions.setEnterprises(
-        res.data.filter(user => user.type === 'enterprise')
-      )
-    }
-    catch (e) {
-      const errors = e.response.data
-      // return actions.setErrors(errors)
-    }
-  }),
-  getAll: thunk(async (actions, payload) => {
     try {
       return await axios.get('/api/enterprise/all')
     }
     catch (err) {
       console.log(err)
-      return err.response
-    } 
+      const error = err.response.data && err.response.data.enterprises
+      actions.setError(error)
+    }
   }),
   enterprises: [],
   setEnterprises: action((state, payload) => ({
     enterprises: [...payload]
   })),
+  error: {},
+  setError: action((state, payload) => ({
+    error: payload
+  }))
 }
 
 export default enterpriseModel

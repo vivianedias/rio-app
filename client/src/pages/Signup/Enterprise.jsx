@@ -10,7 +10,7 @@ import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
 import InputText from '../../components/InputText'
-import Error from '../../components/Error'
+import { Error } from '../../components/Status'
 
 import states from '../../assets/states.json'
 import {
@@ -22,7 +22,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background, WrapButton } from './styles'
+import { Form, Background, WrapButton, Title } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, setValue } = useForm()
@@ -66,6 +66,7 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Formulário de Cadastro da Empresa</Title>
           <InputText
             name="name"
             type="text"

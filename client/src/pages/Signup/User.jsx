@@ -9,9 +9,9 @@ import Button from '../../components/Button'
 import Select from '../../components/Select'
 import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
-import Error from '../../components/Error'
+import { Error } from '../../components/Status'
 
-import { emailValidation, getUserType } from '../../utils/service'
+import { emailValidation } from '../../utils/service'
 import {
   gender,
   color
