@@ -65,6 +65,11 @@ const Dashboard = () => {
               Ver minhas vagas
             </Button>
           </Link>
+          <Link to={'/busca/profissionais'}>
+            <Button>
+              Buscar profissional
+            </Button>
+          </Link>
         </If>
         <ButtonDelete
           color="#FFFFFF"
