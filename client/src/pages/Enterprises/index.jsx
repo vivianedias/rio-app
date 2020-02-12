@@ -1,11 +1,13 @@
 import React, { useEffect } from "react"
+import { Link } from 'react-router-dom' 
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import uuid from "uuid"
 
-import { Container, Group, Title, Background } from './style'
+import { Container, Group, Title, Background, GroupButton } from './style'
 import CardEnterprise from '../../components/CardEnterprise'
 import Text from '../../components/Text'
 import { IfElse } from '../../components/If'
+import Button from '../../components/Button'
 
 const EnterprisesList = () => {
   const enterprises = useStoreState(state => state.enterprise.enterprises)
@@ -18,6 +20,13 @@ const EnterprisesList = () => {
     <Background>
       <Container>
         <Title>Empresas</Title>
+        <GroupButton>
+          <Link to="/busca-empresas">
+            <Button
+            background="#200122"
+            color="#FC9B55">Buscar Empresas</Button>
+          </Link>
+        </GroupButton>
         <Group>
           <IfElse
             condition={

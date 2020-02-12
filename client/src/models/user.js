@@ -28,6 +28,15 @@ const userModel = {
       actions.setError(error)
     }
   }),
+  getProfessionalAll: thunk(async () => {
+    try {
+      return await axios.get('/api/professional/all')
+    }
+    catch (err) {
+      console.log(err)
+      return err.response
+    }
+  }),
   user: {},
   setUser: action((state, payload) => ({
     user: { ...payload }

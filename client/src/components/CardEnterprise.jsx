@@ -75,7 +75,7 @@ const CardEnterprise = ({ name, email, phone, id }) => {
           </StyledLink>
         </Group>
       </GroupCard>
-      <Group>
+      {/* <Group>
         <form>
           <InputText
             name="name"
@@ -85,7 +85,7 @@ const CardEnterprise = ({ name, email, phone, id }) => {
           />
           <Button type="submit">Aprovar</Button>
         </form>
-      </Group>
+      </Group> */}
     </Card>
   );
 };

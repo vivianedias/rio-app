@@ -10,7 +10,7 @@ const ResultSearchProfessionals = ({ data }) => {
   const [userFilter, setUserFilter] = useState([])
   const [professionals, setProfessionals] = useState([])
   const getProfessionalAll = useStoreActions(actions => actions.user.getProfessionalAll)
-  const getUserAll = useStoreActions(actions => actions.user.getUserAll)
+  const getUserAll = useStoreActions(actions => actions.user.getAllUsers)
   const userType = useStoreState(state => state.auth.auth.user)
 
   const list = []

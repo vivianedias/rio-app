@@ -47,3 +47,9 @@ export const StyledButtonSearch = styled.button`
   background-color: #6f0000;
   color: #fc9b44;
   `
+  export const GroupButton = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+`;
