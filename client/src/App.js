@@ -18,8 +18,8 @@ import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './pages/Dashboard/index'
 import Admin from './pages/Dashboard/Admin/Admin'
-import VacancyList from './pages/Dashboard/Vacancy/VacancyList'
-import VacancyRegister from './pages/Dashboard/Vacancy/VacancyRegister'
+import VacancyList from './pages/Vacancy/VacancyList'
+import VacancyRegister from './pages/Vacancy/VacancyRegister'
 import SearchProfessionals from './pages/Search/SearchProfessionals';
 import SearchEnterprise from './pages/Search/SearchEnterprise';
 import ResultSearchProfessionals from './pages/Search/ResultSearchProfessionals';
@@ -43,7 +43,10 @@ const App = ({ store }) => (
           <Route path="/" exact component={Login} />
           <Route path="/cadastro" exact component={Users} />
           <Switch>
-            {/* <PrivateRoute path='/listagem/vagas' component={VacancyList} /> */}
+            <PrivateRoute
+              path='/listagem/vagas/:id'
+              component={VacancyList}
+            />
             <PrivateRoute path='/cadastro/vaga' component={VacancyRegister} />
             <PrivateRoute path='/cadastro/empresa' component={Enterprise} />
             <PrivateRoute

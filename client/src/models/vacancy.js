@@ -2,31 +2,26 @@ import { thunk, action } from 'easy-peasy'
 import axios from 'axios'
 
 const vacancyModel = {
-  setVacancy: thunk(async (actions, payload) => {
-    try {
-      await axios.post('/api/job', payload)
-    }
-    catch (e) {
-      console.log(e)
-      // const errors = e.response.data
-      // return actions.setErrors(errors)
-    }
-  }),
   getAllVacancies: thunk(async (actions, payload) => {
+    // all specific enterpise vacancies or all vacancies
     try {
-      const res = await axios.get('/api/job/all')
-      actions.setVacancies(res.data)
+      const res = payload
+        ? await axios.get(`/api/job/all/${payload}`)
+        : await axios.get('/api/job/all')
+      actions.setVacancies(res.data && res.data)
     }
-    catch (e) {
-      console.log(e)
-      // const errors = e.response.data
-      // return actions.setErrors(errors)
+    catch (err) {
+      console.log(err)
     }
   }),
-  vancacies: [],
+  vancancies: [],
   setVacancies: action((state, payload) => ({
-    vancacies: [ ...payload ]
+    vacancies: payload
   })),
+  error: {},
+  setError: action((state, payload) => ({
+    error: payload
+  }))
 }
 
 export default vacancyModel
