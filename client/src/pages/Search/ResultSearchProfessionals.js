@@ -92,7 +92,7 @@ const ResultSearchProfessionals = ({ data }) => {
         <Group>
           {userType.type === "enterprise" ?
             notRegister ?
-              <p>{setNotRegister}</p>
+              <p>{notRegister}</p>
               :
               <Group>
                 <Text>Foram encontrados {professionals.length} resultados de busca para a sua pesquisa</Text>
@@ -101,7 +101,7 @@ const ResultSearchProfessionals = ({ data }) => {
             <Group>
               {
                 notRegister ?
-                  <p>{setNotRegister}</p>
+                  <p>{notRegister}</p>
                   :
                   professionals.length > 0 ?
                     professionals.map((professional) => (
