@@ -1,11 +1,6 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
-
-const StyledLabel = styled.label`
-  color: #fc9b44;
-  font-weight: 500;
-`
+import Label from './Label'
 
 const InputText = (
   {
@@ -20,7 +15,7 @@ const InputText = (
   }) => {
   return (
     <div className="field">
-      <StyledLabel className="label">{label}</StyledLabel>
+      <Label>{label}</Label>
       <div
         className={`control ${icon ? "has-icons-left" : ""} ${error ? "has-icons-right" : ""}`}
       >
