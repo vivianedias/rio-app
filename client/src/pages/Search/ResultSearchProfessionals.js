@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useStoreActions, useStoreState } from 'easy-peasy'
-import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, Text } from './styles'
+import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, Text, Link } from './styles'
 import CardProfessional from './components/CardProfessional'
 import { validatingFields } from '../../utils/service'
 import Professionals from "../Signup/Professional"
@@ -81,8 +81,10 @@ const ResultSearchProfessionals = ({ data }) => {
   
   return (
     < WrapperResultSearch >
+    <Group>
+        <Link href="/busca-profissionais">Voltar</Link>
+    </Group>
       <Wrapper>
-
         <TitleSearch>Resultado de busca de Profissionais</TitleSearch>
         <SubTitle>Resultado de Busca para:</SubTitle>
         <Text>{list.join(", ")}</Text>
@@ -108,6 +110,7 @@ const ResultSearchProfessionals = ({ data }) => {
                         email={professional.email}
                         address={professional.address}
                         phone={professional.phone}
+                        cnpj={professional.cnpj ? "Possui CNPJ" : "Não possui CNPJ"}
                         pcd={professional.pcd ? "Pcd" : "Não Pcd"}
                         gender={professional.gender}
                         sexual_orientation={professional.sexual_orientation}

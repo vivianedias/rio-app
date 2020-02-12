@@ -1,21 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-const CardProfessional = (props) => {
+const CardEnterprise = (props) => {
   return (
     <Container>
       <Card>
-        <Group>
+      <Group>
           <Name>{props.name}</Name>
           <Destac>{props.email}</Destac>
-          <Textarea>{props.address}</Textarea>
-          <Textarea>{props.phone}</Textarea>
+          <Textarea>{props.state}</Textarea>
           <Textarea>{props.cnpj}</Textarea>
-          <Textarea>{props.pcd}</Textarea>
-          <Textarea>{props.gender}</Textarea>
-          <Textarea>{props.sexual_orientation}</Textarea>
-          <Textarea>{props.self_declaration}</Textarea>
-          <Bio>{props.bio}</Bio>
+          <Textarea>{props.apan_associate}</Textarea>
+          <Textarea>{props.business_segments}</Textarea>
+          <Textarea>{props.business_fields}</Textarea>
+          <Textarea>{props.diversity_functions}</Textarea>
+          <Bio>{props.presentation}</Bio>
           <Destac>{props.links}</Destac>
         </Group>
       </Card>
@@ -23,7 +22,7 @@ const CardProfessional = (props) => {
   );
 };
 
-export default CardProfessional;
+export default CardEnterprise;
 
 export const Container = styled.div`
     border-radius: 8px;
@@ -31,6 +30,7 @@ export const Container = styled.div`
     border: 1px solid transparent;
     transition: border 300ms ease-in;
     min-width: 100%;
+    min-height: 100%;
     margin-top: 2vh;
 
     &:hover {
@@ -38,12 +38,15 @@ export const Container = styled.div`
     }
 `;
 export const Card = styled.div`
-  padding: 20px;
+    padding: 20px;
+
 `;
 export const Textarea = styled.p`
     font-size: 16px;  
-    color: #FFDEAD;
-    margin-top: 1vh;
+`;
+export const Label = styled.label`
+    font-size: 16px;
+    margin-right: 1vw;
 `;
 export const Group = styled.div`
     display: flex;

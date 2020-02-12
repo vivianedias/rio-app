@@ -61,7 +61,6 @@ export const WrapperResultSearch = styled.div`
 `;
 
 export const SearchResultEnterprise = styled.div`
-    text-align: center;
     color: wheat;
 `;
 
@@ -82,4 +81,8 @@ export const Text = styled.div`
   width: 100%;
   color: #FFDEAD;
 `
-
+export const Link = styled.a`
+  margin-left: 1vh;
+  color: #FFFFFF;
+  text-decoration: underline;
+`
