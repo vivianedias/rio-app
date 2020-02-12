@@ -16,7 +16,7 @@ export const Error = ({ msg }) => (
 )
 
 export const Success = ({ msg }) => (
-  <If condition={typeof msg !== ''}>
+  <If condition={msg !== ''}>
     <Text
       color="#1ee81e"
       size=".75rem"

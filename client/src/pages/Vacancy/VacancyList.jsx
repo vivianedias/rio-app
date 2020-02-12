@@ -13,7 +13,7 @@ const VacancyList = ({ match }) => {
   useEffect(() => {
     const id = match.params && match.params.id
     getAllVacancies(id)
-  }, [])
+  }, [getAllVacancies, match.params])
 
   return (
     <Background>

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import InputText from '../../components/InputText'
 
 export const Container = styled.div`
   width: 95%;
