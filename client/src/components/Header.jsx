@@ -24,37 +24,31 @@ const StyledLogo = styled.img`
   margin-left: 30px;
 `
 
-const StyledButton = styled.button(props => ({
-  background: props.background,
-  lineHeight: '1.5',
-  paddingBottom: 'calc(.5em - 1px)',
-  paddingLeft: 'calc(.75em - 1px)',
-  paddingRight: 'calc(.75em - 1px)',
-  paddingTop: 'calc(.5em - 1px)',
-  borderRadius: '4px',
-  fontSize: '1rem',
-  marginBottom: '.5rem',
-  marginRight: '10px',
-  color: props.color,
-  border: 'none',
-}));
+const StyledLink = styled.a`
+  lineHeight: 1.5;
+  padding-bottom: calc(.5em - 1px);
+  padding-left: calc(.75em - 1px);
+  padding-right: calc(.75em - 1px);
+  padding-top: calc(.5em - 1px);
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: .5rem;
+  margin-right: 10px;
+  border: none;
+  text-decoration: none;
+  color: #FC9B55;
+  &:hover {
+    color: #fff;
+  }
+`
 
-const StyledNavlink = styled(NavLink)(props => ({
-  background: 'linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)',
-  lineHeight: '1.5',
-  paddingBottom: 'calc(.5em - 1px)',
-  paddingLeft: 'calc(.75em - 1px)',
-  paddingRight: 'calc(.75em - 1px)',
-  paddingTop: 'calc(.5em - 1px)',
-  borderRadius: '4px',
-  fontSize: '1rem',
-  marginBottom: '.5rem',
-  marginRight: '10px',
-  color: "#FC9B55",
-  border: 'none'
-}));
-
-
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: #FC9B55;
+  &:hover {
+    color: #fff;
+  }
+`
 
 const Header = () => {
   const [modalStatus, setModalStatus] = useState(false)
@@ -87,7 +81,7 @@ const Header = () => {
     }
   }, [setAuth, logoutUser])
 
-  const type = getUserType(auth.user && auth.user.type)
+  const type = getUserType(auth && auth.user.type)
 
   return (
     <Wrapper
@@ -120,49 +114,41 @@ const Header = () => {
         <div className="navbar-end">
           <div className="navbar-item">
             <div className="buttons">
+              <StyledLink
+                background="#200122"
+                color="#FC9B55"
+                href="https://raio.agency/"
+              >
+                Home
+              </StyledLink>
               <IfElse
-                condition={auth.isAuthenticated}
+                condition={auth && auth.isAuthenticated}
                 True={
                   <>
-                    <StyledButton
-                      background="#200122"
-                      color="#FC9B55"
-                      href="https://raio.agency/"
-                    >
-                      Home
-                    </StyledButton>
-                    <StyledNavlink
-                      to={`/dashboard/${type}`}
-                    >
-                      Dashboard
-                    </StyledNavlink>
-                    <StyledButton
+                    <Button>
+                      <StyledNavLink to={`/dashboard/${type}`}>
+                        Dashboard
+                      </StyledNavLink>
+                    </Button>
+                    <Button
                       background="#200122"
                       color="#FC9B55"
                       onClick={logoutUser}
                     >
                       Sair
-                    </StyledButton>
+                    </Button>
                   </>
                 }
                 False={
                   <>
-                    <StyledButton
-                      background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
-                      color=" #FC9B55"
-                      onClick={() => setModalStatus(!modalStatus)}>
+                    <Button onClick={() => setModalStatus(!modalStatus)}>
                       Cadastre-se
-                    </StyledButton>
-                    <StyledNavlink to="/" >
-                      Entrar
-                    </StyledNavlink>
-                    <StyledButton
-                      background="#200122"
-                      color="#FC9B55"
-                      href="https://raio.agency/"
-                    >
-                      Home
-                    </StyledButton>
+                    </Button>
+                    <Button>
+                      <StyledNavLink to="/">
+                        Entrar
+                      </StyledNavLink>
+                    </Button>
                   </>
                 }
               />

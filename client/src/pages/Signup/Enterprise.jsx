@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import uuid from 'uuid'
 
 import Flexbox from '../../components/Flexbox'
@@ -9,8 +9,8 @@ import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
-
 import InputText from '../../components/InputText'
+import { Error } from '../../components/Status'
 
 import states from '../../assets/states.json'
 import {
@@ -22,12 +22,13 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background } from './styles'
+import { Form, Background, WrapButton, Title } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, setValue } = useForm()
 
   const registerCompany = useStoreActions(actions => actions.register.registerCompany)
+  const registerError = useStoreState(state => state.register.error)
   const [isLoading, setLoader] = useState(false)
 
   const onSubmit = (data) => {
@@ -65,6 +66,7 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Formulário de Cadastro da Empresa</Title>
           <InputText
             name="name"
             type="text"
@@ -189,9 +191,14 @@ const Enterprise = () => {
             onChange={e => handleRadio('apanAssociate', e.target.value)}
           />
 
-          <Button type="submit">
-            Enviar
-          </Button>
+          <Error msg={registerError && registerError.enterprise} />
+
+          <WrapButton>
+            <Button type="submit">
+              Enviar
+            </Button>
+          </WrapButton>
+
         </Form>
       </Flexbox>
     </Background>

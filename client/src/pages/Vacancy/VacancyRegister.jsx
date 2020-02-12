@@ -1,30 +1,28 @@
 import React, { useState } from "react"
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
-import { useStoreActions, } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 
-import InputText from '../../../components/InputText'
-import Button from '../../../components/Button'
-import { If } from '../../../components/If'
+import InputText from '../../components/InputText'
+import Button from '../../components/Button'
+import Form from '../../components/Form'
+import { Error, Success } from '../../components/Status'
 
-import history from '../../../history'
-import { Form, Background, Group, Title } from './style'
+import history from '../../history'
+import { Background, Group, Title, WrapButton } from './style'
 
-const Text = styled.p`
-  font-size: 16px; 
-  color: #FFFFFF; 
-  font-weight: 600;
-`;
 
 const Vacancy = () => {
   const {
     register,
     handleSubmit,
     errors,
+    reset
   } = useForm()
 
   const registerJob = useStoreActions(actions => actions.enterprise.registerJob)
+  const registerError = useStoreState(state => state.enterprise.error)
   const [status, setStatus] = useState('')
+
   const onSubmit = async (data) => {
     const res = await registerJob({
       ...data,
@@ -32,7 +30,9 @@ const Vacancy = () => {
       total_period: data.start + '-' + data.end
     })
 
-    if (res.status === 200) {
+    reset()
+
+    if (res && res.status && res.status === 200) {
       setStatus(res.msg)
       return history.push('/dashboard/empresa')
     }
@@ -79,7 +79,7 @@ const Vacancy = () => {
           name="location"
           type="text"
           register={register({
-            required: 'Esse campo é obrigatório',
+            required: 'Esse campo é obrigatório'
           })}
           label="Endereço"
           placeholder="Insira o endereço"
@@ -91,7 +91,7 @@ const Vacancy = () => {
             name="start"
             type="text"
             register={register({
-              required: 'Esse campo é obrigatório',
+              required: 'Esse campo é obrigatório'
             })}
             label="Data Inicial"
             placeholder="Insira a data inicial"
@@ -101,7 +101,7 @@ const Vacancy = () => {
             name="end"
             type="text"
             register={register({
-              required: 'Esse campo é obrigatório',
+              required: 'Esse campo é obrigatório'
             })}
             label="Data Final"
             placeholder="Insira a data final"
@@ -111,20 +111,25 @@ const Vacancy = () => {
 
         <InputText
           name="cache"
-          type="text"
+          type="number"
           register={register({
-            required: 'Esse campo é obrigatório',
+            required: 'Esse campo é obrigatório'
           })}
           label="Cachê"
           placeholder="Insira o valor do cachê"
           error={errors.formationInstitution && errors.formationInstitution.message}
         />
-        <If condition={status !== ''}>
-          <Text>{status}</Text>
-        </If>
-        <Button type="submit">
-          Enviar
-        </Button>
+
+        <Success msg={status} />
+        <Error msg={registerError} />
+
+        <WrapButton>
+          <Button
+            type="submit"
+          >
+            Enviar
+          </Button>
+        </WrapButton>
       </Form>
     </Background>
   )

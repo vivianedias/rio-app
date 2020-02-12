@@ -49,7 +49,8 @@ const ResultSearchProfessionals = ({ data }) => {
           itemArea === areas ||
           item.cnpj === data.cnpj ||
           item.state === data.state ||
-          item.sexual_orientation === data.sexual_orientation)
+          item.sexual_orientation === data.sexual_orientation
+        )
       })
 
       let filterUser = user.data.filter((item) => {

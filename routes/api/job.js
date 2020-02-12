@@ -3,6 +3,7 @@ const router = express.Router()
 const passport = require('passport')
 
 const Job = require('../../models/Job')
+const Enterprise = require('../../models/Enterprise')
 
 // @route   GET api/job/all
 // @desc    Get jobs
@@ -19,6 +20,26 @@ router.get('/all', (req, res) => {
     })
     .catch(() => res.status(404).json({
       jobs: 'Não existem vagas cadastradas ainda'
+    }))
+})
+
+// @route   GET api/job/:enterprise_id/all
+// @desc    Get all specific enterprise jobs
+// @access  Public
+router.get('/all/:enterprise_id', (req, res) => {
+  Job
+    .find({ enterprise_id: req.params.enterprise_id })
+    .sort({ createdAt: -1 })
+    .then(jobs => {
+      if (!jobs) {
+        return res.status(404).json({
+          jobs: 'Essa empresa ainda não publicou vagas'
+        })
+      }
+      res.json(jobs)
+    })
+    .catch(() => res.status(404).json({
+      jobs: 'Essa empresa ainda não publicou vagas'
     }))
 })
 
@@ -66,36 +87,35 @@ router.get('/:jobId', passport.authenticate('jwt', { session: false }),
 // @desc    Create new job
 // @access  Private
 router.post('/', passport.authenticate('jwt', { session: false }), async (req, res) => {
-  try {
-    const company = Company.findOne({ user_id: req.user.id })
-    try {
-      const newJob = new Job({
-        company_id: company.id,
-        company_email: company.email,
-        company: req.body.company,
-        company_name: req.body.company_name,
-        title: req.body.title,
-        function: req.body.function,
-        requirements: req.body.requirements,
-        location: req.body.location,
-        cache: req.body.cache,
-        total_period: req.body.total_period,
-      })
-  
-      const data = newJob.save()
-      return res.json(data)
-    }
-    catch (err) {
-      res.status(400).send({
-        error: 'Erro ao criar a vaga',
+  Enterprise.findOne({ user_id: req.user.id })
+    .then(enterprise => {
+      if (enterprise) {
+        const newJob = new Job({
+          enterprise_id: enterprise.id,
+          enterprise_name: enterprise.name,
+          title: req.body.title,
+          function: req.body.function,
+          requirements: req.body.requirements,
+          location: req.body.location,
+          cache: req.body.cache,
+          total_period: req.body.total_period,
+        })
+    
+        newJob
+          .save()
+          .then(job => res.json(job))
+          .catch(err => {
+            console.log(err)
+            res.status(500).json({ job: 'Erro ao salvar vaga' })
+          })
+      }
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(400).json({
+        job: 'Erro ao encontrar uma empresa para esse usuário',
       });
-    }
-  }
-  catch (err) {
-    res.status(400).send({
-      error: 'Erro ao encontrar uma empresa para esse usuário',
-    });
-  }
+    })
 });
 
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import uuid from 'uuid'
 import styled from 'styled-components'
+import Text from './Text'
 
 const StyledRadio = styled.label`
   display: flex;
@@ -15,13 +16,13 @@ const StyledDescription = styled.label`
 `
 const Input = styled.input`
   margin-right: 10px;
-  `
+`
 
 const Wrapper = styled.div`
   display: flex;
-  `
+`
 
-const InputLabel = styled.span`
+const InputLabel = styled(Text)`
   text-transform: capitalize;
 `
 
@@ -38,7 +39,7 @@ const Radios = ({ label, error, onChange, name }) => (
             value={item === 'sim'}
             name={name}
           />
-          <InputLabel>{item}</InputLabel>
+          <InputLabel size="14px">{item}</InputLabel>
         </StyledRadio>
       ))}
     </Wrapper>

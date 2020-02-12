@@ -1,17 +1,19 @@
 import React, { useEffect } from "react"
 import { useStoreState, useStoreActions } from 'easy-peasy'
+import uuid from "uuid"
+
 import { Container, Group, Title, Background, Textarea } from './style'
-import CardVacacy from '../../../components/CardVacancy'
-import { IfElse } from '../../../components/If'
+import CardVacancy from '../../components/CardVacancy'
+import { IfElse } from '../../components/If'
 
-
-const Operator = () => {
+const VacancyList = ({ match }) => {
   const vacancies = useStoreState(state => state.vacancy.vacancies)
   const getAllVacancies = useStoreActions(actions => actions.vacancy.getAllVacancies)
 
   useEffect(() => {
-    getAllVacancies()
-  }, [getAllVacancies])
+    const id = match.params && match.params.id
+    getAllVacancies(id)
+  }, [getAllVacancies, match.params])
 
   return (
     <Background>
@@ -22,13 +24,15 @@ const Operator = () => {
             condition={typeof vacancies !== 'undefined' && vacancies.length > 0}
             True={
               vacancies && vacancies.map((vacancy) => (
-                <CardVacacy
-                  name={vacancy.name}
+                <CardVacancy
+                  enterpriseName={vacancy.enterprise_name}
+                  name={vacancy.title}
                   function={vacancy.function}
                   requirements={vacancy.requirements}
                   location={vacancy.location}
                   period={vacancy.total_period}
                   cache={vacancy.cache}
+                  key={uuid()}
                 />
               ))
             }
@@ -42,4 +46,4 @@ const Operator = () => {
   )
 }
 
-export default Operator
+export default VacancyList

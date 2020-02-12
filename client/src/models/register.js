@@ -11,8 +11,10 @@ const registerModel = {
     }
     catch (err) {
       console.log(err)
-      const errors = err.response.data
-      return actions.setErrors(errors)
+      const error = {
+        professional: err.response.data && err.response.data.register
+      }
+      return actions.setErrors(error)
     }
   }),
   registerCompany: thunk(async (actions, payload) => {
@@ -22,8 +24,10 @@ const registerModel = {
     }
     catch (err) {
       console.log(err)
-      const errors = err.response.data
-      return actions.setErrors(errors)
+      const error = {
+        enterprise: err.response.data && err.response.data.register
+      }
+      return actions.setErrors(error)
     }
   }),
   registerUser: thunk(async (actions, payload) => {
@@ -33,14 +37,16 @@ const registerModel = {
     }
     catch (err) {
       console.log(err)
-      const errors = err.response.data
-      return actions.setErrors(errors)
+      const error = {
+        user: err.response.data && err.response.data.register
+      }
+      return actions.setErrors(error)
     }
   }),
-  errors: {},
-  setErrors: action((state, payload) => {
-    state.errors = payload
-  })
+  error: {},
+  setErrors: action((state, payload) => ({
+    error: payload
+  }))
 }
 
 
