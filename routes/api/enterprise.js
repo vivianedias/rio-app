@@ -74,7 +74,7 @@ router.get('/all', (req, res) => {
     .sort({ createdAt: -1 })
     .then(enterprises => {
       if (!enterprises) {
-        errors.noenterprises = 'Não existem empresas cadastradas ainda'
+        errors.enterprises = 'Não existem empresas cadastradas ainda'
         return res.status(404).json(errors)
       }
       res.json(enterprises)

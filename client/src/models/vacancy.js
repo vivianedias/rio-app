@@ -3,12 +3,10 @@ import axios from 'axios'
 
 const vacancyModel = {
   getAllVacancies: thunk(async (actions, payload) => {
-    // all specific enterpise vacancies or all vacancies
+    // all specific enterpise vacancies
     try {
-      const res = payload
-        ? await axios.get(`/api/job/all/${payload}`)
-        : await axios.get('/api/job/all')
-      actions.setVacancies(res.data && res.data)
+      const res = payload && await axios.get(`/api/job/all/${payload}`)
+      actions.setVacancies(res && res.data)
     }
     catch (err) {
       console.log(err)

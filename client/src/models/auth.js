@@ -32,6 +32,7 @@ const authModel = {
       try {
         const check = await axios.get('/api/user/has-additional-register')
         const type = getUserType(decoded.type)
+        console.log({type})
         
         if (check.data.hasAdditionalRegister || type === 'admin') {
           return history.push(`/dashboard/${type}`)

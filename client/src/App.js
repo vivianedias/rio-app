@@ -18,6 +18,7 @@ import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './pages/Dashboard/index'
 import Admin from './pages/Dashboard/Admin/Admin'
+import AllEnterprises from './pages/Enterprises/index'
 import VacancyList from './pages/Vacancy/VacancyList'
 import VacancyRegister from './pages/Vacancy/VacancyRegister'
 import SearchProfessionals from './pages/Search/SearchProfessionals';
@@ -53,8 +54,11 @@ const App = ({ store }) => (
               path='/cadastro/profissional'
               component={Professional}
             />
-            <PrivateRoute path='/dashboard/admin' component={Admin} />
-            <PrivateRoute path='/empresas' component={VacancyList} />
+            <PrivateRoute path='/dashboard/admin' exact component={Admin} />
+            <PrivateRoute
+              path='/dashboard/admin/empresas'
+              component={AllEnterprises}
+            />
             <PrivateRoute
               path='/dashboard/profissional'
               component={Dashboard}

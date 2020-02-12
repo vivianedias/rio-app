@@ -11,6 +11,7 @@ export const Background = styled.div`
   padding: 30px;
   display: flex;
   justify-content: center;
+  min-height: calc(100vh - 200px);
 `
 
 export const Title = styled.h1`

@@ -85,14 +85,14 @@ const Login = () => {
             </StyledLink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
-            <Link to='/cadastro'>
-              <Button type="submit">
-                cadastre-se
-              </Button>
-            </Link>
             <Button type="submit">
               entrar
             </Button>
+            <Link to='/cadastro'>
+              <Button type="submit" tabIndex="1">
+                cadastre-se
+              </Button>
+            </Link>
           </Flexbox>
         </Form>
       </Flexbox>
