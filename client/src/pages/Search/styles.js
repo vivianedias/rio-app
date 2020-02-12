@@ -15,7 +15,7 @@ export const SubTitle = styled.h3`
     color: #fc9b44;
     text-align: center;
     font-size: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 2vh;
    
 `
 export const Container = styled.div`
@@ -57,7 +57,7 @@ export const WrapperResultSearch = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #6F0000;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 export const SearchResultEnterprise = styled.div`
@@ -76,8 +76,10 @@ export const Wrapper = styled.div`
 `
 
 export const Text = styled.div`
+  font-size: 16px;
   display: flex;
   justify-content: center;
   width: 100%;
+  color: #FFDEAD;
 `
 

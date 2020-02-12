@@ -6,28 +6,16 @@ const CardProfessional = (props) => {
     <Container>
       <Card>
         <Group>
-          <Label>Nome:</Label>
-          <Textarea>{props.name}</Textarea>
-        </Group>
-        <Group>
-          <Label>Email:</Label>
-          <Textarea>{props.email}</Textarea>
-        </Group>
-        <Group>
-          <Label>Genero:</Label>
-          <Textarea>{props.gender}</Textarea>
-        </Group>
-        <Group>
-          <Label>Telefone:</Label>
+          <Name>{props.name}</Name>
+          <Destac>{props.email}</Destac>
+          <Textarea>{props.address}</Textarea>
           <Textarea>{props.phone}</Textarea>
-        </Group>
-        <Group>
-          <Label>Orientação Sexual:</Label>
+          <Textarea>{props.pcd}</Textarea>
+          <Textarea>{props.gender}</Textarea>
           <Textarea>{props.sexual_orientation}</Textarea>
-        </Group>
-        <Group>
-          <Label>Auti Declaração:</Label>
           <Textarea>{props.self_declaration}</Textarea>
+          <Bio>{props.bio}</Bio>
+          <Destac>{props.links}</Destac>
         </Group>
       </Card>
     </Container>
@@ -42,7 +30,6 @@ export const Container = styled.div`
     border: 1px solid transparent;
     transition: border 300ms ease-in;
     min-width: 100%;
-    min-height: 100%;
     margin-top: 2vh;
 
     &:hover {
@@ -50,17 +37,30 @@ export const Container = styled.div`
     }
 `;
 export const Card = styled.div`
-    padding: 20px;
-
+  padding: 20px;
 `;
 export const Textarea = styled.p`
     font-size: 16px;  
-`;
-export const Label = styled.label`
-    font-size: 16px;
-    margin-right: 1vw;
+    color: #FFDEAD;
+    margin-top: 1vh;
 `;
 export const Group = styled.div`
     display: flex;
+    flex-direction: column;
     margin: 0.4vw 0;
+`;
+export const Name = styled.p`
+    color: #FFDEAD;
+    font-size: 28px;
+    margin-top: 1vh;
+`;
+export const Destac = styled.p`
+    color: #fc9b44;
+    font-size: 16px;
+    margin-top: 1vh;
+`;
+export const Bio = styled.p`
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
 `;
