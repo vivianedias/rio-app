@@ -10,36 +10,32 @@ const userModel = {
       // Set current user profile
       actions.setUser({
         ...user.data,
-        ...userTypeData.data
+        ...userTypeData.data,
+        enterprise_id: userTypeData.data._id
       })
     }
     catch (e) {
-      const errors = e.response.data
-      // return actions.setErrors(errors)
+      throw e
     }
   }),
-  getProfessionalAll: thunk(async () => {
-    try {
-      return await axios.get('/api/professional/all')
-    }
-    catch (err) {
-      console.log(err)
-      return err.response
-    }
-  }),
-  getUserAll: thunk(async () => {
+  getAllUsers: thunk(async (actions) => {
     try {
       return await axios.get('/api/user/all')
     }
     catch (err) {
       console.log(err)
-      return err.response
+      const error = err.response.data && err.response.data.users
+      actions.setError(error)
     }
   }),
   user: {},
   setUser: action((state, payload) => ({
     user: { ...payload }
   })),
+  error: {},
+  setError: action((state, payload) => ({
+    error: payload
+  }))
 }
 
 export default userModel

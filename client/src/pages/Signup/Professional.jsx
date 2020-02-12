@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import uuid from 'uuid'
 
 import InputText from '../../components/InputText'
@@ -10,6 +10,7 @@ import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
+import { Error } from '../../components/Status'
 
 import states from '../../assets/states.json'
 import {
@@ -21,7 +22,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background } from './styles'
+import { Form, Background, Title } from './styles'
 
 const Professionals = () => {
   const {
@@ -32,6 +33,7 @@ const Professionals = () => {
   } = useForm()
 
   const registerUser = useStoreActions(actions => actions.register.registerProfessional)
+  const registerError = useStoreState(state => state.register.error)
 
   const onSubmit = (data) => {
     const formatted = {
@@ -66,6 +68,7 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+          <Title>Formulário de Cadastro da Empresa</Title>
           <Select
             name="sexualOrientation"
             label="Orientação sexual"
@@ -233,6 +236,8 @@ const Professionals = () => {
               }
             })}
           />
+
+          <Error msg={registerError && registerError.professional} />
 
           <Button type="submit">
             Enviar

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import uuid from 'uuid'
 
 import InputText from '../../components/InputText'
@@ -9,29 +9,22 @@ import Button from '../../components/Button'
 import Select from '../../components/Select'
 import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
+import { Error } from '../../components/Status'
 
-import { emailValidation, getUserType } from '../../utils/service'
+import { emailValidation } from '../../utils/service'
 import {
   gender,
   color
 } from './dicioFields'
 
-import { Form, Background } from './styles'
+import { Form, Background, WrapButton, Title } from './styles'
 
 const Users = () => {
-  const { register, handleSubmit, errors, getValues } = useForm()
-  //   defaultValues: {
-  //     name: 'Viviane',
-  //     gender:'bla',
-  //     email: 'bla@gmail.com',
-  //     phone: '123123123',
-  //     password: 'blabla',
-  //     confirmPassword: 'blabla',
-  //   }
-  // })
+  const { register, handleSubmit, errors, getValues, reset } = useForm()
 
   const registerUser = useStoreActions(actions => actions.register.registerUser)
   const [modalStatus, setModalStatus] = useState(false)
+  const registerError = useStoreState(state => state.register.error)
 
   const onSubmit = (data) => {
     const formatted = {
@@ -40,6 +33,8 @@ const Users = () => {
       self_declaration: data.selfDeclaration,
       type: localStorage.user_type
     }
+
+    reset()
 
     return registerUser(formatted)
   }
@@ -52,6 +47,7 @@ const Users = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+        <Title>Formulário de inscrição do Usuário</Title>
           <InputText
             name="email"
             type="text"
@@ -140,7 +136,7 @@ const Users = () => {
 
           <Select
             name="selfDeclaration"
-            label="Auto Declaração (pessoa responsável pelo cadastro)"
+            label="Auto Declaração"
             register={register}
             firstValue="Auto Declaração"
             error={errors.selfDeclaration && errors.selfDeclaration.message}
@@ -150,12 +146,15 @@ const Users = () => {
             )}
           </Select>
 
-          <Button
-            type="submit"
-          >
-            Enviar
-          </Button>
-          {/* TODO: Tratar erros do request */}
+          <Error msg={registerError && registerError.user} />
+
+          <WrapButton>
+            <Button
+              type="submit"
+            >
+              Enviar
+            </Button>
+          </WrapButton>
         </Form>
       </Flexbox>
       <Modal

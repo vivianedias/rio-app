@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useStoreActions, useStoreState } from 'easy-peasy'
+import uuid from 'uuid'
 
 import Field from '../../components/Field'
 import Modal from '../../components/Modal'
@@ -25,12 +26,12 @@ const Dashboard = () => {
   const user = useStoreState(state => state.user.user)
 
   const [modalStatus, setModalStatus] = useState(false)
-  const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
+  // const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
   const [modalInfoPlans, setModalInfoPlans] = useState(false)
   const [modalBoasVindas, setModalBoasVindas] = useState(false)
 
   useEffect(() => {
-    getUser(userType.type)
+    typeof userType.type !== 'undefined' && getUser(userType.type)
     if (userType.type === "professional") setModalBoasVindas(true)
     if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
@@ -42,18 +43,26 @@ const Dashboard = () => {
         {fields.map(field => {
           if (typeof user[field.name] !== 'undefined') {
             return (
-              <>
-                <Field name={field.display} content={user[field.name]} />
-              </>
+              <Field
+                key={uuid()}
+                name={field.display}
+                content={user[field.name]}
+              />
             )
           }
+          return false
         })}
       </Container>
       <GroupButtons>
         <If condition={userType.type === "enterprise"}>
           <Link to="/cadastro/vaga">
-            <Button disabled={disabledButton}>
+            <Button>
               Cadastrar Vagas
+            </Button>
+          </Link>
+          <Link to={`/listagem/vagas/${user.enterprise_id}`}>
+            <Button>
+              Ver minhas vagas
             </Button>
           </Link>
         </If>

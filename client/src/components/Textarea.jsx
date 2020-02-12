@@ -1,17 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import styled from 'styled-components'
-
-const StyledLabel = styled.label`
- color: #fc9b44;
-font-weight: 500;
-`
+import Label from './Label'
 
 const Textarea = ({ placeholder, label, rows, register, error, name }) => {
   return (
     <div className="field">
-      <StyledLabel className="label">{label}</StyledLabel>
+      <Label>{label}</Label>
       <div className={`control ${error ? "has-icons-right" : ""}`}>
         <textarea
           className={`textarea ${error ? "is-danger" : ""}`}

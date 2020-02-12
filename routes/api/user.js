@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
-        errors.email = 'Opa! Já existe um usuário com esse e-mail.'
+        errors.register = 'Opa! Já existe um usuário com esse e-mail.'
         return res.status(400).json(errors)
       }
 
@@ -45,16 +45,31 @@ router.post('/register', (req, res) => {
       })
 
       bcrypt.genSalt(10, (err, salt) => {
-        if (err) throw err
+        if (err) {
+          errors.register = 'Erro ao criptografar senha'
+          return res.status(400).json(errors)
+        }
         bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err
+          if (err) {
+            errors.register = 'Erro ao criptografar senha'
+            return res.status(400).json(errors)
+          }
           newUser.password = hash
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(err => console.log(err))
+            .catch(err => {
+              console.log(err)
+              errors.register = 'Erro ao salvar usuário na base de dados'
+              return res.status(400).json(errors)
+            })
         })
       })
+    })
+    .catch(err => {
+      console.log(err)
+      errors.register = 'Houve um problema ao criar o usuário'
+      return res.status(400).json(errors)
     })
 })
 
@@ -76,39 +91,45 @@ router.post('/login', (req, res) => {
   User.findOne({ email }).then(user => {
     // Check for user
     if (!user) {
-      errors.email = 'Usuário não encontrado'
+      errors.login = 'Usuário não encontrado'
       return res.status(400).json(errors)
     }
 
     // Check Password
-    bcrypt.compare(password, user.password).then(isMatch => {
-      if (isMatch) {
-        // User Matched
-        // Create JWT Payload
-        const payload = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          type: user.type
-        }
-
-        // Sign Token
-        jwt.sign(
-          payload,
-          process.env.secretOrKey,
-          { expiresIn: 3600 },
-          (err, token) => {
-            res.json({
-              success: true,
-              token: 'Bearer ' + token
-            })
+    bcrypt.compare(password, user.password)
+      .then(isMatch => {
+        if (isMatch) {
+          // User Matched
+          // Create JWT Payload
+          const payload = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            type: user.type
           }
-        )
-      } else {
-        errors.password = 'Senha incorreta'
+
+          // Sign Token
+          jwt.sign(
+            payload,
+            process.env.secretOrKey,
+            { expiresIn: 3600 },
+            (err, token) => {
+              res.json({
+                success: true,
+                token: 'Bearer ' + token
+              })
+            }
+          )
+        } else {
+          errors.password = 'Senha incorreta'
+          return res.status(400).json(errors)
+        }
+      })
+      .catch(err => {
+        errors.login = 'Erro ao comparar senhas'
         return res.status(400).json(errors)
-      }
-    })
+      })
+    
   })
 })
 
@@ -167,13 +188,13 @@ router.get('/all', (req, res) => {
     .sort({ createdAt: -1 })
     .then(users => {
       if (!users) {
-        errors.nousers = 'Não existem usuários cadastradas ainda'
+        errors.users = 'Não existem usuários cadastradas ainda'
         return res.status(404).json(errors)
       }
       res.json(users)
     })
     .catch(() => res.status(404).json({
-      users: 'Não existem usuários cadastradas ainda'
+      users: 'Não foi possível buscar os usuários cadastrados. Tente novamente'
     }))
 })
 
