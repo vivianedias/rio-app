@@ -30,7 +30,7 @@ const AppWrapper = styled.div`
 `
 
 const AppBody = styled.div`
-  min-height: 100vh;
+  height: 100%;
   width: 100%;
   font-family: "Montserrat";
 `

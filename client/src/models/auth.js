@@ -10,7 +10,7 @@ const authModel = {
   authUser: thunk(async (actions, payload) => {
     try {
       const res = await axios.post('/api/user/login', payload)
-  
+      console.log(1, {res})
       // Set token to localStorage
       const { token } = res.data
       localStorage.setItem('jwtToken', token)
@@ -40,12 +40,14 @@ const authModel = {
         return history.push(`/cadastro/${type}`)
       }
       catch (err) {
-        throw err
+        console.log(2, {err})
+        // throw err
       }
     }
-    catch (e) {
-      const errors = e.response.data
-      // return actions.setErrors(errors)
+    catch (err) {
+      console.log(3, {err})
+      const error = err.response.data && err.response.data.login
+      return actions.setErrors(error)
     }
   }),
   logoutUser: thunk(async (actions, payload) => {
@@ -70,6 +72,10 @@ const authModel = {
   setAuth: action((state, payload) => ({
     auth: { ...payload }
   })),
+  error: {},
+  setErrors: action((state, payload) => ({
+    error: payload
+  }))
 }
 
 export default authModel

@@ -1,38 +1,40 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions, useStoreState } from 'easy-peasy'
+import { Link } from 'react-router-dom'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
-import Modal from '../../components/Modal'
-import SignupPopup from '../../components/popups/Signup'
+import Form from '../../components/Form'
+import Error from '../../components/Error'
 
-import { Form, InputWrapper, WrapperScreen, StyledFont, StyledButton, Styledlink } from './style'
+import {
+  InputWrapper,
+  Wrapper,
+  Title,
+  StyledButton,
+  StyledLink
+} from './style'
 import { emailValidation } from '../../utils/service'
 import history from '../../history'
 
 const Login = () => {
-
-  const [modalStatus, setModalStatus] = useState(false)
-  const { register, handleSubmit, errors, clearError } = useForm()
+  const { register, handleSubmit, errors } = useForm()
   const authUser = useStoreActions(actions => actions.auth.authUser)
   const auth = useStoreState(state => state.auth.auth)
-
-  const onSubmit = data => authUser(data)
-
-  const toggleModal = () => {
-    clearError()
-    return setModalStatus(!modalStatus)
-  }
+  const loginError = useStoreState(state => state.auth.error)
+  console.log(loginError)
+  const onSubmit = (data) => authUser(data)
 
   useEffect(() => {
-    const { user: { type = '' }, isAuthenticated } = auth
-    if (isAuthenticated) return history.push(`/dashboard/${type}`)
+    if (auth) {
+      const { user: { type = '' }, isAuthenticated } = auth
+      if (isAuthenticated) return history.push(`/dashboard/${type}`)
+    }
   }, [auth])
 
   return (
-    <WrapperScreen>
+    <Wrapper>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Flexbox
@@ -45,7 +47,7 @@ const Login = () => {
               right: 0
             }}
           >
-            <StyledFont>entre na raio</StyledFont>
+            <Title>entre na raio</Title>
           </Flexbox>
           <InputWrapper>
             <InputText
@@ -78,38 +80,31 @@ const Login = () => {
                 }
               })}
             />
-            <Styledlink to="/esqueci-senha">
+            <Error msg={loginError} />
+            <StyledLink to="/esqueci-senha">
               esqueceu sua senha?
-            </Styledlink>
+            </StyledLink>
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
+            <Link to='/cadastro'>
+              <StyledButton type="submit"
+                background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
+                color="#FC9B55"
+              >
+                cadastre-se
+              </StyledButton>
+            </Link>
             <StyledButton
-              onClick={toggleModal}
-              background="linear-gradient(101deg, #200122 0%, rgb(65,1,20) 80%)"
-              color=" #FC9B55"
-            >
-              cadastre-se
-            </StyledButton>
-            <StyledButton type="submit"
+              type="submit"
               background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
-              color=" #FC9B55">
+              color="#FC9B55"
+            >
               entrar
             </StyledButton>
           </Flexbox>
         </Form>
       </Flexbox>
-      <Modal
-        isOpen={modalStatus}
-        onClose={() => setModalStatus(false)}
-        className="modal-register"
-        width='500px'
-      >
-        <SignupPopup
-          toggleModalStatus={() => setModalStatus(!modalStatus)}
-        />
-      </Modal>
-
-    </WrapperScreen>
+    </Wrapper>
   )
 }
 
