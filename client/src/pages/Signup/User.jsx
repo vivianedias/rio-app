@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useStoreActions } from 'easy-peasy'
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import uuid from 'uuid'
 
 import InputText from '../../components/InputText'
@@ -16,22 +16,16 @@ import {
   color
 } from './dicioFields'
 
-import { Form, Background } from './styles'
+import { Form, Background, WrapButton, Title } from './styles'
 
 const Users = () => {
   const { register, handleSubmit, errors, getValues } = useForm()
-  //   defaultValues: {
-  //     name: 'Viviane',
-  //     gender:'bla',
-  //     email: 'bla@gmail.com',
-  //     phone: '123123123',
-  //     password: 'blabla',
-  //     confirmPassword: 'blabla',
-  //   }
-  // })
 
   const registerUser = useStoreActions(actions => actions.register.registerUser)
   const [modalStatus, setModalStatus] = useState(false)
+  const registerErrors = useStoreState(state => state.register.errors)
+
+  console.log({ registerErrors })
 
   const onSubmit = (data) => {
     const formatted = {
@@ -52,6 +46,7 @@ const Users = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
+        <Title>Formulário de inscrição do Usuário</Title>
           <InputText
             name="email"
             type="text"
@@ -140,7 +135,7 @@ const Users = () => {
 
           <Select
             name="selfDeclaration"
-            label="Auto Declaração (pessoa responsável pelo cadastro)"
+            label="Auto Declaração"
             register={register}
             firstValue="Auto Declaração"
             error={errors.selfDeclaration && errors.selfDeclaration.message}
@@ -149,13 +144,13 @@ const Users = () => {
               <option value={item} key={uuid()}>{item}</option>
             )}
           </Select>
-
-          <Button
-            type="submit"
-          >
-            Enviar
-          </Button>
-          {/* TODO: Tratar erros do request */}
+          <WrapButton>
+            <Button
+              type="submit"
+            >
+              Enviar
+            </Button>
+          </WrapButton>
         </Form>
       </Flexbox>
       <Modal

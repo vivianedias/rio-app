@@ -7,12 +7,12 @@ import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Form from '../../components/Form'
 import Error from '../../components/Error'
+import Button from '../../components/Button'
 
 import {
   InputWrapper,
-  Wrapper,
+  Background,
   Title,
-  StyledButton,
   StyledLink
 } from './style'
 import { emailValidation } from '../../utils/service'
@@ -23,7 +23,6 @@ const Login = () => {
   const authUser = useStoreActions(actions => actions.auth.authUser)
   const auth = useStoreState(state => state.auth.auth)
   const loginError = useStoreState(state => state.auth.error)
-  console.log(loginError)
   const onSubmit = (data) => authUser(data)
 
   useEffect(() => {
@@ -34,7 +33,7 @@ const Login = () => {
   }, [auth])
 
   return (
-    <Wrapper>
+    <Background>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Flexbox
@@ -87,24 +86,17 @@ const Login = () => {
           </InputWrapper>
           <Flexbox justify="space-around" className="control">
             <Link to='/cadastro'>
-              <StyledButton type="submit"
-                background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
-                color="#FC9B55"
-              >
+              <Button type="submit">
                 cadastre-se
-              </StyledButton>
+              </Button>
             </Link>
-            <StyledButton
-              type="submit"
-              background="linear-gradient(101deg,#6f0000 0%,rgb(65, 1, 20) 80%)"
-              color="#FC9B55"
-            >
+            <Button type="submit">
               entrar
-            </StyledButton>
+            </Button>
           </Flexbox>
         </Form>
       </Flexbox>
-    </Wrapper>
+    </Background>
   )
 }
 

@@ -9,7 +9,6 @@ import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
 import Select from '../../components/Select'
-
 import InputText from '../../components/InputText'
 
 import states from '../../assets/states.json'
@@ -22,7 +21,7 @@ import {
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
-import { Form, Background } from './styles'
+import { Form, Background, WrapButton } from './styles'
 
 const Enterprise = () => {
   const { register, handleSubmit, errors, setValue } = useForm()
@@ -189,9 +188,12 @@ const Enterprise = () => {
             onChange={e => handleRadio('apanAssociate', e.target.value)}
           />
 
-          <Button type="submit">
-            Enviar
-          </Button>
+          <WrapButton>
+            <Button type="submit">
+              Enviar
+            </Button>
+          </WrapButton>
+
         </Form>
       </Flexbox>
     </Background>

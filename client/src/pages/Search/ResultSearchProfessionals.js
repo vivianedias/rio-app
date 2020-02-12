@@ -27,12 +27,13 @@ const ResultSearchProfessionals = ({ data }) => {
           item.cnpj === data.cnpj ||
           item.self_declaration === data.self_declaration ||
           item.state === data.state ||
-          item.sexual_orientation === data.sexual_orientation)
+          item.sexual_orientation === data.sexual_orientation
+        )
       })
   
       let filterUser = user.data.filter((item, index) => {
         let id = filter[index] && filter[index].user_id
-          return item._id === id
+        return item._id === id
       })
 
       setProfessionals(filterUser)
