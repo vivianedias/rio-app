@@ -7,8 +7,7 @@ const StyledBody = styled.div`
   position: relative;
   transition: .3s all ease-in-out;
   left: 0;
-  background: linear-gradient(101deg,#6f0000 0%,rgb(65,1,20) 60%);
-
+  
   &.opened {
     left: -320px;
   }

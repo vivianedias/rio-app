@@ -28,7 +28,8 @@ import ResultSearchEnterprise from './pages/Search/ResultSearchEnterprise'
 import ResultSearchProfessionals from './pages/Search/ResultSearchProfessionals'
 
 const AppWrapper = styled.div`
-  height: 100%;
+  height: 100vh;
+  background: linear-gradient(101deg,#6f0000 0%,rgb(65,1,20) 60%);
 `
 
 const App = ({ store }) => {
