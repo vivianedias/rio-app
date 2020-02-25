@@ -27,7 +27,6 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
   height: 40rem;
   justify-content: center;
   min-height: calc(100vh - 200px);

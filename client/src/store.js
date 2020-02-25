@@ -1,5 +1,5 @@
 import { createStore } from 'easy-peasy';
-import GlobalModels from './models/index'
+import GlobalModels from './models'
 
 const {
   example,

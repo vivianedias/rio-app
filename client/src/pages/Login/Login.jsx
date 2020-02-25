@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useStoreActions, useStoreState } from 'easy-peasy'
+import Typography from '@material-ui/core/Typography'
 import { Link } from 'react-router-dom'
-
+import { useStoreActions, useStoreState } from 'easy-peasy'
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
 import Form from '../../components/Form'
 import { Error } from '../../components/Status'
-import Button from '../../components/Button'
+import Button from '../../comps/Button'
 
 import {
-  InputWrapper,
-  Background,
-  Title,
-  StyledLink
+  Background
 } from './style'
 import { emailValidation } from '../../utils/service'
 import history from '../../history'
@@ -36,64 +33,53 @@ const Login = () => {
     <Background>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Flexbox
-            center
-            width="100%"
-            margin={{
-              top: 10,
-              bottom: 10,
-              left: 0,
-              right: 0
-            }}
-          >
-            <Title>entre na raio</Title>
-          </Flexbox>
-          <InputWrapper>
-            <InputText
-              label="E-mail"
-              type="text"
-              name="email"
-              placeholder="e-mail"
-              icon="fa-envelope"
-              error={errors.email && errors.email.message}
-              register={register({
-                required: 'Esse campo é obrigatório',
-                pattern: {
-                  value: emailValidation(),
-                  message: 'Insira um endereço de e-mail válido'
-                }
-              })}
-            />
-            <InputText
-              label="Senha"
-              type="password"
-              name="password"
-              placeholder="senha"
-              icon="fa-lock"
-              error={errors.password && errors.password.message}
-              register={register({
-                required: 'Esse campo é obrigatório',
-                minLength: {
-                  value: 6,
-                  message: 'A senha deve ter no mínimo 6 caracteres'
-                }
-              })}
-            />
-            <Error msg={loginError} />
-            <StyledLink to="/esqueci-senha">
+          <Typography variant="h3" component="h2" gutterBottom>
+            Entre na Raio
+          </Typography>
+
+          <InputText
+            type="text"
+            name="email"
+            label="E-mail"
+            placeholder="e-mail"
+            icon="fa-envelope"
+            error={errors.email && errors.email.message}
+            register={register({
+              required: 'Esse campo é obrigatório',
+              pattern: {
+                value: emailValidation(),
+                message: 'Insira um endereço de e-mail válido'
+              }
+            })}
+          />
+
+          <InputText
+            label="Senha"
+            type="password"
+            name="password"
+            placeholder="senha"
+            icon="fa-lock"
+            error={errors.password && errors.password.message}
+            register={register({
+              required: 'Esse campo é obrigatório',
+              minLength: {
+                value: 6,
+                message: 'A senha deve ter no mínimo 6 caracteres'
+              }
+            })}
+          />
+          
+          <Error msg={loginError} />
+          
+          <Link to="/esqueci-senha">
+            <Button>
               esqueceu sua senha?
-            </StyledLink>
-          </InputWrapper>
-          <Flexbox justify="space-around" className="control">
-            <Button type="submit">
-              entrar
             </Button>
-            <Link to='/cadastro'>
-              <Button type="submit" tabIndex="1">
-                cadastre-se
-              </Button>
-            </Link>
-          </Flexbox>
+          </Link>
+
+          <Button variant="contained" type="submit">
+            Entrar
+          </Button>
         </Form>
       </Flexbox>
     </Background>

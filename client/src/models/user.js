@@ -2,6 +2,11 @@ import { thunk, action } from 'easy-peasy'
 import axios from 'axios'
 
 const userModel = {
+  user: {},
+  error: {},
+  ui: {
+    menuOpened: false
+  },
   getUser: thunk(async (actions, payload) => {
     try {
       const user = await axios.get('/api/user/current')
@@ -37,13 +42,16 @@ const userModel = {
       return err.response
     }
   }),
-  user: {},
   setUser: action((state, payload) => ({
     user: { ...payload }
   })),
-  error: {},
   setError: action((state, payload) => ({
     error: payload
+  })),
+  toggleMenu: action((state, payload) => ({
+    ui: {
+      menuOpened: payload
+    }
   }))
 }
 
