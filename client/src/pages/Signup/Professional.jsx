@@ -18,7 +18,6 @@ import {
   registryTypes,
   formations,
   identitySegments,
-  sexualOrientation
 } from './dicioFields'
 import { formatCheckboxFields } from '../../utils/service'
 
@@ -45,7 +44,6 @@ const Professionals = () => {
       expertise_areas: formatCheckboxFields(data.expertiseAreas),
       apan_associate: data.apanAssociate,
       formation_institution: data.formationInstitution,
-      sexual_orientation: data.sexualOrientation,
       home_state: data.homeState,
       type: 'professional'
     }
@@ -69,18 +67,7 @@ const Professionals = () => {
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Title>Formulário de Cadastro da Empresa</Title>
-          <Select
-            name="sexualOrientation"
-            label="Orientação sexual"
-            error={errors.sexualOrientation && errors.sexualOrientation.message}
-            firstValue="Orientação Sexual"
-            register={register}
-          >
-            {sexualOrientation.map(item =>
-              <option value={item} key={uuid()}>{item}</option>
-            )}
-          </Select>
-
+          
           <Radios
             label="PcD (Pessoa com deficiência)"
             error={errors.pcd && errors.pcd.message}

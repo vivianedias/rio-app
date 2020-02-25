@@ -21,7 +21,6 @@ import {
   registryTypes,
   formations,
   identitySegments,
-  sexualOrientation
 } from '../Signup/dicioFields'
 
 import { Form, Success, Background } from '../Signup/styles'
@@ -58,7 +57,6 @@ const SearchProfessionals = () => {
       cnpj: data.companyRegistry,
       self_declaration: data.selfDeclaration,
       state: data.currentState,
-      sexual_orientation: data.sexualOrientation,
       expertise_areas: formatCheckboxFields(data.expertiseAreas)
     }
     
@@ -118,18 +116,6 @@ const SearchProfessionals = () => {
                   firstValue="Gênero"
                 >
                   {gender.map(item =>
-                    <option value={item} key={uuid()}>{item}</option>
-                  )}
-                </Select>
-
-                <Select
-                  label="Orientação sexual"
-                  error={errors.sexualOrientation && errors.sexualOrientation.message}
-                  name="sexualOrientation"
-                  firstValue="Orientação Sexual"
-                  register={register}
-                >
-                  {sexualOrientation.map(item =>
                     <option value={item} key={uuid()}>{item}</option>
                   )}
                 </Select>

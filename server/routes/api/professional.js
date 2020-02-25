@@ -42,7 +42,6 @@ router.post('/register', passport.authenticate('jwt', { session: false }),
             identity_segments: req.body.identity_segments,
             expertise_areas: req.body.expertise_areas,
             apan_associate: req.body.apan_associate,
-            sexual_orientation: req.body.sexual_orientation,
             links: req.body.links,
             bio: req.body.bio,
           })
