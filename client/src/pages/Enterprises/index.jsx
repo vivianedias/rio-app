@@ -5,9 +5,19 @@ import uuid from "uuid"
 
 import { Container, Group, Title, Background, GroupButton } from './style'
 import CardEnterprise from '../../components/CardEnterprise'
-import Text from '../../components/Text'
+import Alert from '@material-ui/lab/Alert'
 import { IfElse } from '../../components/If'
-import Button from '../../components/Button'
+import Tables from '../../comps/Tables'
+import Button from '../../comps/Button'
+
+const headCells = [
+  { id: 'name_enterprise', numeric: false, disablePadding: true, label: 'Empresa' },
+  { id: 'name', numeric: false, disablePadding: false, label: 'Responsável' },
+  { id: 'email', numeric: false, disablePadding: false, label: 'E-mail' },
+  { id: 'carbs', numeric: false, disablePadding: false, label: 'Telefone' },
+  { id: 'protein', numeric: false, disablePadding: false, label: 'Segmento' },
+  { id: 'actions', numeric: false, disablePadding: false, label: '' },
+];
 
 const EnterprisesList = () => {
   const enterprises = useStoreState(state => state.enterprise.enterprises)
@@ -16,15 +26,24 @@ const EnterprisesList = () => {
   useEffect(() => {
     getAllEnterprises()
   }, [getAllEnterprises])
+
+  const clearList = enterprises
+    // .filter(ent => ent.name_enterprise)
+    .map(ent => ({
+    name_enterprise: ent.name_enterprise,
+    name: ent.name,
+    email: ent.email,
+    phone: ent.phone,
+    segments: ent.business_segments
+  }))
   return (
-    <Background>
+    <Background className="container clearfix et_menu_container">
       <Container>
-        <Title>Empresas</Title>
         <GroupButton>
           <Link to="/busca/empresas">
             <Button
-            background="#200122"
-            color="#FC9B55">Buscar Empresas</Button>
+              variant="contained"
+            >Buscar Empresas</Button>
           </Link>
         </GroupButton>
         <Group>
@@ -32,17 +51,24 @@ const EnterprisesList = () => {
             condition={
               typeof enterprises !== 'undefined' && enterprises.length > 0
             }
-            True={enterprises.map((enterprise) => enterprise && (
-              <CardEnterprise
-                name={enterprise.enterprise_name}
-                phone={enterprise.phone}
-                email={enterprise.email}
-                id={enterprise.enterprise_id}
-                key={uuid()}
+            True={
+              // enterprises.map((enterprise) => enterprise && (
+              <Tables 
+                title="Empresas"
+                headCells={headCells}
+                list={clearList} 
               />
-            ))}
+              // <CardEnterprise
+              //   name={enterprise.enterprise_name}
+              //   phone={enterprise.phone}
+              //   email={enterprise.email}
+              //   id={enterprise.enterprise_id}
+              //   key={uuid()}
+              // /> 
+            }
+            // ))}
             False={
-              <Text size="16px" weight="600">Não há empresas cadastradas</Text>
+              <Alert severity="warning">Não há empresas cadastradas</Alert>
             }
           />
         </Group>

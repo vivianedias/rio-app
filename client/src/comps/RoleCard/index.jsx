@@ -22,7 +22,6 @@ const StyledCard = styled(Card)`
 `;
 
 const RoleCard = ({ title, to, icon, children }) => {
-
   return (
     <StyledCard className='role-card'>
       <CardContent>

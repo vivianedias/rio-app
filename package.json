@@ -22,6 +22,7 @@
     "url": "https://github.com/vivianedias/rio-api/issues"
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.44",
     "@sendgrid/mail": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",

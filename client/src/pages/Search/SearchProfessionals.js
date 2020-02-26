@@ -32,7 +32,6 @@ const SearchProfessionals = () => {
     register,
     handleSubmit,
     errors,
-    getValues,
     setValue
   } = useForm()
 

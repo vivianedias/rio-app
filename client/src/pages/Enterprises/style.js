@@ -25,7 +25,6 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: #e6e6e6;
   justify-content: center;
   min-height: calc(100vh - 200px);
 `

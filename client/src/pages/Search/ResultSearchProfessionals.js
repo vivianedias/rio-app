@@ -48,8 +48,7 @@ const ResultSearchProfessionals = ({ data }) => {
         return (
           itemArea === areas ||
           item.cnpj === data.cnpj ||
-          item.state === data.state ||
-          item.sexual_orientation === data.sexual_orientation
+          item.state === data.state
         )
       })
 
@@ -114,7 +113,6 @@ const ResultSearchProfessionals = ({ data }) => {
                         cnpj={professional.cnpj ? "Possui CNPJ" : "Não possui CNPJ"}
                         pcd={professional.pcd ? "Pcd" : "Não Pcd"}
                         gender={professional.gender}
-                        sexual_orientation={professional.sexual_orientation}
                         self_declaration={professional.self_declaration}
                         bio={professional.bio}
                         links={professional.links}

@@ -27,18 +27,14 @@ import SearchProfessionals from './pages/Search/SearchProfessionals'
 import ResultSearchEnterprise from './pages/Search/ResultSearchEnterprise'
 import ResultSearchProfessionals from './pages/Search/ResultSearchProfessionals'
 
-const AppWrapper = styled.div`
-  height: 100vh;
-  background: linear-gradient(101deg,#6f0000 0%,rgb(65,1,20) 60%);
-`
+
 
 const App = ({ store }) => {
-  console.log('store ==>', store)
   return (
     <StoreProvider store={store}>
       <Router history={history}>
       <ThemeProvider theme={theme}>
-        <AppWrapper>
+        <>
           <Header
             isOpened={true}
           />
@@ -84,7 +80,7 @@ const App = ({ store }) => {
               />
             </Switch>
           </AppBody>
-        </AppWrapper>
+        </>
         </ThemeProvider>
       </Router>
     </StoreProvider>
