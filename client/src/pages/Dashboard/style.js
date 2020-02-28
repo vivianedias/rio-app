@@ -48,6 +48,17 @@ export const Container = styled.div`
     right: 0;
     width: 150px;
   }
+
+  &.header {
+    width: 100%;
+    background: #f7cc94;
+    color: #200122;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+  }
 `
 
 export const GroupButton = styled.div`

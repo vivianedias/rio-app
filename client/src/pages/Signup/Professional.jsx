@@ -66,7 +66,7 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Title>Formulário de Cadastro da Empresa</Title>
+          <Title>Formulário de Cadastro da Profissional</Title>
           
           <Radios
             label="PcD (Pessoa com deficiência)"
@@ -156,7 +156,7 @@ const Professionals = () => {
             label="Se sim, qual o tipo do seu CNPJ ?"
             error={errors.cnpjType && errors.cnpjType.message}
             name="cnpjType"
-            firstValue="Tipo de CPNJ"
+            firstValue="Tipo de CNPJ"
             register={register}
           >
             {registryTypes.map(type => (

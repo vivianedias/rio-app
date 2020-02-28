@@ -7,6 +7,8 @@ import Field from '../../components/Field'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import { If } from '../../components/If'
+import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
+import Person from '@material-ui/icons/Person'
 import InfoDelete from '../../components/popups/InfoDelete'
 import BoasVindas from '../../components/popups/BoasVindas'
 import seloPlans from '../../assets/selo.png'
@@ -38,8 +40,11 @@ const Dashboard = () => {
 
   return (
     <Background>
-      <Container>
-        <Title>Meu Perfil</Title>
+      <Container className='header'>
+      { userType.type === "enterprise" ?
+        <Enterprise style={{ fontSize: 80 }} /> :
+        <Person style={{ fontSize: 80 }} />}
+        <Title>Perfil {userType.type === "enterprise" ? "Empresa" : "Profissional"}</Title>
       </Container>
       <div>
       {fields.map(field => {
