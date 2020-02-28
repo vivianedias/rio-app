@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useStoreActions, useStoreState } from 'easy-peasy'
+import Person from '@material-ui/icons/Person'
+import Star from '@material-ui/icons/Star'
+import Tooltip from '@material-ui/core/Tooltip'
+import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
+import Typography from '@material-ui/core/Typography'
+import LocationOn from '@material-ui/icons/LocationOn'
+import Description from '@material-ui/icons/Description'
+import Email from '@material-ui/icons/Email'
 import uuid from 'uuid'
 
 import Field from '../../components/Field'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import { If } from '../../components/If'
-import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
-import Person from '@material-ui/icons/Person'
 import InfoDelete from '../../components/popups/InfoDelete'
 import BoasVindas from '../../components/popups/BoasVindas'
 import seloPlans from '../../assets/selo.png'
@@ -19,7 +25,6 @@ import {
   ButtonDelete,
   GroupButtons,
   Container,
-  Title
 } from './style'
 
 const Dashboard = () => {
@@ -37,14 +42,32 @@ const Dashboard = () => {
     if (userType.type === "professional") setModalBoasVindas(true)
     if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
-
+  console.log(user)
   return (
     <Background>
       <Container className='header'>
-      { userType.type === "enterprise" ?
-        <Enterprise style={{ fontSize: 80 }} /> :
-        <Person style={{ fontSize: 80 }} />}
-        <Title>Perfil {userType.type === "enterprise" ? "Empresa" : "Profissional"}</Title>
+        <div className="container clearfix et_menu_container">
+          <div className="profile-wrapper">
+            <div className="avatar">
+              <span className="image">
+                { userType.type === "enterprise" ?
+                  <Enterprise style={{ fontSize: 60 }} /> :
+                  <Person style={{ fontSize: 60 }} /> }
+              </span>
+                <Typography component="h2" variant="h6">
+                  Perfil {userType.type === "enterprise" ? "Empresa" : "Profissional"}
+                </Typography>
+            </div>
+            <div className="user-info">
+              <Typography color="secondary" component="h2" variant="h5">{user.name}
+                {user.apan_associate && <Tooltip title="Associado APAN"><Star /></Tooltip>}
+              </Typography>
+              <Typography component="subtitle2"><Email />{user.email}</Typography>
+              <Typography component="body1"><LocationOn /> {user.city}</Typography>
+              <Typography component="body1"><Description /> {user.presentation}</Typography>
+            </div>   
+          </div>   
+        </div>
       </Container>
       <div>
       {fields.map(field => {

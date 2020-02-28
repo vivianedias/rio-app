@@ -55,9 +55,44 @@ export const Container = styled.div`
     color: #200122;
     min-height: 150px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column; 
+    align-items: center;
+
+    .container {
+      justify-content: space-around;
+      display: flex;
+
+      .profile-wrapper {
+        display: flex;
+        .avatar {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .image {
+            width: 80px;
+            height: 80px;
+            border-radius: 100%;
+            color: #f7cc94;
+            background: #200122;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+        .user-info {
+          display: flex;
+          flex-direction: column;
+          margin-left: 20px;
+          > * {
+            display: flex;
+            align-items: center;
+            margin: 2px 0;
+          }
+        }
+      }
+    }
   }
 `
 

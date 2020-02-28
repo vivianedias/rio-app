@@ -66,7 +66,7 @@ const Professionals = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Title>Formulário de Cadastro da Profissional</Title>
+          <Title>Formulário de Cadastro de Profissional</Title>
           
           <Radios
             label="PcD (Pessoa com deficiência)"
