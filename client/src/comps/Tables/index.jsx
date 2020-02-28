@@ -1,6 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import { Link } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,26 +14,6 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Honeycomb', 408, 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Jelly Bean', 375, 0.0, 94, 0.0),
-  createData('KitKat', 518, 26.0, 65, 7.0),
-  createData('Lollipop', 392, 0.2, 98, 0.0),
-  createData('Marshmallow', 318, 0, 81, 2.0),
-  createData('Nougat', 360, 19.0, 9, 37.0),
-  createData('Oreo', 437, 18.0, 63, 4.0),
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -60,7 +42,7 @@ function stableSort(array, comparator) {
 }
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, headCells, onRequestSort } = props;
+  const { order, orderBy, headCells, onRequestSort, actions } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
@@ -89,6 +71,16 @@ function EnhancedTableHead(props) {
             </TableCell>
           )}
         )}
+        {
+          actions && (
+            <TableCell  
+              align="center"
+              padding='default'
+            >
+              <TableSortLabel></TableSortLabel>
+            </TableCell>
+          )
+        }
       </TableRow>
     </TableHead>
   );
@@ -158,7 +150,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable({ headCells, list, title }) {
+export default function EnhancedTable({ headCells, list, title, actions }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('name_enterprise');
@@ -201,30 +193,50 @@ export default function EnhancedTable({ headCells, list, title }) {
               headCells={headCells}
               onRequestSort={handleRequestSort}
               rowCount={list.length}
+              actions={actions}
             />
+
             <TableBody>
               {stableSort(list, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(row => {
-                  const vals = Object.values(row)
-                  console.log('r =>', vals)
-                  // const values = row.map(val => )
+                  console.log('r =>', row)
+                  const hc = headCells.map(nameCell => ({
+                    cell: nameCell.id
+                  }))
                   return (
                     <TableRow
                       hover
                       tabIndex={-1}
-                      key={vals[0]}
+                      key={row[hc[0].cell]}
                     >
                       {
-                        vals.map(val => {
+                        hc.map(name => {
                           return (
                             <TableCell padding="default">
-                              {val}
+                              {row[name.cell] || '-'}
                             </TableCell>
                           )
                         })
                       }
-                      <TableCell align="right">actions</TableCell> 
+                      {
+                        actions && (
+                          <TableCell align="right">
+                            {actions.map(action => {
+                              return (
+                                <Tooltip title={action.tooltip}>
+                                  {action.type === 'link' ?
+                                  <Link to={`${action.action}${row.id}`}>
+                                    <IconButton aria-label="delete">{action.btn}</IconButton>
+                                  </Link> :
+                                  <IconButton aria-label="delete">{action.btn}</IconButton>}
+
+                                </Tooltip>
+                              )
+                            })}
+                          </TableCell> 
+                        )
+                      }
                     </TableRow>
                   );
                 })}

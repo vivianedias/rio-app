@@ -3,7 +3,7 @@ import React, {useState,useEffect} from 'react';
   import jwtDecode from 'jwt-decode'
   import { useStoreActions, useStoreState } from 'easy-peasy'
   
-  import Modal from '../../components/Modal'
+  import Modal from '../../comps/Modal'
   import SignupPopup from '../../components/popups/Signup'
   import Button from '../Button'
   import { IfElse } from '../../components/If'
@@ -121,9 +121,17 @@ import React, {useState,useEffect} from 'react';
             </div>
           </StyledAside>
         </div>
-
-
         <Modal
+          title="Cadastre-se"
+          isOpen={modalStatus}
+          onClose={() => setModalStatus(false)}
+        >
+          <SignupPopup
+            toggleModalStatus={() => setModalStatus(!modalStatus)}
+          />
+        </Modal>
+
+        {/* <Modal
           isOpen={modalStatus}
           onClose={() => setModalStatus(false)}
           width="500px"
@@ -131,7 +139,7 @@ import React, {useState,useEffect} from 'react';
           <SignupPopup
             toggleModalStatus={() => setModalStatus(!modalStatus)}
           />
-        </Modal>
+        </Modal> */}
       </Wrapper>
     );
   }

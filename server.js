@@ -43,6 +43,9 @@ app.use('/api/enterprise', enterprise)
 app.use('/api/user', user)
 app.use('/api/job', job)
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
+})
 
 // TODO: colocar isso em um .env
 const port = process.env.PORT || 5000

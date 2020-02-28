@@ -6,7 +6,6 @@ import { Route } from 'react-router'
 import { ThemeProvider } from '@material-ui/styles'
 import { Router, Switch } from 'react-router-dom'
 import { StoreProvider } from 'easy-peasy'
-import styled from 'styled-components'
 import theme from './utils/theme'
 import history from './history'
 
