@@ -42,10 +42,12 @@ export const Label = styled.label`
 `;
 
 export const Container = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
+  &.ad {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+  }
 `
 
 export const GroupButton = styled.div`

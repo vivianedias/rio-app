@@ -8,8 +8,8 @@ import Modal from '../../components/Modal'
 import Button from '../../components/Button'
 import { If } from '../../components/If'
 import InfoDelete from '../../components/popups/InfoDelete'
-import InfoPlans from '../../components/popups/InfoPlans'
 import BoasVindas from '../../components/popups/BoasVindas'
+import seloPlans from '../../assets/selo.png'
 
 import { fields } from './dicio'
 import {
@@ -40,7 +40,9 @@ const Dashboard = () => {
     <Background>
       <Container>
         <Title>Meu Perfil</Title>
-        {fields.map(field => {
+      </Container>
+      <div>
+      {fields.map(field => {
           if (typeof user[field.name] !== 'undefined') {
             return (
               <Field
@@ -52,7 +54,7 @@ const Dashboard = () => {
           }
           return false
         })}
-      </Container>
+      </div>  
       <GroupButtons>
         <If condition={userType.type === "enterprise"}>
           <Link to="/cadastro/vaga">
@@ -78,15 +80,13 @@ const Dashboard = () => {
           Deletar Perfil
         </ButtonDelete>
       </GroupButtons>
-      <Modal
-        isOpen={modalInfoPlans}
-        onClose={() => setModalInfoPlans(false)}
-        width="500px"
-      >
-        <InfoPlans
-          toggleModalStatus={() => setModalInfoPlans(!modalInfoPlans)}
-        />
-      </Modal>
+
+      <Container className="ad">
+        <a href="https://raio.agency/planos">
+          <img src={seloPlans} />
+        </a>
+      </Container>
+
       <Modal
         isOpen={modalBoasVindas}
         onClose={() => setModalBoasVindas(false)}
