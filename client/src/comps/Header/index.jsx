@@ -23,9 +23,9 @@ import React, {useState,useEffect} from 'react';
     const [modalStatus, setModalStatus] = useState(false)
     const setAuth = useStoreActions(actions => actions.auth.setAuth)
     const logoutUser = useStoreActions(actions => actions.auth.logoutUser)
-    const toggleMenu = useStoreActions(actions => actions.user.toggleMenu)
+    const toggleMenu = useStoreActions(actions => actions.ui.toggleMenu)
     const auth = useStoreState(state => state.auth.auth)
-    const { menuOpened } = useStoreState(state => state.user.ui)
+    const { menuOpened } = useStoreState(state => state.ui)
     
 
     useEffect(() => {

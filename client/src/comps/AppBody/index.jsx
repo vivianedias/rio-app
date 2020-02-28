@@ -21,7 +21,7 @@ const StyledBody = styled.div`
 `
 
 const AppBody = ({ children }) => {
-  const {menuOpened} = useStoreState(state => state.user.ui)
+  const {menuOpened} = useStoreState(state => state.ui)
 
   return (
     <StyledBody className={menuOpened && 'opened'}>

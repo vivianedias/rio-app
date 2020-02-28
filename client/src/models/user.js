@@ -4,14 +4,11 @@ import axios from 'axios'
 const userModel = {
   user: {},
   error: {},
-  ui: {
-    menuOpened: false
-  },
   getUser: thunk(async (actions, payload) => {
     try {
       const user = await axios.get('/api/user/current')
       const userTypeData = await axios.get(`/api/${payload}`)
-
+      console.log(user);
       // Set current user profile
       actions.setUser({
         ...user.data,
@@ -47,11 +44,6 @@ const userModel = {
   })),
   setError: action((state, payload) => ({
     error: payload
-  })),
-  toggleMenu: action((state, payload) => ({
-    ui: {
-      menuOpened: payload
-    }
   }))
 }
 
