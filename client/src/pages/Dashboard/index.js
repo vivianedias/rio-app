@@ -8,6 +8,8 @@ import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
 import Typography from '@material-ui/core/Typography'
 import LocationOn from '@material-ui/icons/LocationOn'
 import Description from '@material-ui/icons/Description'
+import School from '@material-ui/icons/School'
+import Face from '@material-ui/icons/Face'
 import Email from '@material-ui/icons/Email'
 import uuid from 'uuid'
 
@@ -18,6 +20,7 @@ import { If } from '../../components/If'
 import InfoDelete from '../../components/popups/InfoDelete'
 import BoasVindas from '../../components/popups/BoasVindas'
 import seloPlans from '../../assets/selo.png'
+import loading from '../../assets/loading.svg'
 
 import { fields } from './dicio'
 import {
@@ -34,7 +37,7 @@ const Dashboard = () => {
 
   const [modalStatus, setModalStatus] = useState(false)
   // const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
-  const [modalInfoPlans, setModalInfoPlans] = useState(false)
+  const [modalInfoPlans, setModalInfoPlans] = useState(true)
   const [modalBoasVindas, setModalBoasVindas] = useState(false)
 
   useEffect(() => {
@@ -45,6 +48,8 @@ const Dashboard = () => {
   console.log(user)
   return (
     <Background>
+      {Object.values(user).length ? (
+      <>
       <Container className='header'>
         <div className="container clearfix et_menu_container">
           <div className="profile-wrapper">
@@ -64,7 +69,10 @@ const Dashboard = () => {
               </Typography>
               <Typography component="subtitle2"><Email />{user.email}</Typography>
               <Typography component="body1"><LocationOn /> {user.city}</Typography>
-              <Typography component="body1"><Description /> {user.presentation}</Typography>
+              
+              { userType.type === "enterprise" ?
+                <Typography component="body1"><Description /> {user.presentation}</Typography> :
+                <Typography component="body1"><Face /> {user.bio}</Typography> }
             </div>   
           </div>   
         </div>
@@ -109,12 +117,6 @@ const Dashboard = () => {
         </ButtonDelete>
       </GroupButtons>
 
-      <Container className="ad">
-        <a href="https://raio.agency/planos">
-          <img src={seloPlans} />
-        </a>
-      </Container>
-
       <Modal
         isOpen={modalBoasVindas}
         onClose={() => setModalBoasVindas(false)}
@@ -131,6 +133,14 @@ const Dashboard = () => {
           toggleModalStatus={() => setModalStatus(!modalStatus)}
         />
       </Modal>
+      <Modal
+        isOpen={modalInfoPlans}
+        onClose={() => setModalStatus(false)}
+        width="500px"
+      >
+       <img src={seloPlans} />
+       </Modal></>) : 
+       <img src={loading} />}
     </Background>
   )
 }

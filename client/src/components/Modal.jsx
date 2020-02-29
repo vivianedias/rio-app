@@ -7,12 +7,10 @@ const ModalStyled = styled.div`
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  bottom: 0;
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: transparent; /* Fallback color */
+  
 `
 
 const ModalContentStyled = styled.div`
@@ -21,13 +19,13 @@ const ModalContentStyled = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: ${props => `${props.width}`}; /* Could be more or less, depending on screen size */
-  background-image: linear-gradient(77deg,rgba(111,0,0,0) 20%,#200122 100%);
-  background-color: #6f0000;
+  background-color: #fc9b44;
   border: none;
+  border-radius: 4px;
 `
 
 const CloseButtonStyled = styled.div`
-  color: #fc9b44;
+  color: rgba(0,0,0,.3);
   float: right;
   font-size: 28px;
   font-weight: bold;

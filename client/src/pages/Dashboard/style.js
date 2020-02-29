@@ -4,8 +4,9 @@ export const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   width: 100%;
-  background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
+  min-height: calc(100vh - 200px);
 `
 
 export const Button = styled.button`
@@ -42,13 +43,6 @@ export const Label = styled.label`
 `;
 
 export const Container = styled.div`
-  &.ad {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 150px;
-  }
-
   &.header {
     width: 100%;
     background: #f7cc94;
