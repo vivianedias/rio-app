@@ -8,11 +8,17 @@ import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
 import Typography from '@material-ui/core/Typography'
 import LocationOn from '@material-ui/icons/LocationOn'
 import Description from '@material-ui/icons/Description'
-import School from '@material-ui/icons/School'
+// import School from '@material-ui/icons/School'
+import PostAdd from '@material-ui/icons/PostAdd';
+import Delete from '@material-ui/icons/Delete';
+import Search from '@material-ui/icons/Search';
+import Visibility from '@material-ui/icons/Visibility';
+
 import Face from '@material-ui/icons/Face'
 import Email from '@material-ui/icons/Email'
 import uuid from 'uuid'
 
+import FABMenu from '../../comps/FABMenu'
 import Field from '../../components/Field'
 import Modal from '../../components/Modal'
 import Button from '../../components/Button'
@@ -30,14 +36,17 @@ import {
   Container,
 } from './style'
 
+
+
 const Dashboard = () => {
   const userType = useStoreState(state => state.auth.auth.user)
   const getUser = useStoreActions(actions => actions.user.getUser)
   const user = useStoreState(state => state.user.user)
+  
 
   const [modalStatus, setModalStatus] = useState(false)
   // const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
-  const [modalInfoPlans, setModalInfoPlans] = useState(true)
+  const [modalInfoPlans, setModalInfoPlans] = useState(false)
   const [modalBoasVindas, setModalBoasVindas] = useState(false)
 
   useEffect(() => {
@@ -45,9 +54,17 @@ const Dashboard = () => {
     if (userType.type === "professional") setModalBoasVindas(true)
     if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
-  console.log(user)
+
+  const actions = [
+    { icon: <PostAdd />, name: 'Cadastrar Vagas', link: '/cadastro/vaga' },
+    { icon: <Visibility />, name: 'Ver Minhas Vagas', link: `/listagem/vagas/${user.enterprise_id}` },
+    { icon: <Search />, name: 'Buscar Profissional', link: '/busca/profissionais'},
+    { icon: <Delete />, name: 'Deletar Perfil', onClick: () => setModalStatus(true)},
+  ];
+
   return (
     <Background>
+      
       {Object.values(user).length ? (
       <>
       <Container className='header'>
@@ -76,6 +93,7 @@ const Dashboard = () => {
             </div>   
           </div>   
         </div>
+        <FABMenu actionButtons={actions} />
       </Container>
       <div>
       {fields.map(field => {
@@ -92,6 +110,7 @@ const Dashboard = () => {
         })}
       </div>  
       <GroupButtons>
+        
         <If condition={userType.type === "enterprise"}>
           <Link to="/cadastro/vaga">
             <Button>
@@ -133,13 +152,13 @@ const Dashboard = () => {
           toggleModalStatus={() => setModalStatus(!modalStatus)}
         />
       </Modal>
-      <Modal
+        <Modal
         isOpen={modalInfoPlans}
-        onClose={() => setModalStatus(false)}
-        width="500px"
+        onClose={() => setModalInfoPlans(false)}
       >
        <img src={seloPlans} />
-       </Modal></>) : 
+       </Modal>
+      </>) : 
        <img src={loading} />}
     </Background>
   )

@@ -55,9 +55,9 @@ function Modal({ children, isOpen, onClose, title }) {
           },
         }}
         open={isOpen}>
-        <DialogTitle id="customized-dialog-title" onClose={onClose}>
+        { title && <DialogTitle id="customized-dialog-title" onClose={onClose}>
           {title}
-        </DialogTitle>
+      </DialogTitle> }
         <DialogContent dividers>
           { children }
         </DialogContent>

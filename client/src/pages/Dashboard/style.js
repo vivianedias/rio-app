@@ -47,15 +47,9 @@ export const Container = styled.div`
     width: 100%;
     background: #f7cc94;
     color: #200122;
-    min-height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
 
     .container {
-      justify-content: space-around;
-      display: flex;
-
       .profile-wrapper {
         display: flex;
         .avatar {
@@ -63,6 +57,7 @@ export const Container = styled.div`
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          margin-right: 100px;
 
           .image {
             width: 80px;

@@ -16,7 +16,6 @@ const StyledBody = styled.div`
     &[type='button'] {
       color: #ef9448;
     }
-    color: #6f0000;
   }
 `
 

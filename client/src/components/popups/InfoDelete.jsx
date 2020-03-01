@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import Flexbox from '../Flexbox'
-import Button from '../Button'
+import Button from '../../comps/Button'
 
 const InfoDelete = ({ toggleModalStatus }) => {
 
@@ -33,13 +33,13 @@ const InfoDelete = ({ toggleModalStatus }) => {
         align="center"
       >
         <Link to="/" onClick={() => handleClick()}>
-          <Button styles="is-link">
+          <Button>
             Excluir
           </Button>
         </Link>
 
         <Link to="/" onClick={() => handleClick()}>
-          <Button styles="is-danger">
+          <Button>
             Cancelar
           </Button>
         </Link>
