@@ -23,9 +23,6 @@ const InfoDelete = ({ toggleModalStatus }) => {
           right: 0
         }}
       >
-        <Title className="title is-5">
-          Deseja realmente excluir sua conta?
-        </Title>
       </Flexbox>
       <Flexbox
         justify="space-evenly"

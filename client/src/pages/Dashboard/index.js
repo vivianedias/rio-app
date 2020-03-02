@@ -2,26 +2,26 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import Person from '@material-ui/icons/Person'
-import Star from '@material-ui/icons/Star'
-import Tooltip from '@material-ui/core/Tooltip'
+
 import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
 import Typography from '@material-ui/core/Typography'
 import LocationOn from '@material-ui/icons/LocationOn'
-import Description from '@material-ui/icons/Description'
+import Paper from '@material-ui/core/Paper';
 // import School from '@material-ui/icons/School'
 import PostAdd from '@material-ui/icons/PostAdd';
 import Delete from '@material-ui/icons/Delete';
 import Search from '@material-ui/icons/Search';
 import Visibility from '@material-ui/icons/Visibility';
-
-import Face from '@material-ui/icons/Face'
-import Email from '@material-ui/icons/Email'
+import { getInfo } from './user_info' 
 import uuid from 'uuid'
 
+import Profile from './Profile'
+import Info from './Info'
 import FABMenu from '../../comps/FABMenu'
 import Field from '../../components/Field'
 import Modal from '../../components/Modal'
-import Button from '../../components/Button'
+import NewModal from '../../comps/Modal'
+import Button from '../../comps/Button'
 import { If } from '../../components/If'
 import InfoDelete from '../../components/popups/InfoDelete'
 import BoasVindas from '../../components/popups/BoasVindas'
@@ -39,7 +39,7 @@ import {
 
 
 const Dashboard = () => {
-  const userType = useStoreState(state => state.auth.auth.user)
+  const userType = useStoreState(state => state.auth.auth.user.type)
   const getUser = useStoreActions(actions => actions.user.getUser)
   const user = useStoreState(state => state.user.user)
   
@@ -61,56 +61,46 @@ const Dashboard = () => {
     { icon: <Search />, name: 'Buscar Profissional', link: '/busca/profissionais'},
     { icon: <Delete />, name: 'Deletar Perfil', onClick: () => setModalStatus(true)},
   ];
-
+  console.table(userType)
   return (
     <Background>
       
       {Object.values(user).length ? (
       <>
-      <Container className='header'>
+      <Container className='header container clearfix et_menu_container'>
         <div className="container clearfix et_menu_container">
-          <div className="profile-wrapper">
-            <div className="avatar">
-              <span className="image">
-                { userType.type === "enterprise" ?
-                  <Enterprise style={{ fontSize: 60 }} /> :
-                  <Person style={{ fontSize: 60 }} /> }
-              </span>
-                <Typography component="h2" variant="h6">
-                  Perfil {userType.type === "enterprise" ? "Empresa" : "Profissional"}
-                </Typography>
-            </div>
-            <div className="user-info">
-              <Typography color="secondary" component="h2" variant="h5">{user.name}
-                {user.apan_associate && <Tooltip title="Associado APAN"><Star /></Tooltip>}
-              </Typography>
-              <Typography component="subtitle2"><Email />{user.email}</Typography>
-              <Typography component="body1"><LocationOn /> {user.city}</Typography>
-              
-              { userType.type === "enterprise" ?
-                <Typography component="body1"><Description /> {user.presentation}</Typography> :
-                <Typography component="body1"><Face /> {user.bio}</Typography> }
-            </div>   
-          </div>   
+          <Profile
+            name={user.name}
+            icon={ userType.type === "enterprise" ?
+              <Enterprise style={{ fontSize: 60 }} /> :
+              <Person style={{ fontSize: 60 }} /> }
+            associate={user.apan_associate}
+            type={userType.type === "enterprise" ? "Empresa" : "Profissional"}
+            bio={userType.type === "enterprise" ? user.description : user.bio}
+          />
+          <Info
+            infoList={getInfo(user)[userType.type]}
+          />
+           
         </div>
-        <FABMenu actionButtons={actions} />
+          
       </Container>
-      <div>
+      {/* <div>
       {fields.map(field => {
           if (typeof user[field.name] !== 'undefined') {
             return (
-              <Field
-                key={uuid()}
-                name={field.display}
-                content={user[field.name]}
-              />
+              <>
+                <Typography>{field.display}</Typography>
+                <Typography>{user[field.name]}</Typography>
+              </>
             )
           }
           return false
         })}
-      </div>  
-      <GroupButtons>
-        
+      </div> */}
+      {userType.type === "enterprise" && <FABMenu actionButtons={actions} />  }
+      
+      <GroupButtons className="container">
         <If condition={userType.type === "enterprise"}>
           <Link to="/cadastro/vaga">
             <Button>
@@ -128,12 +118,15 @@ const Dashboard = () => {
             </Button>
           </Link>
         </If>
-        <ButtonDelete
+        <Button
           color="#FFFFFF"
+          variant="contained"
+          color="primary"
+          size="lg"
           onClick={() => setModalStatus(true)}
         >
-          Deletar Perfil
-        </ButtonDelete>
+          Deletar Perfil <Delete />
+        </Button>
       </GroupButtons>
 
       <Modal
@@ -143,15 +136,13 @@ const Dashboard = () => {
       >
         <BoasVindas />
       </Modal>
-      <Modal
+      <NewModal
         isOpen={modalStatus}
         onClose={() => setModalStatus(false)}
-        width="500px"
+        title="Deseja realmente excluir sua conta?"
       >
-        <InfoDelete
-          toggleModalStatus={() => setModalStatus(!modalStatus)}
-        />
-      </Modal>
+        <Button color="dark"><Delete />Excluir</Button>
+      </NewModal>
         <Modal
         isOpen={modalInfoPlans}
         onClose={() => setModalInfoPlans(false)}

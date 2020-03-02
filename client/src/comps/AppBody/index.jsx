@@ -14,7 +14,7 @@ const StyledBody = styled.div`
 
   button:hover {
     &[type='button'] {
-      color: #ef9448;
+      color: #200122;
     }
   }
 `
