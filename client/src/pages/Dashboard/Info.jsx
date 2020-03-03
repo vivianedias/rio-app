@@ -7,7 +7,9 @@ import Typography from '@material-ui/core/Typography'
 const StyledInfo = styled.div`
   width: 100%;
   margin-right: 70px;
+  
   .sec {
+    margin-bottom: 20px;
     border-bottom: 2px solid rgba(26,26,26, .2);
     &:last-child {
       border-bottom-color: transparent;

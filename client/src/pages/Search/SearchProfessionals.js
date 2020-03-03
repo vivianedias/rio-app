@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions } from 'easy-peasy'
 import ResultSearchProfessionals from './ResultSearchProfessionals'
+import Typography from '@material-ui/core/Typography'
 import uuid from 'uuid'
 
-import { If } from '../../components/If'
 import Flexbox from '../../components/Flexbox'
-import Button from '../../components/Button'
+import Button from '../../comps/Button'
 
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
@@ -18,14 +18,9 @@ import {
   functions,
   color as selfDeclaration,
   gender,
-  registryTypes,
-  formations,
-  identitySegments,
 } from '../Signup/dicioFields'
 
-import { Form, Success, Background } from '../Signup/styles'
-import { TitleSearch } from './styles'
-
+import { Form, Background } from '../Signup/styles'
 
 const SearchProfessionals = () => {
   const {
@@ -38,7 +33,6 @@ const SearchProfessionals = () => {
   const [form, setForm] = useState(true)
   const [dados, setDados] = useState()
   const registerUser = useStoreActions(actions => actions.user.registerProfessional)
-  const [isSuccessful, setSuccess] = useState(false)
   const [isLoading, setLoader] = useState({
     city: false,
     submit: false
@@ -87,7 +81,7 @@ const SearchProfessionals = () => {
             <Flexbox justify="center">
               <Form onSubmit={handleSubmit(onSubmit)}>
 
-                <TitleSearch>Busca de profissionais</TitleSearch>
+                <Typography component="h2" variant="h4">Resultado de busca de Profissionais</Typography>
                 <Checkboxes
                   label="Áreas de atuação"
                   register={register}
@@ -118,7 +112,7 @@ const SearchProfessionals = () => {
                     <option value={item} key={uuid()}>{item}</option>
                   )}
                 </Select>
-
+                
                 <Radios
                   label="PcD (Pessoa com deficiência)"
                   error={errors.pcd && errors.pcd.message}
@@ -139,22 +133,24 @@ const SearchProfessionals = () => {
                   )}
                 </Select>
 
-                <Radios
-                  label="Possui CNPJ"
-                  onChange={e => handleRadio('companyRegistry', e.target.value)}
-                  error={errors.companyRegistry && errors.companyRegistry.message}
-                  name="companyRegistry"
-                />
+            <Radios
+              label="Possui CNPJ"
+              onChange={e => handleRadio('companyRegistry', e.target.value)}
+              error={errors.companyRegistry && errors.companyRegistry.message}
+              name="companyRegistry"
+            />
 
-                <Button
-                  type="submit"
-                  isLoading={isLoading.submit}
-                >
-                  Buscar
-          </Button>I
+            <Button
+              type="submit"
+              variant="contained"
+              size="lg"
+              isLoading={isLoading.submit}
+            >
+              Buscar
+            </Button>
           </Form>
             </Flexbox>
-          </Background >
+          </Background>
           :
           <ResultSearchProfessionals data={dados} />
       }

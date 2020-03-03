@@ -39,10 +39,10 @@ import {
 
 
 const Dashboard = () => {
-  const userType = useStoreState(state => state.auth.auth.user.type)
+  const userType = useStoreState(state => state.auth.auth.user)
   const getUser = useStoreActions(actions => actions.user.getUser)
   const user = useStoreState(state => state.user.user)
-  
+  const hasVacancies = user.vacancies - user.usedVacancies > 0;
 
   const [modalStatus, setModalStatus] = useState(false)
   // const [disabledButton, setDisabledButton] = useState(false) // TODO: Add count to set or unset register vacancy button
@@ -55,16 +55,8 @@ const Dashboard = () => {
     if (userType.type === "enterprise") setModalInfoPlans(true)
   }, [userType, getUser])
 
-  const actions = [
-    { icon: <PostAdd />, name: 'Cadastrar Vagas', link: '/cadastro/vaga' },
-    { icon: <Visibility />, name: 'Ver Minhas Vagas', link: `/listagem/vagas/${user.enterprise_id}` },
-    { icon: <Search />, name: 'Buscar Profissional', link: '/busca/profissionais'},
-    { icon: <Delete />, name: 'Deletar Perfil', onClick: () => setModalStatus(true)},
-  ];
-  console.table(userType)
   return (
     <Background>
-      
       {Object.values(user).length ? (
       <>
       <Container className='header container clearfix et_menu_container'>
@@ -76,37 +68,31 @@ const Dashboard = () => {
               <Person style={{ fontSize: 60 }} /> }
             associate={user.apan_associate}
             type={userType.type === "enterprise" ? "Empresa" : "Profissional"}
-            bio={userType.type === "enterprise" ? user.description : user.bio}
+            bio={userType.type === "enterprise" ? user.presentation : user.bio}
+            pcd={user.pcd}
+            segments={userType.type === "enterprise" ? user.business_segments : user.identity_segments}
           />
           <Info
-            infoList={getInfo(user)[userType.type]}
+            infoList={getInfo(user, userType.type)}
           />
            
         </div>
           
       </Container>
-      {/* <div>
-      {fields.map(field => {
-          if (typeof user[field.name] !== 'undefined') {
-            return (
-              <>
-                <Typography>{field.display}</Typography>
-                <Typography>{user[field.name]}</Typography>
-              </>
-            )
-          }
-          return false
-        })}
-      </div> */}
-      {userType.type === "enterprise" && <FABMenu actionButtons={actions} />  }
       
       <GroupButtons className="container">
         <If condition={userType.type === "enterprise"}>
-          <Link to="/cadastro/vaga">
-            <Button>
+          {hasVacancies ? <Link to="/cadastro/vaga">
+            <Button variant="contained">
               Cadastrar Vagas
             </Button>
-          </Link>
+          </Link> :
+          <a href="http://raio.agency/planos">
+            <Button variant="contained">
+              Cadastrar Vagas
+            </Button>
+          </a>
+          }
           <Link to={`/listagem/vagas/${user.enterprise_id}`}>
             <Button>
               Ver minhas vagas
@@ -119,7 +105,6 @@ const Dashboard = () => {
           </Link>
         </If>
         <Button
-          color="#FFFFFF"
           variant="contained"
           color="primary"
           size="lg"

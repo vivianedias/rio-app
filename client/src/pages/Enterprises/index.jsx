@@ -2,12 +2,13 @@ import React, { useEffect } from "react"
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import { makeStyles } from '@material-ui/core/styles'
-import { Container, Group, Background, GroupButton } from './style'
 import ViewListIcon from '@material-ui/icons/ViewList'
 import Alert from '@material-ui/lab/Alert'
-import { IfElse } from '../../components/If'
-import Tables from '../../comps/Tables'
 import TextField from '@material-ui/core/TextField'
+
+import Tables from '../../comps/Tables'
+import { IfElse } from '../../components/If'
+import { Container, Group, Background } from './style'
 
 const headCells = [
   { id: 'name_enterprise', numeric: false, disablePadding: true, label: 'Empresa' },

@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import Label from './Label'
+import Typography from '@material-ui/core/Typography'
 
 const Select = (
   {
@@ -13,7 +14,7 @@ const Select = (
     isLoading = false,
   }) => (
     <div className="field">
-      <Label>{label}</Label>
+      <Typography color="secondary" variant="h6">{label}</Typography>
       <div className="control">
         <div className={`select ${error ? "is-focused is-danger" : ""} ${isLoading ? "is-loading" : ""}`}>
           <select name={name} ref={register}>

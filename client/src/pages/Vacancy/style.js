@@ -40,7 +40,6 @@ export const Form = styled.form`
   width: 50%;
   margin: 25px;
   padding: 30px;
-  background-color: #fff;
 `
 
 export const WrapButton = styled.div`

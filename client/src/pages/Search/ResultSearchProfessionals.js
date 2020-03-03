@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useStoreActions, useStoreState } from 'easy-peasy'
+import Typography from '@material-ui/core/Typography'
+import Alert from '@material-ui/lab/Alert'
 import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, Text, Link } from './styles'
 import CardProfessional from './components/CardProfessional'
 import { validatingFields } from '../../utils/service'
@@ -31,7 +33,7 @@ const ResultSearchProfessionals = ({ data }) => {
       setNotRegister("Não existem candidatos(a) cadastrados(a) ainda")
     } else {
 
-      let filter = professionalAll.data.filter((item) => {
+      const filter = professionalAll.data.filter((item) => {
         let itemArea = ""
         let areas = ""
         item.expertise_areas.map((value) => {
@@ -52,7 +54,7 @@ const ResultSearchProfessionals = ({ data }) => {
         )
       })
 
-      let filterUser = user.data.filter((item) => {
+      const filterUser = user.data.filter((item) => {
         if (item.type === "professional") {
           let id = ""
           filter.map((us) => {
@@ -82,17 +84,17 @@ const ResultSearchProfessionals = ({ data }) => {
   return (
     < WrapperResultSearch >
     <Group>
-        <Link href="/busca-profissionais">Voltar</Link>
+        <Link href="/busca/profissionais">Voltar</Link>
     </Group>
       <Wrapper>
-        <TitleSearch>Resultado de busca de Profissionais</TitleSearch>
+        <Typography component="h2" variant="h4">Resultado de busca de Profissionais</Typography>
         <SubTitle>Resultado de Busca para:</SubTitle>
         <Text>{list.join(", ")}</Text>
 
         <Group>
           {userType.type === "enterprise" ?
-            notRegister ?
-              <p>{notRegister}</p>
+            notRegister || professionals.length == 0 ?
+              <Alert severity="warning">{notRegister}</Alert>
               :
               <Group>
                 <Text>Foram encontrados {professionals.length} resultados de busca para a sua pesquisa</Text>
@@ -100,8 +102,8 @@ const ResultSearchProfessionals = ({ data }) => {
             :
             <Group>
               {
-                notRegister ?
-                  <p>{notRegister}</p>
+                notRegister || professionals.length == 0 ?
+                  <Alert severity="warning">{notRegister}</Alert>
                   :
                   professionals.length > 0 ?
                     professionals.map((professional) => (
@@ -118,7 +120,6 @@ const ResultSearchProfessionals = ({ data }) => {
                         links={professional.links}
                       />
                     )) : <Text>Não achamos nenhum profissional</Text>
-
               }
             </Group>
           }

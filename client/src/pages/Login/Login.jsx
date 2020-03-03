@@ -33,7 +33,7 @@ const Login = () => {
     <Background>
       <Flexbox center>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Typography variant="h3" component="h2" gutterBottom>
+          <Typography variant="h4" component="h2" gutterBottom>
             Entre na Raio
           </Typography>
 

@@ -4,7 +4,6 @@ export const Form = styled.form`
   width: 50%;
   margin: 25px;
   padding: 30px;
-  background-color: #fff;
 `
 
 export const Success = styled.div`
@@ -15,6 +14,13 @@ export const Success = styled.div`
 
 export const Background = styled.div`
   height: 100%;
+
+  h2 {
+    text-align: center;
+    font-weight: bold;
+    color: #f7cc94;
+    margin-bottom: 20px;
+  }
 `
 
 export const WrapButton = styled.div`

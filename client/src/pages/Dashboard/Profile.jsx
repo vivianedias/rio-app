@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Star from '@material-ui/icons/Star'
+import PcD from '@material-ui/icons/Accessible'
 import Typography from '@material-ui/core/Typography'
 
 const StyledProfile = styled.div`
@@ -29,9 +30,15 @@ const StyledProfile = styled.div`
   .bio {
     text-align: justify;
   }
+
+  .segments {
+    color: #200122;
+    text-align: left;
+    margin-top: 20px;
+  }
 `
 
-function Profile({ icon, name, associate, bio, type }) {
+function Profile({ icon, name, associate, bio, type, segments, pcd }) {
   return (
     <StyledProfile className='profile'>
       <span className="image">{icon}</span>
@@ -43,7 +50,19 @@ function Profile({ icon, name, associate, bio, type }) {
           <Typography color="secondary">Associado APAN</Typography>
         </div>) 
       }
+      { pcd && (
+        <div className="associate">
+          <PcD color="secondary" />
+          <Typography color="secondary">PcD</Typography>
+        </div>) 
+      }
       <Typography className="bio">{bio}</Typography>
+
+      {segments.length > 0 &&
+      <section className="segments">
+        <Typography component="h3" variant="h6">Segmentos de atuação</Typography>
+        <Typography>{segments.join(', ')}</Typography>
+      </section>}
     </StyledProfile>
   )
 }
