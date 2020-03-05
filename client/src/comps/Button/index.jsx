@@ -10,6 +10,7 @@ const Button = ({ type, onClick, children, disabled, styles, isLoading, color, v
       disabled={disabled}
       type={type}
       onClick={onClick}
+      style={{margin: '5px'}}
       className={`button ${isLoading ? 'is-loading' : ''} ${styles}`}
     >
       {children}

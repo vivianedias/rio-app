@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react"
 import { useStoreActions, useStoreState } from 'easy-peasy'
 import Typography from '@material-ui/core/Typography'
 import Alert from '@material-ui/lab/Alert'
-import { Wrapper, Group, TitleSearch, WrapperResultSearch, SubTitle, Text, Link } from './styles'
+import Chip from '@material-ui/core/Chip'
+
+import { Wrapper, Group, WrapperResultSearch, SubTitle, Text, Link } from './styles'
+import Button from '../../comps/Button'
+import Tables from '../../comps/Tables'
 import CardProfessional from './components/CardProfessional'
 import { validatingFields } from '../../utils/service'
 import Professionals from "../Signup/Professional"
@@ -80,49 +84,55 @@ const ResultSearchProfessionals = ({ data }) => {
       setProfessionals(obj)
     }
   }, [])
-  
+
+  const headCells = [
+    { id: 'name', numeric: false, disablePadding: true, label: 'Nome' },
+    { id: 'email', numeric: false, disablePadding: false, label: 'E-mail' },
+    { id: 'address', numeric: false, disablePadding: false, label: 'Endereço' },
+    { id: 'phone', numeric: false, disablePadding: false, label: 'Telefone' },
+    { id: 'cnpj', numeric: false, disablePadding: false, label: 'Possui CNPJ' },
+    { id: 'gender', numeric: false, disablePadding: false, label: 'Gênero' },
+    { id: 'self_declaration', numeric: false, disablePadding: false, label: 'Auto declaração' },
+    { id: 'bio', numeric: false, disablePadding: false, label: 'Bio' },
+    { id: 'links', numeric: false, disablePadding: false, label: 'Links' },
+  ];
+  console.log('var ==>', professionals)
   return (
-    < WrapperResultSearch >
-    <Group>
-        <Link href="/busca/profissionais">Voltar</Link>
-    </Group>
+    <WrapperResultSearch className="container">
+      <Button variant="contained">
+        <Link href="/busca/profissionais">
+          Voltar
+        </Link>
+      </Button>
+
       <Wrapper>
         <Typography component="h2" variant="h4">Resultado de busca de Profissionais</Typography>
-        <SubTitle>Resultado de Busca para:</SubTitle>
-        <Text>{list.join(", ")}</Text>
+        
+        {
+          list.map(term => <Chip label={term} />)
+        }
 
         <Group>
-          {userType.type === "enterprise" ?
-            notRegister || professionals.length == 0 ?
-              <Alert severity="warning">{notRegister}</Alert>
-              :
-              <Group>
-                <Text>Foram encontrados {professionals.length} resultados de busca para a sua pesquisa</Text>
-              </Group>
-            :
+          {
+            notRegister ?
+            <Alert severity="warning">{notRegister}</Alert> :
             <Group>
-              {
-                notRegister || professionals.length == 0 ?
-                  <Alert severity="warning">{notRegister}</Alert>
-                  :
-                  professionals.length > 0 ?
-                    professionals.map((professional) => (
-                      <CardProfessional
-                        name={professional.name}
-                        email={professional.email}
-                        address={professional.address}
-                        phone={professional.phone}
-                        cnpj={professional.cnpj ? "Possui CNPJ" : "Não possui CNPJ"}
-                        pcd={professional.pcd ? "Pcd" : "Não Pcd"}
-                        gender={professional.gender}
-                        self_declaration={professional.self_declaration}
-                        bio={professional.bio}
-                        links={professional.links}
-                      />
-                    )) : <Text>Não achamos nenhum profissional</Text>
-              }
+              <Text>Foram encontrados {professionals.length} resultados de busca para a sua pesquisa</Text>
             </Group>
           }
+          <Group>
+            {
+              notRegister ?
+              <Alert severity="warning">{notRegister}</Alert> :
+              <Tables
+                title={`${professionals.length} profissiona${professionals.length > 1 ? 'is' : 'l'} 
+                encontrado${professionals.length > 1 && 's'}`}
+                headCells={headCells}
+                list={professionals.map(pro => ({...pro, cnpj: pro.cnpj ? 'Sim' : 'Não'}))}
+              />
+            }
+          </Group>
+         
         </Group>
       </Wrapper>
     </WrapperResultSearch >

@@ -4,34 +4,21 @@ import { useStoreActions, useStoreState } from 'easy-peasy'
 import Person from '@material-ui/icons/Person'
 
 import Enterprise from '@material-ui/icons/AccountBalanceOutlined'
-import Typography from '@material-ui/core/Typography'
-import LocationOn from '@material-ui/icons/LocationOn'
-import Paper from '@material-ui/core/Paper';
-// import School from '@material-ui/icons/School'
-import PostAdd from '@material-ui/icons/PostAdd';
 import Delete from '@material-ui/icons/Delete';
-import Search from '@material-ui/icons/Search';
-import Visibility from '@material-ui/icons/Visibility';
 import { getInfo } from './user_info' 
 import uuid from 'uuid'
 
 import Profile from './Profile'
 import Info from './Info'
-import FABMenu from '../../comps/FABMenu'
-import Field from '../../components/Field'
 import Modal from '../../components/Modal'
 import NewModal from '../../comps/Modal'
 import Button from '../../comps/Button'
 import { If } from '../../components/If'
-import InfoDelete from '../../components/popups/InfoDelete'
 import BoasVindas from '../../components/popups/BoasVindas'
 import seloPlans from '../../assets/selo.png'
 import loading from '../../assets/loading.svg'
-
-import { fields } from './dicio'
 import {
   Background,
-  ButtonDelete,
   GroupButtons,
   Container,
 } from './style'
@@ -93,13 +80,22 @@ const Dashboard = () => {
             </Button>
           </a>
           }
-          <Link to={`/listagem/vagas/${user.enterprise_id}`}>
-            <Button>
+          { user.usedVacancies > 0 && 
+          (<Link to={`/listagem/vagas/${user.enterprise_id}`}>
+            <Button
+              variant="contained"
+              color="primary"
+              size="lg"
+            >
               Ver minhas vagas
             </Button>
-          </Link>
+          </Link>) }
           <Link to={'/busca/profissionais'}>
-            <Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="lg"
+            >
               Buscar profissional
             </Button>
           </Link>
@@ -110,7 +106,7 @@ const Dashboard = () => {
           size="lg"
           onClick={() => setModalStatus(true)}
         >
-          Deletar Perfil <Delete />
+          Deletar Perfil
         </Button>
       </GroupButtons>
 

@@ -34,7 +34,7 @@ export const Background = styled.div`
 export const WrapperChoices = styled.div`
   display: flex;
   width: 50%;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 /* STYLES ALLENTERPRISE */

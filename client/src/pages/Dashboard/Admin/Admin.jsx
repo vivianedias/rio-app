@@ -14,14 +14,13 @@ const DashboardWrapper = () =>
           icon={<Enterprise style={{ fontSize: 80, color: '#200122' }} />}
           to="/dashboard/admin/empresas"
           title="Empresarial"
-        >
-        </RoleCard>
-        <RoleCard 
+        />
+        
+        {/* <RoleCard 
           icon={<Person style={{ fontSize: 80, color: '#200122' }} />}
           to="/dashboard/admin/profissionais"
           title="Profissional"
-        >
-        </RoleCard>
+        /> */}
       </WrapperChoices>
     </Background>
 
