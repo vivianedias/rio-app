@@ -18,7 +18,6 @@ export const Background = styled.div`
   h2 {
     text-align: center;
     font-weight: bold;
-    color: #f7cc94;
     margin-bottom: 20px;
   }
 `

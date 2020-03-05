@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useStoreActions, useStoreState } from 'easy-peasy'
+import Typography from '@material-ui/core/Typography'
 import uuid from 'uuid'
 
 import Flexbox from '../../components/Flexbox'
-import Button from '../../components/Button'
+import Button from '../../comps/Button'
 import Textarea from '../../components/Textarea'
 import Checkboxes from '../../components/Checkboxes'
 import Radios from '../../components/Radios'
@@ -66,9 +67,9 @@ const Enterprise = () => {
     <Background>
       <Flexbox justify="center">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Title>Formulário de Cadastro da Empresa</Title>
+          <Typography variant="h4" component="h2">Formulário de Cadastro da Empresa</Typography>
           <InputText
-            name="name"
+            name="enterprise_name"
             type="text"
             register={register({
               required: 'Esse campo é obrigatório',
@@ -194,7 +195,7 @@ const Enterprise = () => {
           <Error msg={registerError && registerError.enterprise} />
 
           <WrapButton>
-            <Button type="submit">
+            <Button variant="contained" type="submit">
               Enviar
             </Button>
           </WrapButton>

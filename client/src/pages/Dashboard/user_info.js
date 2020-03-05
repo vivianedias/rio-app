@@ -111,6 +111,10 @@ export const getInfo = (user, type) => {
       title: 'Contato',
       values: [
         {
+          campo: 'Nome do Responsável',
+          valor: user.name
+        },
+        {
           campo: 'Telefone',
           valor: formatPhone(user.phone)
         },
@@ -120,7 +124,7 @@ export const getInfo = (user, type) => {
         },
         {
           campo: 'Links',
-          valor: user.links.split(';').join(', ')
+          valor: user.links.join(', ')
         }
       ]
     },

@@ -6,11 +6,6 @@ import Typography from '@material-ui/core/Typography'
 
 const mobile = '576px'
 
-const StyledDescription = styled.label`
-  color: #fc9b44;
-  font-weight: 500;
-`
-
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
