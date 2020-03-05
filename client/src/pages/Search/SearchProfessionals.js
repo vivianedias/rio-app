@@ -80,15 +80,13 @@ const SearchProfessionals = () => {
           <Background>
             <Flexbox justify="center">
               <Form onSubmit={handleSubmit(onSubmit)}>
-
-                <Typography component="h2" variant="h4">Resultado de busca de Profissionais</Typography>
+                <Typography component="h2" variant="h4">Busca de Profissionais</Typography>
                 <Checkboxes
                   label="Áreas de atuação"
                   register={register}
                   fields={functions}
                   name="expertiseAreas"
                 />
-
                 <Select
                   label="Auto Declaração"
                   register={register}

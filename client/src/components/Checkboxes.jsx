@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import uuid from 'uuid'
 import styled from 'styled-components'
 import Typography from '@material-ui/core/Typography'
-import Text from './Text'
 
 const mobile = '576px'
 

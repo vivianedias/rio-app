@@ -84,7 +84,6 @@ export const Text = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  color: #FFDEAD;
 `
 
 export const Link = styled.a`

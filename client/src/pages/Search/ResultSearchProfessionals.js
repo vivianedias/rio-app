@@ -17,7 +17,6 @@ const ResultSearchProfessionals = ({ data }) => {
   const [professionals, setProfessionals] = useState([])
   const getProfessionalAll = useStoreActions(actions => actions.user.getProfessionalAll)
   const getUserAll = useStoreActions(actions => actions.user.getAllUsers)
-  const userType = useStoreState(state => state.auth.auth.user)
 
   const list = []
   Object.keys(data).forEach((item) => (
@@ -113,17 +112,10 @@ const ResultSearchProfessionals = ({ data }) => {
         }
 
         <Group>
-          {
-            notRegister ?
-            <Alert severity="warning">{notRegister}</Alert> :
-            <Group>
-              <Text>Foram encontrados {professionals.length} resultados de busca para a sua pesquisa</Text>
-            </Group>
-          }
-          <Group>
+          
             {
-              notRegister ?
-              <Alert severity="warning">{notRegister}</Alert> :
+              notRegister || professionals.length === 0 ?
+              <Alert severity="warning">{notRegister || 'Nenhum Profissional encontrado'}</Alert> :
               <Tables
                 title={`${professionals.length} profissiona${professionals.length > 1 ? 'is' : 'l'} 
                 encontrado${professionals.length > 1 && 's'}`}
@@ -131,8 +123,7 @@ const ResultSearchProfessionals = ({ data }) => {
                 list={professionals.map(pro => ({...pro, cnpj: pro.cnpj ? 'Sim' : 'Não'}))}
               />
             }
-          </Group>
-         
+
         </Group>
       </Wrapper>
     </WrapperResultSearch >
