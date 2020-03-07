@@ -13,9 +13,14 @@ const EnterpriseSchema = new Schema({
     type: Schema.Types.String,
     ref: 'User'
   },
-  name: {
+  enterprise_name: {
     type: String,
     required: true
+  },
+  name: {
+    type: Schema.Types.String,
+    required: false,
+    ref: 'User'
   },
   foundation_date: {
     type: String,
@@ -26,7 +31,7 @@ const EnterpriseSchema = new Schema({
     required: true
   },
   links: {
-    type: String,
+    type: Array,
     required: true
   },
   diversity_functions: {

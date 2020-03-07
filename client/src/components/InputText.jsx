@@ -1,21 +1,21 @@
 import React from "react"
 import PropTypes from 'prop-types'
-import Label from './Label'
+import Typography from '@material-ui/core/Typography';
 
 const InputText = (
   {
     label,
     name,
     type,
-    placeholder,
     icon,
     help,
     error,
-    register
+    register,
+    placeholder
   }) => {
   return (
     <div className="field">
-      <Label>{label}</Label>
+      <Typography variant="subtitle2" component="span">{label}</Typography>
       <div
         className={`control ${icon ? "has-icons-left" : ""} ${error ? "has-icons-right" : ""}`}
       >
@@ -58,19 +58,6 @@ InputText.propTypes = {
   icon: PropTypes.string,
   help: PropTypes.string,
   register: PropTypes.func.isRequired
-  // margin: shape({
-  //   top: oneOfType([string, number]),
-  //   bottom: oneOfType([string, number]),
-  //   left: oneOfType([string, number]),
-  //   right: oneOfType([string, number])
-  // }),
-  // /** The padding property. */
-  // padding: shape({
-  //   top: oneOfType([string, number]),
-  //   bottom: oneOfType([string, number]),
-  //   left: oneOfType([string, number]),
-  //   right: oneOfType([string, number])
-  // })
 }
 
 InputText.defaultProps = {

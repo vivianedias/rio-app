@@ -1,6 +1,7 @@
 import React from 'react'
 import uuid from 'uuid'
 import styled from 'styled-components'
+import Typography from '@material-ui/core/Typography'
 import Text from './Text'
 
 const StyledRadio = styled.label`
@@ -28,7 +29,7 @@ const InputLabel = styled(Text)`
 
 const Radios = ({ label, error, onChange, name }) => (
   <div className="field">
-    <StyledDescription className="label">{label}</StyledDescription>
+    <Typography color="secondary" variant="h6">{label}</Typography>
     <Wrapper>
       {['sim', 'não'].map(item => (
         <StyledRadio className="radio" key={uuid()}>
@@ -39,7 +40,7 @@ const Radios = ({ label, error, onChange, name }) => (
             value={item === 'sim'}
             name={name}
           />
-          <InputLabel size="14px">{item}</InputLabel>
+          <Typography color="primary">{item}</Typography>
         </StyledRadio>
       ))}
     </Wrapper>

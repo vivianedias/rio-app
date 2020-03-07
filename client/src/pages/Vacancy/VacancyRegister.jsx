@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useStoreActions, useStoreState } from 'easy-peasy'
 
 import InputText from '../../components/InputText'
-import Button from '../../components/Button'
+import Button from '../../comps/Button'
 import Form from '../../components/Form'
 import { Error, Success } from '../../components/Status'
 
@@ -126,6 +126,7 @@ const Vacancy = () => {
         <WrapButton>
           <Button
             type="submit"
+            variant="primary"
           >
             Enviar
           </Button>

@@ -11,7 +11,7 @@ export const Title = styled.h1`
   font-size: 22px;  
     font-size: 22px;  
   font-size: 22px;  
-  color:#fc9b44;
+  color:#200122;
   margin: 2vw 0;
   text-align: center;
 `;
@@ -27,7 +27,6 @@ export const Background = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
   height: 40rem;
   justify-content: center;
   min-height: calc(100vh - 200px);
@@ -35,7 +34,7 @@ export const Background = styled.div`
 export const WrapperChoices = styled.div`
   display: flex;
   width: 50%;
-  justify-content: space-between;
+  justify-content: center;
 `
 
 /* STYLES ALLENTERPRISE */

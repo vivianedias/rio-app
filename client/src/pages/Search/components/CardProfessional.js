@@ -13,7 +13,6 @@ const CardProfessional = (props) => {
           <Textarea>{props.cnpj}</Textarea>
           <Textarea>{props.pcd}</Textarea>
           <Textarea>{props.gender}</Textarea>
-          <Textarea>{props.sexual_orientation}</Textarea>
           <Textarea>{props.self_declaration}</Textarea>
           <Bio>{props.bio}</Bio>
           <Destac>{props.links}</Destac>

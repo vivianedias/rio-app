@@ -1,10 +1,20 @@
 import React, { useEffect } from "react"
 import { useStoreState, useStoreActions } from 'easy-peasy'
-import uuid from "uuid"
+import Alert from '@material-ui/lab/Alert'
 
-import { Container, Group, Title, Background, Textarea } from './style'
-import CardVacancy from '../../components/CardVacancy'
+import { Container, Group, Background } from './style'
 import { IfElse } from '../../components/If'
+import Tables from '../../comps/Tables'
+
+const headCells = [
+  { id: 'enterprise_name', numeric: false, disablePadding: true, label: 'Empresa' },
+  { id: 'title', numeric: false, disablePadding: false, label: 'Título' },
+  { id: 'function', numeric: false, disablePadding: false, label: 'Funções' },
+  { id: 'requirements', numeric: false, disablePadding: false, label: 'Requisitos' },
+  { id: 'location', numeric: false, disablePadding: false, label: 'Endereço' },
+  { id: 'cache', numeric: true, disablePadding: false, label: 'Cachê' },
+  { id: 'total_period', numeric: true, disablePadding: false, label: 'Período' }
+];
 
 const VacancyList = ({ match }) => {
   const vacancies = useStoreState(state => state.vacancy.vacancies)
@@ -14,30 +24,22 @@ const VacancyList = ({ match }) => {
     const id = match.params && match.params.id
     getAllVacancies(id)
   }, [getAllVacancies, match.params])
-
+  console.log('vac =>', vacancies)
   return (
     <Background>
       <Container>
-        <Title>Vagas</Title>
         <Group>
           <IfElse
             condition={typeof vacancies !== 'undefined' && vacancies.length > 0}
             True={
-              vacancies && vacancies.map((vacancy) => (
-                <CardVacancy
-                  enterpriseName={vacancy.enterprise_name}
-                  name={vacancy.title}
-                  function={vacancy.function}
-                  requirements={vacancy.requirements}
-                  location={vacancy.location}
-                  period={vacancy.total_period}
-                  cache={vacancy.cache}
-                  key={uuid()}
-                />
-              ))
+              <Tables 
+                title="Vagas"
+                headCells={headCells}
+                list={vacancies} 
+              />
             }
             False={
-              <Textarea>Não há vagas cadastradas</Textarea>
+              <Alert severity="warning">Não há vagas cadastradas</Alert>
             }
           />
         </Group>

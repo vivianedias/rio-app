@@ -15,10 +15,6 @@ const ProfessionalSchema = new Schema({
     type: Schema.Types.String,
     ref: 'User'
   },
-  sexual_orientation: {
-    type: String,
-    required: true
-  },
   pcd: {
     type: Boolean,
     required: true

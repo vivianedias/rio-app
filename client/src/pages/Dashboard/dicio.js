@@ -96,10 +96,6 @@ export const fields = [
     display: 'Segmentos de conteúdo identitário'
   },
   {
-    name: 'sexualOrientation',
-    display: 'Orientação Sexual'
-  },
-  {
     name: 'PcD (Pessoa com deficiência)',
     display: 'pcd'
   }

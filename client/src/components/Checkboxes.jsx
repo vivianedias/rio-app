@@ -2,14 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uuid from 'uuid'
 import styled from 'styled-components'
-import Text from './Text'
+import Typography from '@material-ui/core/Typography'
 
 const mobile = '576px'
-
-const StyledDescription = styled.label`
-  color: #fc9b44;
-  font-weight: 500;
-`
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,7 +31,7 @@ const Checkbox = styled.input`
 
 const Checkboxes = ({ label, register, name, fields }) => (
   <div className="field">
-    <StyledDescription className="label">{label}</StyledDescription>
+    <Typography color="secondary" variant="h6">{label}</Typography>
     <Wrapper>
       {fields.map(item => {
         const checkedItem = typeof item !== 'string' ? item.name : item
@@ -47,7 +42,7 @@ const Checkboxes = ({ label, register, name, fields }) => (
               name={`${name}[${checkedItem}]`}
               ref={register}
             />
-            <Text size="14px">{checkedItem}</Text>
+            <Typography color="primary">{checkedItem}</Typography>
           </Label>
         )
       })}

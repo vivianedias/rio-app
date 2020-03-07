@@ -5,7 +5,7 @@ import uuid from 'uuid'
 
 import InputText from '../../components/InputText'
 import Flexbox from '../../components/Flexbox'
-import Button from '../../components/Button'
+import Button from '../../comps/Button'
 import Select from '../../components/Select'
 import Modal from '../../components/Modal'
 import SignupPopup from '../../components/popups/Signup'
@@ -150,6 +150,8 @@ const Users = () => {
 
           <WrapButton>
             <Button
+              color="primary"
+              variant="contained"
               type="submit"
             >
               Enviar

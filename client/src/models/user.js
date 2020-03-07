@@ -2,11 +2,13 @@ import { thunk, action } from 'easy-peasy'
 import axios from 'axios'
 
 const userModel = {
+  user: {},
+  error: {},
   getUser: thunk(async (actions, payload) => {
     try {
       const user = await axios.get('/api/user/current')
       const userTypeData = await axios.get(`/api/${payload}`)
-
+      console.log(user);
       // Set current user profile
       actions.setUser({
         ...user.data,
@@ -37,11 +39,9 @@ const userModel = {
       return err.response
     }
   }),
-  user: {},
   setUser: action((state, payload) => ({
     user: { ...payload }
   })),
-  error: {},
   setError: action((state, payload) => ({
     error: payload
   }))

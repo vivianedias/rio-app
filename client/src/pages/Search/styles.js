@@ -52,14 +52,12 @@ export const Background = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(220deg,#6f0000 0%,#200112 100%);
 `
 
 export const WrapperResultSearch = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #6F0000;
   min-height: 100vh;
 `;
 
@@ -86,7 +84,6 @@ export const Text = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  color: #FFDEAD;
 `
 
 export const Link = styled.a`

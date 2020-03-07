@@ -43,9 +43,8 @@ app.use('/api/enterprise', enterprise)
 app.use('/api/user', user)
 app.use('/api/job', job)
 
-// Set static folder
 app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
+  res.sendFile(path.join(__dirname, 'client', 'public', 'index.html'))
 })
 
 // TODO: colocar isso em um .env

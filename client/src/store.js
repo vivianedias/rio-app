@@ -1,9 +1,10 @@
 import { createStore } from 'easy-peasy';
-import GlobalModels from './models/index'
+import GlobalModels from './models'
 
 const {
   example,
   authModel,
+  uiModel,
   registerModel,
   userModel,
   vacancyModel,
@@ -16,7 +17,8 @@ const storeModel = {
   register: registerModel,
   user: userModel,
   vacancy: vacancyModel,
-  enterprise: enterpriseModel
+  enterprise: enterpriseModel,
+  ui: uiModel
 };
 
 const store = createStore(storeModel);
